@@ -1,0 +1,40 @@
+        *{
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+         font-family: Arial, Helvetica, sans-serif;
+         }
+        
+#homeadmin {
+    height: 85px;
+    background: #0047b1;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    position:fixed;
+	width:100%;
+	top:0%;
+}
+#homeadmin ul {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    margin: 0px;
+}
+#homeadmin ul li a:hover {
+    background: white;
+    color: black;
+}
+#homeadmin ul li a {
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+}
+ #homeadmin ul li {
+     list-style: none;
+     display: inline-block;
+     }
+a{
+     text-decoration: none;
+ }
