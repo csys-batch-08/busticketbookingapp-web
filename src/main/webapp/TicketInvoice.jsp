@@ -1,9 +1,10 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="com.busticketbooking.daoimpl.UserDaoImpl"%>
 <%@page import="com.busticketbooking.model.BookedTickets"%>
 <%@page import="com.busticketbooking.model.SeatDetails"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <% 
+    <% DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-mm-yyyy");
     UserDaoImpl dao=new UserDaoImpl();
     BookedTickets bookTickets=new BookedTickets();
     

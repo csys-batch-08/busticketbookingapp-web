@@ -1,3 +1,4 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@page import="com.busticketbooking.model.BookedTickets"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -7,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="javax.servlet.http.HttpSession" %>
+    <%DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"); %>
     <%User userModel=(User)session.getAttribute("userModel"); 
       BookedTickets bookTickets=new BookedTickets();
       BookedTicketsDaoImpl bookTicketsDao=new BookedTicketsDaoImpl();
@@ -95,8 +97,8 @@
                     <td><%=bookTicket.getTicketNo() %></td>
                     <td><%=bookTicket.getBookingDate() %></td>
                     <td><%=bookTicket.getBusModel().getBusCategory() %></td>
-                    <td><%=bookTicket.getBusModel().getDeparture() %></td>
-                    <td><%=bookTicket.getBusModel().getArrival() %></td>
+                    <td><%=bookTicket.getBusModel().getDeparture().format(format) %></td>
+                    <td><%=bookTicket.getBusModel().getArrival().format(format) %></td>
                     <td><%=bookTicket.getTicketCount() %></td>
                     <td><%=bookTicket.getTotalPrice() %></td>
                     <td><%=bookTicket.getBookingStatus() %></td>

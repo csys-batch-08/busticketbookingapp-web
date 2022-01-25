@@ -17,7 +17,7 @@
 <meta charset="ISO-8859-1">
 <title>Bus Hub</title>
 
-<link rel="stylesheet" href="css/NavigationUser.css">
+<link rel="stylesheet" href="css/UserNavigationIndex.css">
 <style type="text/css">
 
 </style>
