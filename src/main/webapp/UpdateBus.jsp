@@ -117,17 +117,16 @@ margin-left:20px;
  <body>
  
      <div id="homeadmin">
-        <ul>
-        <li><a href="AdminHome.jsp">Home</a></li>
-        <li><a href="AddBus.jsp">Add Bus</a></li>
-        <li><a href="AddOperator.jsp">Add Operator</a></li>
-        <li><a href="BusList.jsp">Bus list</a></li>
-        <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-        <li><a href="UserList.jsp">User list</a></li>
-        <li><a href="BookingList.jsp">Booking list</a></li>
-        <li><a href="SeatList.jsp">Seat list</a></li>
+       <ul>
+            <li><a href="AdminHome.jsp">Home</a></li>
+            <li><a href="AddBus.jsp">Add Bus</a></li>
+            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
         </ul>
-            
     </div>
  
         <div id="addbus" class="col-sm-4">
@@ -136,8 +135,9 @@ margin-left:20px;
             <form action="updateBusPage">
                 <table>
                     <tr>
+                    <!-- pattern="[A-Za-z]{3,}" -->
                         <th><label for="busCategory">Bus Category</label></th>
-                        <th><input name="busCategory" type="text" id="busCategory" pattern="[A-Za-z]{3,}" title="please enter correct bus category" placeholder="Enter the category"  autofocus autocomplete="off" required ></th>
+                        <th><input name="busCategory" type="text" id="busCategory"  title="please enter correct bus category" placeholder="Enter the category"  autofocus autocomplete="off" required ></th>
                     </tr>
                     <tr>
                 <th><label for="fromCity">From City</label></th>
@@ -184,7 +184,7 @@ margin-left:20px;
             <table>
                 <tr>
                     <th><label for="busno">Bus No</label></th>
-                    <th><input name="busNo" type="text" id="busno" pattern="[0-9]{4}" title="only numbers are allowed" placeholder="Enter Bus No"   ></th>
+                    <th><input name="busNo" type="text" id="busno" pattern="[0-9]{4}" title="only numbers are allowed with 4 digit " placeholder="Enter Bus No"   ></th>
                 </tr>
                 <tr>
                     <th><label for="operatorId">Operator ID</label></th>
@@ -199,10 +199,8 @@ margin-left:20px;
             </div>
 
      <script type="text/javascript">
-     	<% int busId=Integer.parseInt(request.getParameter("busId")); 
-     	BusDaoImpl busDao=new BusDaoImpl();
-         Bus busModel=busDao.findBusDetailsUsingID(busId);
-         session.setAttribute("busModell", busModel);
+     	<% 
+         Bus busModel=(Bus) session.getAttribute("BusObject");
      	%> 
      	document.getElementById("busno").value="<%=busModel.getBusNo()%>";
      	document.getElementById("operatorId").value="<%=busModel.getOperatorId()%>";

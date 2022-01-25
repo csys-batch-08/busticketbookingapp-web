@@ -1,6 +1,7 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -19,10 +20,12 @@ public class UpdateBusController extends HttpServlet  {
 		
 		BusDaoImpl busDao=new BusDaoImpl();
 		
-		public void service(HttpServletRequest req,HttpServletResponse res) {
-			HttpSession session=req.getSession();
+		public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
 			
-			Bus busModel=(Bus) session.getAttribute("busModell");
+			HttpSession session=req.getSession();
+			 PrintWriter out=res.getWriter();
+			 
+			Bus busModel=(Bus) session.getAttribute("BusObject");
 			
 			int busId=busModel.getBusId();
 			
@@ -35,18 +38,32 @@ public class UpdateBusController extends HttpServlet  {
 			int totalSeat=Integer.parseInt(req.getParameter("totalSeat"));
 			String status=req.getParameter("seatStatus");	
 			
-			Bus bus=new Bus(busId,0,0,busCategory,fromCity,toCity,departure,arrival,seaterFare,totalSeat,status);
-			boolean busUpdateFlag=busDao.updateBus(bus);
+			busModel.setBusCategory(busCategory);
+			busModel.setFromCity(fromCity);
+			busModel.setToCity(toCity);
+			busModel.setDeparture(departure);
+			busModel.setArrival(arrival);
+			busModel.setSeaterFare(seaterFare);
+			busModel.setTotalseat(totalSeat);
+			busModel.setSeatStatus(status);
+			
+			boolean busUpdateFlag=busDao.updateBus(busModel);
 			
 			if(busUpdateFlag) {
-				try {
-					session.setAttribute("AdminHome", "UpdateBusSession");
-					req.getRequestDispatcher("BusList.jsp").forward(req,res);
-				} catch (ServletException e) {
-					System.out.println(e.getMessage());
-				} catch (IOException e) {
-					System.out.println(e.getMessage());
-				}
+				
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Successfully Updated');");
+				out.println("location='BusList';");
+				out.println("</script>");
+//				try {
+//					session.setAttribute("AdminHome", "UpdateBusSession");
+//					req.getRequestDispatcher("BusList.jsp").forward(req,res);
+//				} catch (ServletException e) {
+//					System.out.println(e.getMessage());
+//				} catch (IOException e) {
+//					System.out.println(e.getMessage());
+//				}
+//			}
 			}
 		}
 }

@@ -7,11 +7,10 @@
     <%@page import="com.busticketbooking.daoimpl.BookedTicketsDaoImpl" %>
     <%@page import="java.time.LocalDate" %>
     <%@page import="java.sql.ResultSet" %>
-    <%
-    List<BookedTickets> bookingListAdmin=new ArrayList<BookedTickets>();
-    BookedTicketsDaoImpl bookDao=new BookedTicketsDaoImpl();
-    bookingListAdmin=bookDao.showlistAdmin();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy   HH:mm");
+    <% 
+    List<BookedTickets> bookingListAdmin=(List<BookedTickets>) session.getAttribute("BookingListAdmin");
+    
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy   HH:mm");
     %>
     
 <!DOCTYPE html>
@@ -56,17 +55,17 @@
 </head>
 <body>
     <div id="homeadmin">
-        <ul>
-             <li><a href="AdminHome.jsp">Home</a></li>
+       <ul>
+            <li><a href="AdminHome.jsp">Home</a></li>
             <li><a href="AddBus.jsp">Add Bus</a></li>
             <li><a href="AddOperator.jsp">Add Operator</a></li>
-            <li><a href="BusList.jsp">Bus list</a></li>
-            <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-            <li><a href="UserList.jsp">User list</a></li>
-            <li><a href="BookingList.jsp">Booking list</a></li>
-            <li><a href="SeatList.jsp">Seat list</a></li>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
         </ul>
-      </div>
+    </div>
         <fieldset id="bookinglistfieldset">
             <legend>Booking List</legend>
         <div id="bookinglistdiv">

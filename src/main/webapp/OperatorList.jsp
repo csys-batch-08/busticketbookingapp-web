@@ -6,11 +6,7 @@
     <%@page import="com.busticketbooking.daoimpl.OperatorDaoImpl" %>
     <%@page import="java.sql.ResultSet" %>
     <%
-    List<Operator> operatorList=new ArrayList<Operator>();
-    OperatorDaoImpl operatorDao=new OperatorDaoImpl();
-    operatorList=operatorDao.viewOperator();
-        int opertorId=Integer.parseInt(request.getParameter("opertorId"));
-        operatorDao.deleteOperator(opertorId);
+    List<Operator> operatorList=(List<Operator>) session.getAttribute("OperatorListAdmin");
     %>
    
 <!DOCTYPE html>
@@ -55,33 +51,18 @@
     </style>
 </head>
 <body>
-	<%if(opertorId>0){ %>
-	<script type="text/javascript">
-		alert("Operator deleted Successfully");
-		</script>
-		<%} %>
-		
-	<% String sessionName=(String)session.getAttribute("AdminHome");
-	//System.out.println(sessionName);
-	if(sessionName.equals("UpdateOperatorSession")){
-		session.setAttribute("AdminHome", "HomeSession");
-	%>
-		<script type="text/javascript">
-		alert("Operator Updated Successfully");
-		</script>
-	<%}%>
+	
     <div id="homeadmin">
-        <ul>
-             <li><a href="AdminHome.jsp">Home</a></li>
+       <ul>
+            <li><a href="AdminHome.jsp">Home</a></li>
             <li><a href="AddBus.jsp">Add Bus</a></li>
             <li><a href="AddOperator.jsp">Add Operator</a></li>
-            <li><a href="BusList.jsp">Bus list</a></li>
-            <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-            <li><a href="UserList.jsp">User list</a></li>
-            <li><a href="BookingList.jsp">Booking list</a></li>
-            <li><a href="SeatList.jsp">Seat list</a></li>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
         </ul>
-            
     </div>
 
     <fieldset id="operatorlistfieldset">
@@ -105,7 +86,12 @@
                     <td><%=operator.getOperatorContact() %></td>
                     <td><%=operator.getOperatorAge() %></td>
                     <td><%=operator.getOperatorStatus() %>
-                    <td><a href="UpdateOperator.jsp?operatorId=<%=operator.getOperatorId()%>">edit</a> / <a href="OperatorList.jsp?opertorId=<%=operator.getOperatorId()%>">delete</a></td>
+                    <%if(operator.getOperatorStatus().equals("active")){ %>
+                    <td><a href="OperatorUpdate?operatorId=<%=operator.getOperatorId()%>">edit</a> / <a href="operatorDelete?operatorId=<%=operator.getOperatorId()%>">delete</a></td>
+                    <%}
+           			  else{%>
+           			<td><a href="OperatorUpdate?operatorId=<%=operator.getOperatorId()%>">edit</a></td>
+           			  <%} %>
                 </tr>
                 <% } %>
         

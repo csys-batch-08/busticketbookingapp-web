@@ -6,9 +6,7 @@
     <%@page import="com.busticketbooking.daoimpl.UserDaoImpl" %>
     <%@page import="java.sql.ResultSet" %>
     
-    <%  List<User> userList = new ArrayList<User>();
-        UserDaoImpl userDao=new UserDaoImpl(); 
-        userList=userDao.viewUserDetails();
+    <%  List<User> userList = (List<User>)session.getAttribute("UserList");
         %>
     
 <!DOCTYPE html>
@@ -53,17 +51,17 @@
 </head>
 <body>
     <div id="homeadmin">
-        <ul>
-             <li><a href="AdminHome.jsp">Home</a></li>
+       <ul>
+            <li><a href="AdminHome.jsp">Home</a></li>
             <li><a href="AddBus.jsp">Add Bus</a></li>
             <li><a href="AddOperator.jsp">Add Operator</a></li>
-            <li><a href="BusList.jsp">Bus list</a></li>
-            <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-            <li><a href="UserList.jsp">User list</a></li>
-            <li><a href="BookingList.jsp">Booking list</a></li>
-            <li><a href="SeatList.jsp">Seat list</a></li>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
         </ul>
-            </div>
+    </div>
         <fieldset id="userlistfieldset">
             <legend>User Details</legend>
         <div id="userlistdiv">

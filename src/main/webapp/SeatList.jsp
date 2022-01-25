@@ -5,10 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%
-    SeatDetailsDaoImpl seatDao=new SeatDetailsDaoImpl();
-    SeatDetails seatModel=new SeatDetails();
-    List<SeatDetails> seatDetailsList=new ArrayList<SeatDetails>();
-    seatDetailsList=seatDao.showSeatList();
+    List<SeatDetails> seatDetailsList= (List<SeatDetails>) session.getAttribute("SeatList");
     %>
 <!DOCTYPE html>
 <html>
@@ -54,17 +51,17 @@
  </head>
  <body>
      <div id="homeadmin">
-         <ul>
-             <li><a href="AdminHome.jsp">Home</a></li>
-             <li><a href="AddBus.jsp">Add Bus</a></li>
-             <li><a href="AddOperator.jsp">Add Operator</a></li>
-             <li><a href="BusList.jsp">Bus list</a></li>
-             <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-             <li><a href="UserList.jsp">User list</a></li>
-             <li><a href="BookingList.jsp">Booking list</a></li>
-             <li><a href="SeatList.jsp">Seat list</a></li>
-         </ul>
-        </div>
+       <ul>
+            <li><a href="AdminHome.jsp">Home</a></li>
+            <li><a href="AddBus.jsp">Add Bus</a></li>
+            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
+        </ul>
+    </div>
 
         <fieldset id="seatlistfieldset">
             <legend>Seat_Details</legend>

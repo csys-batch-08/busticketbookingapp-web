@@ -23,7 +23,6 @@ public class UpdateUserProfileController extends HttpServlet {
 	public void service(HttpServletRequest req,HttpServletResponse res) {
 		HttpSession session=req.getSession();
 		
-		
 		User user=(User) session.getAttribute("userModel");	
 		int userId= user.getUserId();
 		String userName=req.getParameter("userName").toLowerCase();
@@ -39,6 +38,9 @@ public class UpdateUserProfileController extends HttpServlet {
 		user.setUserDOB(userDOB);
 		user.setUserGender(userGender);
 		
+		//to find users age by dob
+		int userAge=userDao.findUserAge(user.getUserDOB());
+		
 		User userModel= new User(userId,userName,userDOB,
 				userEmail, userContact,userGender, userPassword,0);
 		boolean userUpdateFlag=userDao.updateUser(userModel);
@@ -46,6 +48,7 @@ public class UpdateUserProfileController extends HttpServlet {
 		if(userUpdateFlag) {
 			try {
 				session.setAttribute("userHome", "updateUserProfileServlet");
+				session.setAttribute("UserAge", userAge);
 				req.getRequestDispatcher("UserProfile.jsp").forward(req,res);
 				
 			} catch (ServletException e) {

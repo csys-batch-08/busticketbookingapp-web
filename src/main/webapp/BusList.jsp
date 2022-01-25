@@ -7,11 +7,8 @@
     <%@page import="com.busticketbooking.daoimpl.BusDaoImpl" %>
     <%@page import="java.sql.ResultSet" %>
     <%@page import="javax.servlet.http.HttpSession" %>
-    <%DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-    List<Bus> busList=new ArrayList<Bus>();
-    BusDaoImpl busDao=new BusDaoImpl();
-    busList=busDao.viewAllBus();
-    %>
+    <% DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+       List<Bus> busList=(List<Bus>) session.getAttribute("BusListAdmin");  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,28 +54,19 @@
 </head>
     <body>
     
-    <% String sessionName=(String)session.getAttribute("AdminHome");
-	if(sessionName.equals("UpdateBusSession")){
-		session.setAttribute("AdminHome", "HomeSession");
-	%>
-		<script type="text/javascript">
-		alert("Bus updated Successfully");
-		</script>
-	<%}%>
-	
         <div id="homeadmin">
-            <ul>
-                <li><a href="AdminHome.jsp">Home</a></li>
+       <ul>
+            <li><a href="AdminHome.jsp">Home</a></li>
             <li><a href="AddBus.jsp">Add Bus</a></li>
             <li><a href="AddOperator.jsp">Add Operator</a></li>
-            <li><a href="BusList.jsp">Bus list</a></li>
-            <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-            <li><a href="UserList.jsp">User list</a></li>
-            <li><a href="BookingList.jsp">Booking list</a></li>
-            <li><a href="SeatList.jsp">Seat list</a></li>
-            </ul>
-                
-        </div>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
+        </ul>
+    </div>
+    
         <fieldset id="buslistfieldset">
             <legend>Bus Details</legend>
         <div id="buslistdiv">
@@ -110,7 +98,7 @@
                     <td><%=bus.getSeaterFare() %></td>
                     <td><%=bus.getTotalseat() %></td>
                     <td><%=bus.getSeatStatus() %></td>
-                    <td><a href="UpdateBus.jsp?busId=<%=bus.getBusId()%>">Edit</a></td>
+                    <td><a href="BusUpdate?busId=<%=bus.getBusId()%>">Edit</a></td>
                 </tr>
                 <%} %>
             </table>

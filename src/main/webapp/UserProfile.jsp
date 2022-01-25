@@ -29,7 +29,6 @@
         }
         #updateprofile table tr td,th{
             padding: 10px;
-
         }
         #updateprofile table{
             padding: 40px;
@@ -117,7 +116,6 @@
                   <li><a href="logout">LogOut</a></li>
                 </ul>
         </div>
-    
     <div  id="profiletable">
         <table>
             <tr>

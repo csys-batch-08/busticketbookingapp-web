@@ -73,21 +73,20 @@
 </head>
 <body>
     <div id="homeadmin">
-        <ul>
+       <ul>
             <li><a href="AdminHome.jsp">Home</a></li>
             <li><a href="AddBus.jsp">Add Bus</a></li>
             <li><a href="AddOperator.jsp">Add Operator</a></li>
-            <li><a href="BusList.jsp">Bus list</a></li>
-            <li><a href="OperatorList.jsp?opertorId=0">Operator list</a></li>
-            <li><a href="UserList.jsp">User list</a></li>
-            <li><a href="BookingList.jsp">Booking list</a></li>
-            <li><a href="SeatList.jsp">Seat list</a></li>
+            <li><a href="BusList">Bus list</a></li>
+            <li><a href="OperatorList">Operator list</a></li>
+            <li><a href="UserList">User list</a></li>
+            <li><a href="BookingList">Booking list</a></li>
+            <li><a href="SeatList">Seat list</a></li>
         </ul>
-            
     </div>
     
 
-<form action="UpdateOpertaorjsp">
+<form action="UpdateOperatorjsp">
      <div id="addOperator" class="col-sm-4">
      <div id="headeraddoperator"> <label id="operatortitle" for="operatortitle">Operator</label> </div>
      
@@ -118,10 +117,8 @@
      </form>
      
      <script type="text/javascript">
-     	<% int operatorId=Integer.parseInt(request.getParameter("operatorId")); 
-     	OperatorDaoImpl operatorDao=new OperatorDaoImpl();
-         Operator operatorModel=operatorDao.getOperatorById(operatorId);
-         session.setAttribute("operatorModel", operatorModel);
+     	<% 
+         Operator operatorModel=(Operator) session.getAttribute("OperatorObject");
      	%> 
      	document.getElementById("operatorName").value="<%=operatorModel.getOperatorName()%>";
      	document.getElementById("operatorEmail").value="<%=operatorModel.getOperatorEmail()%>";

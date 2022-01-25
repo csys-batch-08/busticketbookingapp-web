@@ -56,14 +56,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			pstatement.setInt(4, OperatorModel.getOperatorAge());
 			
 			result=pstatement.executeUpdate();
-			if(result==1) {
-			System.out.println("for "+OperatorModel.getOperatorId()+ "profile is updated !!");
-			pstatement.close();
-			con.close();
-			}
-			else {
-				System.out.println("BusOperator updation failed");
-			}
+			pstatement.executeUpdate("commit");
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
@@ -77,8 +70,7 @@ public class OperatorDaoImpl implements OperatorDAO{
    
    public boolean deleteOperator (int operatorId) {
 		
-	   String inactive="InActive";
-		String operatorDelete="update bus_operators set operator_status='"+inactive+"' where operator_id=?";
+		String operatorDelete="update bus_operators set operator_status=? where operator_id=? ";
 		String commitQuery="commit";
 		Connection con;
 		int result=0;
@@ -87,9 +79,12 @@ public class OperatorDaoImpl implements OperatorDAO{
 			con = ConnectionUtill.connectdb();
 			PreparedStatement pstatement=con.prepareStatement(operatorDelete);
 			
-			pstatement.setInt(1, operatorId);
+			pstatement.setString(1, "inactive");
+			pstatement.setInt(2, operatorId);
+			
 			result=pstatement.executeUpdate();
 			pstatement.executeQuery(commitQuery);
+			
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
@@ -112,7 +107,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			rs=pstatement.executeQuery(operatorView);
 			
 			while(rs.next()) {
-				Operator operator=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5));
+				Operator operator=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5),rs.getString(6));
 				operatorList.add(operator);
 			}
 			
@@ -141,7 +136,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			 pstatement.setInt(1, operatorId);
 			rs = pstatement.executeQuery();
 			 if (rs.next()) {
-				 operatormodel=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5));
+				 operatormodel=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5),rs.getString(6));
 				con.close();
 				pstatement.close();
 				}
