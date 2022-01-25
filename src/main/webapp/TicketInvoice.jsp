@@ -5,12 +5,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <% DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-    UserDaoImpl dao=new UserDaoImpl();
-    BookedTickets bookTickets=new BookedTickets();
-    
-     bookTickets=(BookedTickets)session.getAttribute("ticketdetailsresult");
-
-     int age=dao.findUserAge(bookTickets.getUserModel().getUserDOB() );
+     
+    BookedTickets bookTickets=(BookedTickets)session.getAttribute("ticketdetailsresult");
+	int userAge=(int) session.getAttribute("UserAge");
     %>
 <!DOCTYPE html>
 <html>
@@ -39,11 +36,6 @@
             font-size: 23px; 
             color: rgb(95, 95, 224);
         }
-
-
-
-
-
 
         #buslogohead{
             font-style: italic;
@@ -101,7 +93,7 @@
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
-                      <a href="UserBookingHistory.jsp">Booking History</a>
+                      <a href="UserBookingHistory">Booking History</a>
                       <a href="MyTicket.jsp">My Ticket</a>
                       <a href="CancelTicket.jsp">Cancel Ticket</a>
                     </div>
@@ -209,7 +201,7 @@
                 </tr>
                 <tr>
                     <td><h4><%=bookTickets.getUserModel().getUserName() %></h4></td>
-                    <td><h4><%=age %></h4></td>
+                    <td><h4><%=userAge %></h4></td>
                     <td><h4><%=bookTickets.getUserModel().getUserContact() %></h4></td>
                     <td><h4><%=bookTickets.getUserModel().getUserGender() %></h4></td>
                 </tr>

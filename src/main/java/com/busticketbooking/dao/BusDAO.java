@@ -10,13 +10,11 @@ public interface BusDAO {
 
 	public boolean insertBus(Bus busModel);
 	
-//	public boolean deleteBus(Bus busModel);
-	
 	public boolean updateBus(Bus busModel);
 	
-	public ResultSet viewAllBus();
+	public List<Bus> viewAllBus();
 	
-	public ResultSet searchhBus(LocalDate givenDepartureDate,String fromLocation,String toLocation) ;
+	public List<Bus> searchhBus(LocalDate givenDepartureDate,String fromLocation,String toLocation) ;
 	
 	public boolean updateSeatCount(Bus busModel);
 	

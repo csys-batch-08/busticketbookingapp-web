@@ -21,7 +21,7 @@ import com.busticketbooking.model.SeatDetails;
 import com.busticketbooking.model.User;
 
 @WebServlet("/confirmBooking")
-public class BookedTicketsController extends HttpServlet {
+public class ConfirmBookingController extends HttpServlet {
 
 	BusDaoImpl busDao = new BusDaoImpl();
 	UserDaoImpl userDao = new UserDaoImpl();
@@ -36,9 +36,9 @@ public class BookedTicketsController extends HttpServlet {
 		User userModel = (User) session.getAttribute("userModel");
 
 		
-		//getting bus object by using current bus id
-		int currentBusId2 = (int) session.getAttribute("currentBusId");
-		Bus busModel = busDao.findBusDetailsUsingID(currentBusId2);
+		//getting bus object from session
+		Bus busModel = (Bus)session.getAttribute("CurrentBusObject");
+		
 		
 		//getting details from seatbooking jsp page input entered by user
 		String randomNo = req.getParameter("randomnumber");
@@ -50,21 +50,15 @@ public class BookedTicketsController extends HttpServlet {
 
 			double updateAmountInWallet = userModel.getUserWallet() - totalPrice;
 			userModel.setUserWallet(updateAmountInWallet);
+			
 			int updateBusSeat = busModel.getTotalseat() - ticketCount;
-			
-			//creating new object by giving new seat update count and update in table 
-			Bus busModel2 = new Bus(busModel.getBusId(), busModel.getBusNo(), busModel.getOperatorId(),
-					busModel.getBusCategory(), busModel.getFromCity(), busModel.getToCity(), busModel.getDeparture(),
-					busModel.getArrival(), busModel.getSeaterFare(), updateBusSeat, busModel.getSeatStatus());
-			boolean updateSeatFlag = busDao.updateSeatCount(busModel2);
-			
-//			//creating new object by giving new wallet update 
-//			User userModel2 = new User(user.getUserId(), user.getUserName(), user.getUserDOB(), user.getUserEmail(),
-//					user.getUserContact(), user.getUserGender(), user.getUserPassword(), updateAmountInWallet);
+			busModel.setTotalseat(updateBusSeat);
+			boolean updateSeatFlag = busDao.updateSeatCount(busModel);
+
 			
 			//getting seat no from dao 
 			try {
-				seatDetailsDao.ticketexist(ticketCount, randomNo, busModel2, userModel);
+				seatDetailsDao.ticketexist(ticketCount, randomNo, busModel, userModel);
 			} catch (ClassNotFoundException e1) {
 				System.out.println(e1.getMessage());
 			} catch (SQLException e1) {
@@ -78,8 +72,6 @@ public class BookedTicketsController extends HttpServlet {
 
 			//creating final session by using all
 			session.setAttribute("FinalBookTicketsModel", bookTickets);
-//			session.setAttribute("FinalBusModel", busModel2);
-//			session.setAttribute("FinalUserModel", userModel2);
 
 			if (ticketInsertFlag) {
 				try {

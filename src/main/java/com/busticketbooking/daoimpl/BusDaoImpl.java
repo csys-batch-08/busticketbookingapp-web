@@ -135,33 +135,32 @@ public class BusDaoImpl implements BusDAO {
 	
 
 	//for admin use to view all busses:
-	 public ResultSet viewAllBus(){
+	 public List<Bus> viewAllBus(){
 	    	
 	    	String busView="select bus_id,bus_no,operator_id,bus_category,from_city,to_city,departure,arrival,seater_fare,total_seat,seat_status from bus_details";
 	    	
 	    	Connection con;
 	    	ResultSet rs=null;
-//	    	List<Bus> busList=new ArrayList<Bus>();
+	    	Bus busModel;
+	    	List<Bus> busList=new ArrayList<Bus>();
 			try {
 				con = ConnectionUtill.connectdb();
 				PreparedStatement pstatement=con.prepareStatement(busView);
 				rs=pstatement.executeQuery();
 				
-//				while(rs.next()) {
-//					
-//					Bus busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getTimestamp(6).toLocalDateTime(),rs.getTimestamp(7).toLocalDateTime(),rs.getInt(8),rs.getInt(9),rs.getInt(10),rs.getString(11));
-//					busList.add(busModel);
-//				}
+				while(rs.next()) {					
+				busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getTimestamp(7).toLocalDateTime(),rs.getTimestamp(8).toLocalDateTime(),rs.getInt(9),rs.getInt(10),rs.getString(11));
+				busList.add(busModel);
+			}
 //				con.close();
 //				pstatement.close();
-				return rs;
 			} catch (ClassNotFoundException e) {
 				System.out.println(e.getMessage());
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
 			}
 			
-			return rs;
+			return busList;
 			
 	    }
 	 
@@ -169,7 +168,7 @@ public class BusDaoImpl implements BusDAO {
 	 
 	 
 	 //for users use to filter the bus according to date and location:
-		public ResultSet searchhBus(LocalDate givenDepartureDate,String fromLocation,String toLocation) 
+		public List<Bus> searchhBus(LocalDate givenDepartureDate,String fromLocation,String toLocation) 
 		 {
 				String findBus="select bus_id,bus_no,operator_id,bus_category,from_city,to_city,departure,arrival,seater_fare,"
 						+ "total_seat,seat_status from bus_details where to_char(departure,'dd-mm-yyyy')=? and from_city=? and to_city=?";
@@ -177,7 +176,7 @@ public class BusDaoImpl implements BusDAO {
 				PreparedStatement pstatement=null;
 				Bus busModel;
 				ResultSet rs=null;
-				//List<Bus> busFilterList=new ArrayList<Bus>();
+				List<Bus> busFilterList=new ArrayList<Bus>();
 				try {
 					con=ConnectionUtill.connectdb();
 					pstatement =con.prepareStatement(findBus);
@@ -185,21 +184,17 @@ public class BusDaoImpl implements BusDAO {
 					pstatement.setString(2, fromLocation);
 					pstatement.setString(3, toLocation);
 					rs=pstatement.executeQuery();
-					//System.out.println(rs.);
-//					while(rs.next()) {					
-////						busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getTimestamp(6).toLocalDateTime(),rs.getTimestamp(7).toLocalDateTime(),rs.getInt(8),rs.getInt(9),rs.getInt(10),rs.getString(11));
-////						busFilterList.add(busModel);
-////						busModel.toString();
-//					System.out.println("busIdINRS"+rs.getInt(1));
-//					System.out.println(rs.getTimestamp(7).toLocalDateTime());
-//					}
-					return rs;
+					
+					while(rs.next()) {					
+						busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getTimestamp(7).toLocalDateTime(),rs.getTimestamp(8).toLocalDateTime(),rs.getInt(9),rs.getInt(10),rs.getString(11));
+						busFilterList.add(busModel);
+					}
 				} catch (ClassNotFoundException e) {
 					System.out.println(e.getMessage());
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}	
-				return rs;
+				return busFilterList;
 		    }
 		
 		

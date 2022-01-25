@@ -90,15 +90,6 @@ public class OperatorDaoImpl implements OperatorDAO{
 			pstatement.setInt(1, operatorId);
 			result=pstatement.executeUpdate();
 			pstatement.executeQuery(commitQuery);
-//			if(result==1) {
-//			System.out.println("Operator Details Successfully deleted");
-//			pstatement.close();
-//			con.close();		
-//			}
-//			else
-//			{
-//				System.out.println("please enter correct id");
-//			}
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
@@ -108,32 +99,30 @@ public class OperatorDaoImpl implements OperatorDAO{
 	}
    
    
-   public ResultSet viewOperator(){
+   public List<Operator> viewOperator(){
    	
    	String operatorView="select * from bus_operators";
    	
    	Connection con;
    	ResultSet rs = null;
-//   	List<Operator> operatorList=new ArrayList<Operator>();
+   	List<Operator> operatorList=new ArrayList<Operator>();
 		try {
 			con = ConnectionUtill.connectdb();	
 			Statement pstatement=con.createStatement();
 			rs=pstatement.executeQuery(operatorView);
 			
-//			while(rs.next()) {
-//				Operator operator=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5));
-//				operatorList.add(operator);
-//			}
+			while(rs.next()) {
+				Operator operator=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5));
+				operatorList.add(operator);
+			}
 			
-			return rs;
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
 		
-		
-		return rs;
+		return operatorList;
 		
    }
    

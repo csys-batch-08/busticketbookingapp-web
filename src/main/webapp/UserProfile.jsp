@@ -2,10 +2,8 @@
 <%@page import="com.busticketbooking.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%User userModel=(User) session.getAttribute("userModel"); %>
-    <%UserDaoImpl dao=new UserDaoImpl();
-   /*  User userModel=dao.getUserDetailsById(user.getUserId()); */
-    int userAge=dao.findUserAge(userModel.getUserDOB());%>
+    <% User userModel=(User) session.getAttribute("userModel"); %>
+    <% int userAge=(int) session.getAttribute("UserAge"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,9 +55,6 @@
     		box-shadow: 0px 0px 5px 0px black;
     		position: absolute;
         }
-        /* #btn:hover , #btnupdatediv:hover{
-            background-color: rgb(247, 112, 112);
-        } */
          #btnupdatediv{
              height: 50px;
     		width: 200px;
@@ -104,7 +99,7 @@
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
-                      <a href="UserBookingHistory.jsp">Booking History</a>
+                      <a href="UserBookingHistory">Booking History</a>
                       <a href="MyTicket.jsp">My Ticket</a>
                       <a href="CancelTicket.jsp">Cancel Ticket</a>
                     </div>

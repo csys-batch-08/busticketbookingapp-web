@@ -1,11 +1,14 @@
+<%@page import="com.busticketbooking.model.User"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="com.busticketbooking.daoimpl.UserDaoImpl" %>
     <%@page import="java.sql.ResultSet" %>
     
-    <%
+    <%  List<User> userList = new ArrayList<User>();
         UserDaoImpl userDao=new UserDaoImpl(); 
-            ResultSet rs=userDao.viewUserDetails();
+        userList=userDao.viewUserDetails();
         %>
     
 <!DOCTYPE html>
@@ -39,7 +42,7 @@
             }
             #userlistdiv{
                 margin-top: 20px;
-                margin-left: 150px;
+                margin-left: 210px;
             }
             #userlistfieldset legend{
                 font-size: 30px;
@@ -74,19 +77,17 @@
                     <th>Gender</th>
                     <th>Password</th>
                     <th>Wallet</th>
-                    <th>Status</th>
                 </tr>
-              <% while(rs.next()){ %>
+              <%for(User user:userList){%>
                 <tr>
-                    <td><%=rs.getInt(1) %></td>
-                    <td><%=rs.getString(2) %></td>
-                    <td><%=rs.getDate(3)%></td>
-                    <td><%=rs.getString(4) %></td>
-                    <td><%=rs.getLong(5) %></td>
-                    <td><%=rs.getString(6) %></td>
-                    <td><%=rs.getString(7) %></td>
-                    <td><%=rs.getDouble(8) %></td>
-                    <td><%=rs.getString(9) %></td>
+                    <td><%=user.getUserId() %></td>
+                    <td><%=user.getUserName() %></td>
+                    <td><%=user.getUserDOB() %></td>
+                    <td><%=user.getUserEmail() %></td>
+                    <td><%=user.getUserContact() %></td>
+                    <td><%=user.getUserGender() %></td>
+                    <td><%=user.getUserPassword() %></td>
+                    <td><%=user.getUserWallet() %></td>
                 </tr>
                 <%} %>
             </table>

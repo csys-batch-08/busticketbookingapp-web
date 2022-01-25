@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.busticketbooking.model.Bus"%>
+<%@page import="java.util.List"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -5,8 +8,9 @@
     <%@page import="java.sql.ResultSet" %>
     <%@page import="javax.servlet.http.HttpSession" %>
     <%DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    List<Bus> busList=new ArrayList<Bus>();
     BusDaoImpl busDao=new BusDaoImpl();
-        ResultSet rs=busDao.viewAllBus();
+    busList=busDao.viewAllBus();
     %>
 <!DOCTYPE html>
 <html>
@@ -93,20 +97,20 @@
                     <th>Seat Status</th>
                     <th>Edit</th>
                 </tr>
-                <% while(rs.next()){ %>
+                <%for(Bus bus:busList){%>
                 <tr>
-                    <td><%=rs.getInt(1) %></td>
-                    <td><%=rs.getInt(2) %></td>
-                    <td><%=rs.getInt(3) %></td>
-                    <td><%=rs.getString(4) %></td>
-                    <td><%=rs.getString(5) %></td>
-                    <td><%=rs.getString(6) %></td>
-                    <td><%=rs.getTimestamp(7).toLocalDateTime().format(format)%></td>
-                    <td><%=rs.getTimestamp(8).toLocalDateTime().format(format)%></td>
-                    <td><%=rs.getInt(9) %></td>
-                    <td><%=rs.getInt(10) %></td>
-                    <td><%=rs.getString(11) %></td>
-                    <td><a href="UpdateBus.jsp?busId=<%=rs.getInt(1)%>">Edit</a></td>
+                    <td><%=bus.getBusId() %></td>
+                    <td><%=bus.getBusNo() %></td>
+                    <td><%=bus.getOperatorId() %></td>
+                    <td><%=bus.getBusCategory() %></td>
+                    <td><%=bus.getFromCity() %></td>
+                    <td><%=bus.getToCity() %></td>
+                    <td><%=bus.getDeparture().format(format)%></td>
+                    <td><%=bus.getArrival().format(format)%></td>
+                    <td><%=bus.getSeaterFare() %></td>
+                    <td><%=bus.getTotalseat() %></td>
+                    <td><%=bus.getSeatStatus() %></td>
+                    <td><a href="UpdateBus.jsp?busId=<%=bus.getBusId()%>">Edit</a></td>
                 </tr>
                 <%} %>
             </table>

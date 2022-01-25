@@ -9,12 +9,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@page import="javax.servlet.http.HttpSession" %>
     <%DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"); %>
-    <%User userModel=(User)session.getAttribute("userModel"); 
-      BookedTickets bookTickets=new BookedTickets();
-      BookedTicketsDaoImpl bookTicketsDao=new BookedTicketsDaoImpl();
-      List<BookedTickets> bookTicketsList=new ArrayList<BookedTickets>();
-      bookTicketsList=bookTicketsDao.getBookingDetailsForCurrentUser(userModel);
-      %>
+    <% List<BookedTickets> bookTicketsList=(List<BookedTickets>) session.getAttribute("BookingList"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +53,7 @@
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
-                      <a href="UserBookingHistory.jsp">Booking History</a>
+                      <a href="UserBookingHistory">Booking History</a>
                       <a href="MyTicket.jsp">My Ticket</a>
                       <a href="CancelTicket.jsp">Cancel Ticket</a>
                     </div>

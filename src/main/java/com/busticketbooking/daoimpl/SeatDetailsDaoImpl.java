@@ -113,8 +113,7 @@ public class SeatDetailsDaoImpl {
 		String seatDetailsQuery="select ticket_no,user_id,bus_id,seat_no,seat_status from seat_details order by bus_id,seat_no";
 		
 		Connection con;
-//		Bus busModel=null;
-//		User userModel=null;
+
 		BookedTickets bookTickets=null;
 	   	ResultSet rs = null;
 	   	List<SeatDetails> seatDetailsList=new ArrayList<SeatDetails>();
@@ -122,9 +121,7 @@ public class SeatDetailsDaoImpl {
 				con = ConnectionUtill.connectdb();	
 				Statement pstatement=con.createStatement();
 				rs=pstatement.executeQuery(seatDetailsQuery);
-				
-//				busModel=busDao.findBusDetailsUsingID(rs.getInt(3));
-//				userModel=userDao.getUserDetailsById(rs.getInt(2));
+
 				while(rs.next()) {
 					bookTickets=tickedDao.findBookedTicketsObjectDetails(rs.getString(1));
 					SeatDetails seatDetails=new SeatDetails(bookTickets,rs.getInt(4),rs.getString(5));
@@ -145,7 +142,6 @@ public class SeatDetailsDaoImpl {
 		String seatDetailsQuery="select seat_no from seat_details where ticket_NO=?";
 		
 		Connection con;
-		BookedTickets bookTickets=null;
 	   	ResultSet rs = null;
 	   	List<String> seatList=new ArrayList<String>();
 			try {

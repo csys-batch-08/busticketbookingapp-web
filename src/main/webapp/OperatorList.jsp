@@ -1,12 +1,15 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.busticketbooking.model.Operator"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="com.busticketbooking.daoimpl.OperatorDaoImpl" %>
     <%@page import="java.sql.ResultSet" %>
     <%
+    List<Operator> operatorList=new ArrayList<Operator>();
     OperatorDaoImpl operatorDao=new OperatorDaoImpl();
-        ResultSet rs=operatorDao.viewOperator();
+    operatorList=operatorDao.viewOperator();
         int opertorId=Integer.parseInt(request.getParameter("opertorId"));
-        //System.out.println(opertorId);
         operatorDao.deleteOperator(opertorId);
     %>
    
@@ -94,15 +97,15 @@
                 <th>Operator Status</th>
                 <th>edit&delete</th>
             </tr>
-            <% while(rs.next()){ %>
+           <%for(Operator operator:operatorList){%>
                 <tr>
-                    <td><%=rs.getInt(1) %></td>
-                    <td><%=rs.getString(2) %></td>
-                    <td><%=rs.getString(3) %></td>
-                    <td><%=rs.getLong(4) %></td>
-                    <td><%=rs.getInt(5) %></td>
-                    <td><%=rs.getString(6) %>
-                    <td><a href="UpdateOperator.jsp?operatorId=<%=rs.getInt(1)%>">edit</a> / <a href="OperatorList.jsp?opertorId=<%=rs.getInt(1)%>">delete</a></td>
+                    <td><%=operator.getOperatorId() %></td>
+                    <td><%=operator.getOperatorName() %></td>
+                    <td><%=operator.getOperatorEmail() %></td>
+                    <td><%=operator.getOperatorContact() %></td>
+                    <td><%=operator.getOperatorAge() %></td>
+                    <td><%=operator.getOperatorStatus() %>
+                    <td><a href="UpdateOperator.jsp?operatorId=<%=operator.getOperatorId()%>">edit</a> / <a href="OperatorList.jsp?opertorId=<%=operator.getOperatorId()%>">delete</a></td>
                 </tr>
                 <% } %>
         

@@ -19,7 +19,7 @@ public interface BookedTicketsDAO {
 	
 	public boolean cancelTicket(String ticketNo);
 	
-	public ResultSet showlistAdmin();
+	public List<BookedTickets> showlistAdmin();
 	
 	
 }

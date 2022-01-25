@@ -189,7 +189,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 	}
 	
 	
-	public ResultSet showlistAdmin() {
+	public List<BookedTickets> showlistAdmin() {
 		
         String showQuery="select booking_id,ticket_no,user_id,bus_id,booking_date,departure_date,ticket_count,total_price,booking_status,payment_status from booked_tickets";
 		
@@ -198,6 +198,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 		ResultSet rs = null;
 		Bus busModel=null;
 		User userModel=null;
+		BookedTickets bookedTicketsModel=null;
 		List<BookedTickets> bookingListAdmin=new ArrayList<BookedTickets>();
 		
 		try {
@@ -205,21 +206,20 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 			pstatement=con.prepareStatement(showQuery);
 			rs=pstatement.executeQuery();
 			
-//			while(rs.next()) { 
-//				busModel=busDao.findBusDetailsUsingID(rs.getInt(3));
-//				userModel=userDao.getUserDetailsById(rs.getInt(2));
-//				BookedTickets bookedTicketsModel=new BookedTickets(rs.getInt(1),userModel,busModel,rs.getDate(4).toLocalDate(),rs.getTimestamp(6).toLocalDateTime(),rs.getInt(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getInt(10),rs.getString(11));
-//				bookingListAdmin.add(bookedTicketsModel);
-//			
-//			}	
-			return rs;
+			while(rs.next()) { 
+				busModel=busDao.findBusDetailsUsingID(rs.getInt(4));
+				userModel=userDao.getUserDetailsById(rs.getInt(3));
+				bookedTicketsModel=new BookedTickets(rs.getInt(1),rs.getString(2),userModel,busModel,rs.getDate(5).toLocalDate(),rs.getTimestamp(6).toLocalDateTime(),rs.getInt(7),rs.getDouble(8),rs.getString(9),rs.getString(10));
+				bookingListAdmin.add(bookedTicketsModel);
+			
+			}	
 		} catch (ClassNotFoundException e) {
 			e.getMessage();
 		} catch (SQLException e) {
 			e.getMessage();
 		}
 		
-		return rs;
+		return bookingListAdmin;
 	}
 
 	

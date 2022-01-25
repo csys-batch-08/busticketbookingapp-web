@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.busticketbooking.model.BookedTickets"%>
+<%@page import="java.util.List"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -5,9 +8,10 @@
     <%@page import="java.time.LocalDate" %>
     <%@page import="java.sql.ResultSet" %>
     <%
+    List<BookedTickets> bookingListAdmin=new ArrayList<BookedTickets>();
     BookedTicketsDaoImpl bookDao=new BookedTicketsDaoImpl();
-        ResultSet rs=bookDao.showlistAdmin();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    bookingListAdmin=bookDao.showlistAdmin();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy   HH:mm");
     %>
     
 <!DOCTYPE html>
@@ -72,25 +76,25 @@
                     <th>Ticket No</th>
                     <th>User Id</th>
                     <th>Bus Id</th>
-                    <th>Booking_Date</th>
-                    <th>Departure_Date</th>
+                    <th>Booking Date</th>
+                    <th>Departure</th>
                     <th>Ticket Count</th>
                     <th>Total Price</th>
                     <th>Booking Status</th>
                     <th>Payment Status</th>
                 </tr>
-                <% while(rs.next()){ %>
+                <%for(BookedTickets bookTickets:bookingListAdmin){%>
                 <tr>
-                	<td><%=rs.getInt(1) %></td>
-                    <td><%=rs.getString(2)%></td>
-                    <td><%=rs.getInt(3) %></td>
-                    <td><%=rs.getInt(4) %></td>
-                    <td><%=rs.getDate(5).toLocalDate()%></td>
-                    <td><%=rs.getTimestamp(6).toLocalDateTime().format(format)%></td>
-                    <td><%=rs.getInt(7) %></td>
-                    <td><%=rs.getDouble(8) %></td>
-                    <td><%=rs.getString(9) %></td>
-                    <td><%=rs.getString(10) %></td>
+                	<td><%=bookTickets.getBookingId() %></td>
+                    <td><%=bookTickets.getTicketNo() %></td>
+                    <td><%=bookTickets.getUserModel().getUserId() %></td>
+                    <td><%=bookTickets.getBusModel().getBusId() %></td>
+                    <td><%=bookTickets.getBookingDate() %></td>
+                    <td><%=bookTickets.getBusModel().getDeparture().format(format)%></td>
+                    <td><%=bookTickets.getTicketCount() %></td>
+                    <td><%=bookTickets.getTotalPrice() %></td>
+                    <td><%=bookTickets.getBookingStatus() %></td>
+                    <td><%=bookTickets.getPaymentStatus() %></td>
                 </tr>
                 <%} %>
             </table>

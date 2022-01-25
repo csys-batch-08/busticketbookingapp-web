@@ -44,7 +44,7 @@
 	
 	
     <div>
-    <form action="FilterBus.jsp">
+    <form action="FilterBus">
         <div id="searchlocation">
             <table>
                 <tr>

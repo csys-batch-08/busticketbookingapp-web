@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.busticketbooking.daoimpl.BookedTicketsDaoImpl;
 import com.busticketbooking.daoimpl.SeatDetailsDaoImpl;
+import com.busticketbooking.daoimpl.UserDaoImpl;
 import com.busticketbooking.exception.WrongTicketNumber;
 import com.busticketbooking.model.BookedTickets;
 import com.busticketbooking.model.SeatDetails;
@@ -26,6 +27,7 @@ public class MyTicketController extends HttpServlet {
 	BookedTicketsDaoImpl bookTicketsDao = new BookedTicketsDaoImpl();
 	SeatDetailsDaoImpl seatDetailsDao = new SeatDetailsDaoImpl();
 	BookedTickets bookedTicketsModel = new BookedTickets();
+	UserDaoImpl dao=new UserDaoImpl();
 	List<SeatDetails> seatNoList=new ArrayList<SeatDetails>();
 
 	public void service(HttpServletRequest req, HttpServletResponse res) {
@@ -38,33 +40,31 @@ public class MyTicketController extends HttpServlet {
 		seatNoList=seatDetailsDao.getSeatDetailsUsingTicketNo(ticketNo);
 		String bookSeatNum = "";
 		for (int i = 0; i < seatNoList.size(); i++) {
-			/* bookSeatNo += seatNoList.[i] + " "; */
+			
 			SeatDetails agis= seatNoList.get(i); 
 			bookSeatNum += agis.getSeatNo() + "  ";	
 		}
 		try {
 		if (bookTickets != null) {
 
-		
 			LocalDate date = bookTickets.getDepartureDate().toLocalDate();
 			boolean resultCheck=bookTicketsDao.dateChecking(ticketNo, date);
 			
 			//to check whether departure date is finished or not
 			if (resultCheck) { 
 				session.setAttribute("ticketdetailsresult", bookTickets);
-				System.out.println("after");
 				session.setAttribute("seatnumberdetailsresult", bookSeatNum);
 				try {
 					res.sendRedirect("TicketInvoice.jsp");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			} else {
 				throw new WrongTicketNumber();
 			}
 		}
-		// if ticketnumber entered by user is wrong
+		
+		// if ticketNumber entered by user is wrong
 		else {
 			throw new WrongTicketNumber();
 		}

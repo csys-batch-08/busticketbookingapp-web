@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.busticketbooking.connection.ConnectionUtill;
 import com.busticketbooking.dao.UserDAO;
@@ -120,33 +122,31 @@ public class UserDaoImpl implements UserDAO {
 	
 
 	// for Admin purpose to show all users
-	public ResultSet viewUserDetails() {
+	public List<User> viewUserDetails() {
 
 		String userView = "select user_id,user_name,user_dob,user_email,user_contact,user_gender,user_password,user_wallet,user_status from user_details";
 
 		Connection con;
 		ResultSet rs = null;
-//		List<User> userList = new ArrayList<User>();
+		List<User> userList = new ArrayList<User>();
 		try {
 			con = ConnectionUtill.connectdb();
 			PreparedStatement pstatement = con.prepareStatement(userView);
 
 			rs = pstatement.executeQuery();
 
-//			while (rs.next()) {
-//				User userModel = new User(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4),
-//						rs.getLong(5), rs.getString(6), rs.getString(7), rs.getInt(8), rs.getString(9));
-//			}
-			return rs;
+			while (rs.next()) {
+				User userModel = new User(rs.getInt(1), rs.getString(2), rs.getDate(3).toLocalDate(), rs.getString(4),
+						rs.getLong(5), rs.getString(6), rs.getString(7), rs.getDouble(8));
+				userList.add(userModel);
+			}
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		return rs;
-
-		
+		return userList;
 
 	}
 

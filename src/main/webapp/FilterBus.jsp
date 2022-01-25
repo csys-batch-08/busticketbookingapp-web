@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.busticketbooking.model.Bus"%>
+<%@page import="java.util.List"%>
 <%@page import="com.busticketbooking.model.User"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -5,17 +8,11 @@
     <%@page import="java.sql.ResultSet" %>
     <%@page import="java.time.LocalDate" %>
     <%@page import="java.time.format.DateTimeFormatter" %>
-     <%User userModel=(User)session.getAttribute("userModel"); %>
+     <%User userModel=(User)session.getAttribute("userModel");
+       List<Bus> busFilterList=(List<Bus>)session.getAttribute("BusList");%>
     <%
     DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
-    DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-mm-yyyy");
-    
-   	String fromLocation=request.getParameter("fromlocation");
-    String toLocation=request.getParameter("tolocation");
-    LocalDate date=LocalDate.parse(request.getParameter("date"));
-    BusDaoImpl busDao=new BusDaoImpl();
-    ResultSet rs=busDao.searchhBus(date, fromLocation, toLocation);
-  
+    DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-mm-yyyy");  
     %>
 <!DOCTYPE html>
 <html>
@@ -110,18 +107,20 @@
         </style>
     </head>
     <body>
-    <form action="SeatBooking.jsp">
+    <form action="SeatBooking">
         <div>
             <fieldset id="fieldsettable">
                 <legend><h3>Available Buses</h3></legend>
             
+            	<%for(Bus busList:busFilterList){%>
+            	
                 <div id="forcontent">
                       <ul id="forcontentinlist">
-                        <li><h4><%=fromLocation %></h4></li>
+                        <li><h4><%=busList.getFromCity() %></h4></li>
                         <li><p>to</p></li>
-                        <li><h4><%=toLocation %></h4></li>
+                        <li><h4><%=busList.getToCity() %></h4></li>
                         <li><p>Journey Date :</p></li>
-                        <li><h4><%=date %></h4></li>
+                        <li><h4><%=busList.getDeparture().toLocalDate() %></h4></li>
                     </ul>
                 </div>
                 <div id="outerlinetable">
@@ -135,17 +134,16 @@
                             <th>Seater Fare</th>
                             <th>Select Service</th>
                         </tr>
-                        <%while(rs.next()){
-                        	System.out.println("time"+rs.getTime(7).toLocalTime().format(formatTime));%>
+                        
                         <tr>
-                            <td><%=rs.getString(4) %></td>
-                            <td><%=rs.getString(5) %></td>
-                            <td><%=rs.getString(6) %></td>
-                            <td><%=rs.getTime(7).toLocalTime().format(formatTime)%></td>
-                            <td><%=rs.getTime(8).toLocalTime().format(formatTime)%></td>
-                            <td><%=rs.getInt(9) %></td>
+                            <td><%=busList.getBusCategory() %></td>
+                            <td><%=busList.getFromCity() %></td>
+                            <td><%=busList.getToCity() %></td>
+                            <td><%=busList.getDeparture().toLocalTime().format(formatTime)%></td>
+                            <td><%=busList.getArrival().toLocalTime().format(formatTime)%></td>
+                            <td><%=busList.getSeaterFare() %></td>
                             <%if(userModel!=null){ %>
-                            <td><button id="busId" name="busIdValue" value="<%=rs.getInt(1)%>">BOOK</button></td>
+                            <td><button id="busId" name="busIdValue" value="<%=busList.getBusId()%>">BOOK</button></td>
                             <%} %>
                             
                         </tr>

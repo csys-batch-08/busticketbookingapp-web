@@ -89,7 +89,7 @@
                 <button class="dropbtn">Ticket 
                 </button>
                 <div class="dropdown-content">
-                  <a href="UserBookingHistory.jsp" onclick="bookinghistoryfunc()">Booking History</a>
+                  <a href="UserBookingHistory" onclick="bookinghistoryfunc()">Booking History</a>
                   <a href="MyTicket.jsp" onclick="myticketfunc()">My Ticket</a>
                   <a href="CancelTicket.jsp" onclick="cancelticketfunc()">Cancel Ticket</a>
                 </div>

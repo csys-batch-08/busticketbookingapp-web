@@ -13,7 +13,7 @@ public interface UserDAO {
 	
 	public boolean updateUser(User userModel);
 		
-	public ResultSet viewUserDetails();
+	public List<User> viewUserDetails();
 	
 	public boolean updateWallet(double updatedWallet, long userContact);
 	 

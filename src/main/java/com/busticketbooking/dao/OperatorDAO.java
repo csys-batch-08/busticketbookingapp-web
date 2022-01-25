@@ -13,7 +13,7 @@ public interface OperatorDAO {
 	 
 	 public boolean deleteOperator (int operatorId);
 	 
-	 public ResultSet viewOperator();
+	 public List<Operator> viewOperator();
 	 
 	 public Operator getOperatorById(int operatorId) ;
 }

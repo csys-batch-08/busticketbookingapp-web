@@ -3,10 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="javax.servlet.http.HttpSession" %>
-    <%User userModel=(User)session.getAttribute("userModel"); 
-      /* UserDaoImpl userDao=new UserDaoImpl();
-      User userModel1=userDao.getUserDetailsById(userModel.getUserId()); */
-      %>
+    <% User userModel=(User)session.getAttribute("userModel"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,7 +80,7 @@
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
-                      <a href="UserBookingHistory.jsp">Booking History</a>
+                      <a href="UserBookingHistory">Booking History</a>
                       <a href="MyTicket.jsp">My Ticket</a>
                       <a href="CancelTicket.jsp">Cancel Ticket</a>
                     </div>

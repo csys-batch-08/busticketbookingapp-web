@@ -7,18 +7,8 @@
 <%@page import="javax.servlet.http.HttpSession" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <% BusDaoImpl busDao=new BusDaoImpl();
-       /* UserDaoImpl userDao=new UserDaoImpl(); 
-       User userModel=(User)session.getAttribute("userModel");
-       User userModel1=userDao.getUserDetailsById(userModel.getUserId());*/
-       
-       // busId coming filterjsp class
-       int busId=Integer.parseInt(request.getParameter("busIdValue")); 
-       
- 
-      
-       session.setAttribute("currentBusId", busId );
-       Bus busModel=busDao.findBusDetailsUsingID(busId);%>
+    <% Bus busModel=(Bus)session.getAttribute("CurrentBusObject");
+    BusDaoImpl busDao=new BusDaoImpl();%>
        
        
 <!DOCTYPE html>

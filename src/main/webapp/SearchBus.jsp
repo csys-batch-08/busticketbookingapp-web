@@ -6,9 +6,8 @@
     <%@page import="com.busticketbooking.model.User" %>
     <%@page import="com.busticketbooking.daoimpl.UserDaoImpl" %>
     <%@page import="javax.servlet.http.HttpSession" %>
-    <%BusDaoImpl busDao=new BusDaoImpl();
-    List<String> locationList=new ArrayList<String>(); 
-    locationList=busDao.getLocations();
+    <%
+    List<String> locationList= (List<String>) session.getAttribute("LocationList");
     %>
 <!DOCTYPE html>
 <html>
@@ -80,19 +79,17 @@
 
 
 <body>
-   
-        <%session.setAttribute("userHome", "homeSession");%>
            
     <div id="nav">
             <ul>
                 <li><h3 id="buslogo">BusHub</h3></li>
-                <li><a href="SearchBus.jsp">Bus_Tickets</a></li>
+                <li><a href="SearchBus">Bus_Tickets</a></li>
                 <li><a href="AboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
-                      <a href="UserBookingHistory.jsp">Booking History</a>
+                      <a href="UserBookingHistory">Booking History</a>
                       <a href="MyTicket.jsp">My Ticket</a>
                       <a href="CancelTicket.jsp">Cancel Ticket</a>
                     </div>
@@ -113,7 +110,7 @@
 	
 	
     <div>
-    <form action="FilterBus.jsp">
+    <form action="FilterBus">
         <div id="searchlocation">
             <table>
                 <tr>
