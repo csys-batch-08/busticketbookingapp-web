@@ -55,15 +55,6 @@ public class UpdateBusController extends HttpServlet  {
 				out.println("alert('Successfully Updated');");
 				out.println("location='BusList';");
 				out.println("</script>");
-//				try {
-//					session.setAttribute("AdminHome", "UpdateBusSession");
-//					req.getRequestDispatcher("BusList.jsp").forward(req,res);
-//				} catch (ServletException e) {
-//					System.out.println(e.getMessage());
-//				} catch (IOException e) {
-//					System.out.println(e.getMessage());
-//				}
-//			}
 			}
 		}
 }

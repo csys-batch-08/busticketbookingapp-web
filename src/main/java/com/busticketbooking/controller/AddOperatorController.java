@@ -1,6 +1,7 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +22,11 @@ public class AddOperatorController extends HttpServlet {
 	
 	OperatorDaoImpl operatorDao=new OperatorDaoImpl();
 	
-	public void service(HttpServletRequest req,HttpServletResponse res) {
+	@Override
+	public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
 		
-		HttpSession session=req.getSession();
+		PrintWriter out=res.getWriter();
+		
 		String operatorName=req.getParameter("operatorName").toLowerCase();
 		String operatorEmail=req.getParameter("operatorEmail").toLowerCase();
 		long operatorContact=Long.parseLong(req.getParameter("operatorContact"));
@@ -33,15 +36,12 @@ public class AddOperatorController extends HttpServlet {
 				operatorEmail, operatorContact, operatorAge);
 		boolean operatorInsertFlag=operatorDao.insertOperator(operatorModel);
 		if(operatorInsertFlag) {
-			try {
-				session.setAttribute("AdminHome", "AddOperatorSession");    
-				req.getRequestDispatcher("AddOperator.jsp").forward(req,res);
-				
-			} catch (ServletException e) {
-				System.out.println(e.getMessage());
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Successfully Added');");
+			out.println("location='addOperator.jsp';");
+			out.println("</script>");
+
 		}
 	}
 

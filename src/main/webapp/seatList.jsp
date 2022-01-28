@@ -1,14 +1,7 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.busticketbooking.model.SeatDetails"%>
-<%@page import="com.busticketbooking.daoimpl.SeatDetailsDaoImpl"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%
-    List<SeatDetails> seatDetailsList= (List<SeatDetails>) session.getAttribute("SeatList");
-    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <link href="css/bootstrap.css" rel="stylesheet" >
@@ -52,9 +45,9 @@
  <body>
      <div id="homeadmin">
        <ul>
-            <li><a href="AdminHome.jsp">Home</a></li>
-            <li><a href="AddBus.jsp">Add Bus</a></li>
-            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="adminHome.jsp">Home</a></li>
+            <li><a href="addBus.jsp">Add Bus</a></li>
+            <li><a href="addOperator.jsp">Add Operator</a></li>
             <li><a href="BusList">Bus list</a></li>
             <li><a href="OperatorList">Operator list</a></li>
             <li><a href="UserList">User list</a></li>
@@ -74,15 +67,15 @@
                     <th>Seat_No</th>
                     <th>Seat_Status</th>
                 </tr>
-                <%for(SeatDetails seatInfo:seatDetailsList){%>
+                 <c:forEach items="${SeatList}" var="seatlist">
                 <tr>
-                    <td><%=seatInfo.getBookedTickets().getTicketNo() %></td>
-                    <td><%=seatInfo.getBookedTickets().getUserModel().getUserId()%></td>
-                    <td><%=seatInfo.getBookedTickets().getBusModel().getBusId() %></td>
-                    <td><%=seatInfo.getSeatNo() %></td>
-                    <td><%=seatInfo.getStatus() %></td>
+                    <td>${seatlist.getBookedTickets().getTicketNo() }</td>
+                    <td>${seatlist.getBookedTickets().getUserModel().getUserId()}</td>
+                    <td>${seatlist.getBookedTickets().getBusModel().getBusId() }</td>
+                    <td>${seatlist.getSeatNo() }</td>
+                    <td>${seatlist.getStatus() }</td>
                 </tr>
-                 <%} %>
+                 </c:forEach>
             </table>
       </div>
     </fieldset>

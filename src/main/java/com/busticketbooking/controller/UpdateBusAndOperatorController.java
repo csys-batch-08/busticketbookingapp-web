@@ -19,6 +19,7 @@ public class UpdateBusAndOperatorController extends HttpServlet {
 			
 			BusDaoImpl busDao=new BusDaoImpl();
 			
+			@Override
 			public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
 				
 				HttpSession session=req.getSession();
@@ -45,15 +46,7 @@ public class UpdateBusAndOperatorController extends HttpServlet {
 					out.println("alert('Successfully Updated');");
 					out.println("location='BusList';");
 					out.println("</script>");
-//					try {
-//						session.setAttribute("AdminHome", "UpdateBusSession");
-//						req.getRequestDispatcher("BusList.jsp").forward(req,res);
-//					} catch (ServletException e) {
-//						System.out.println(e.getMessage());
-//					} catch (IOException e) {
-//						System.out.println(e.getMessage());
-//					}
-//				}
+
 				}
 			}
 }

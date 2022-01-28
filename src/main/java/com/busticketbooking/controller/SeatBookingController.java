@@ -2,6 +2,8 @@ package com.busticketbooking.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import com.busticketbooking.model.Bus;
 @WebServlet("/SeatBooking")
 public class SeatBookingController extends HttpServlet {
 
+	@Override
 	public void service(HttpServletRequest req,HttpServletResponse res) {
 		
 		HttpSession session=req.getSession();
@@ -25,12 +28,14 @@ public class SeatBookingController extends HttpServlet {
 	       Bus busModel=busDao.findBusDetailsUsingID(busId);
 	       
 	       if(busModel!=null) {
-	    	   try {
-	    		   session.setAttribute("CurrentBusObject", busModel);
-				   res.sendRedirect("SeatBooking.jsp");
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+		    		try {
+		    			session.setAttribute("CurrentBusObject", busModel);
+			    		RequestDispatcher reqDispatcher=req.getRequestDispatcher("seatBooking.jsp");
+						reqDispatcher.forward(req, res);
+					} catch (ServletException | IOException e) {
+						e.printStackTrace();
+					}
+			
 	       }
 	}
 }

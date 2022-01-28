@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,20 +18,20 @@ import com.busticketbooking.model.BookedTickets;
 @WebServlet("/BookingList")
 public class BookingListController extends HttpServlet {
 
+	@Override
 	public void service(HttpServletRequest req,HttpServletResponse res) {
 		
-		HttpSession session=req.getSession();
 
-		List<BookedTickets> bookingListAdmin=new ArrayList<BookedTickets>();
 	    BookedTicketsDaoImpl bookDao=new BookedTicketsDaoImpl();
-	    bookingListAdmin=bookDao.showlistAdmin();
+	    List<BookedTickets> bookingListAdmin=bookDao.showlistAdmin();
 	    
 	    if(bookingListAdmin!=null) {
 	    	try {
-	    		session.setAttribute("BookingListAdmin", bookingListAdmin);
-				res.sendRedirect("BookingList.jsp");
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
+	    		req.setAttribute("BookingListAdmin", bookingListAdmin);
+	    		RequestDispatcher reqDispatcher=req.getRequestDispatcher("bookingList.jsp");
+ 	    		reqDispatcher.forward(req, res);
+			} catch (IOException | ServletException e) {
+				e.printStackTrace();
 			}
 	    }
 	}

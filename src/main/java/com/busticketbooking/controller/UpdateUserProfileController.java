@@ -1,6 +1,7 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
 import javax.servlet.ServletException;
@@ -20,7 +21,8 @@ public class UpdateUserProfileController extends HttpServlet {
 	
 	UserDaoImpl userDao=new UserDaoImpl();
 	
-	public void service(HttpServletRequest req,HttpServletResponse res) {
+	@Override
+	public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
 		HttpSession session=req.getSession();
 		
 		User user=(User) session.getAttribute("userModel");	
@@ -38,24 +40,21 @@ public class UpdateUserProfileController extends HttpServlet {
 		user.setUserDOB(userDOB);
 		user.setUserGender(userGender);
 		
-		//to find users age by dob
+		//to find users age by DOB
 		int userAge=userDao.findUserAge(user.getUserDOB());
 		
 		User userModel= new User(userId,userName,userDOB,
 				userEmail, userContact,userGender, userPassword,0);
 		boolean userUpdateFlag=userDao.updateUser(userModel);
 		
+		PrintWriter out=res.getWriter();
 		if(userUpdateFlag) {
-			try {
-				session.setAttribute("userHome", "updateUserProfileServlet");
-				session.setAttribute("UserAge", userAge);
-				req.getRequestDispatcher("UserProfile.jsp").forward(req,res);
-				
-			} catch (ServletException e) {
-				System.out.println(e.getMessage());
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			
+			session.setAttribute("UserAge", userAge);
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Profile Updated Successfully');");
+			out.println("location='userProfile.jsp';");
+			out.println("</script>");
 		}
 	}
 }

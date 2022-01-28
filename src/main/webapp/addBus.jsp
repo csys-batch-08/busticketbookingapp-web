@@ -65,7 +65,7 @@
 </head>
 <body>
 
-	<% String sessionName=(String)session.getAttribute("AdminHome");
+	<%-- <% String sessionName=(String)session.getAttribute("AdminHome");
 	System.out.println(sessionName);
 	if(sessionName.equals("AddBusSession")){
 		session.setAttribute("AdminHome", "HomeSession");
@@ -73,14 +73,14 @@
 		<script type="text/javascript">
 		alert("Bus added Successfully");
 		</script>
-	<%}%>
+	<%}%> --%>
 	
 	
     <div id="homeadmin">
        <ul>
-            <li><a href="AdminHome.jsp">Home</a></li>
-            <li><a href="AddBus.jsp">Add Bus</a></li>
-            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="adminHome.jsp">Home</a></li>
+            <li><a href="addBus.jsp">Add Bus</a></li>
+            <li><a href="addOperator.jsp">Add Operator</a></li>
             <li><a href="BusList">Bus list</a></li>
             <li><a href="OperatorList">Operator list</a></li>
             <li><a href="UserList">User list</a></li>

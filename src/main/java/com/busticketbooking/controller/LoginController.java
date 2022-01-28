@@ -19,6 +19,7 @@ import com.busticketbooking.model.User;
 @WebServlet("/loginWay")
 public class LoginController extends HttpServlet {
 
+	@Override
 	public void service(HttpServletRequest req, HttpServletResponse res) {
 
 		HttpSession session = req.getSession();
@@ -40,10 +41,10 @@ public class LoginController extends HttpServlet {
 				if (adminModel!=null) {
 					if (adminModel.getAdminPassword().equals(password)) {
 						try {
-							res.sendRedirect("AdminHome.jsp");
-							session.setAttribute("AdminHome", "HomeSession");
+							res.sendRedirect("adminHome.jsp");
+//							session.setAttribute("AdminHome", "HomeSession");
 						} catch (IOException e) {
-							System.out.println(e.getMessage());
+							e.printStackTrace();
 						}
 					} else {
 						throw new LoginPasswordException();
@@ -54,16 +55,16 @@ public class LoginController extends HttpServlet {
 			} catch (LoginUserNameException e) {
 				session.setAttribute("erroruserid", e.getUserNameLoginMessage());
 				try {
-					res.sendRedirect("Login.jsp");
+					res.sendRedirect("login.jsp");
 				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
+					System.out.println(e.getMessage());
 				}
 			} catch (LoginPasswordException e) {
 				session.setAttribute("erroruserid", e.getPasswordLoginMessage());
 				try {
-					res.sendRedirect("Login.jsp");
+					res.sendRedirect("login.jsp");
 				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 		} else if (loginId.contains("admin@gmail.com") == false && loginId.matches("[0-9]+") == false) {
@@ -72,9 +73,9 @@ public class LoginController extends HttpServlet {
 			} catch (LoginUserNameException e) {
 				session.setAttribute("erroruserid", e.getUserNameLoginMessage());
 				try {
-					res.sendRedirect("Login.jsp");
+					res.sendRedirect("login.jsp");
 				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 		}
@@ -90,11 +91,11 @@ public class LoginController extends HttpServlet {
 						try {
 							
 							session.setAttribute("userModel", userModel);
-							session.setAttribute("userHome", "loginSession");
+//						    session.setAttribute("userHome", "loginSession");
 							
 							res.sendRedirect("SearchBus");
 						} catch (IOException e) {
-							System.out.println(e.getMessage());
+							e.printStackTrace();
 						}
 					} else {
 						throw new LoginPasswordException();
@@ -106,17 +107,17 @@ public class LoginController extends HttpServlet {
 			} catch (LoginUserNameException e) {
 				session.setAttribute("erroruserid", e.getUserNameLoginMessage());
 				try {
-					res.sendRedirect("Login.jsp");
+					res.sendRedirect("login.jsp");
 				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
+					e1.printStackTrace();
 				}
 
 			} catch (LoginPasswordException e) {
 				session.setAttribute("erroruserid", e.getPasswordLoginMessage());
 				try {
-					res.sendRedirect("Login.jsp");
+					res.sendRedirect("login.jsp");
 				} catch (IOException e1) {
-					System.out.println(e1.getMessage());
+					e1.printStackTrace();
 				}
 			}
 		}

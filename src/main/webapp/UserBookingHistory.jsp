@@ -1,17 +1,9 @@
-<%@page import="java.time.format.DateTimeFormatter"%>
-<%@page import="com.busticketbooking.model.BookedTickets"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.busticketbooking.daoimpl.BookedTicketsDaoImpl"%>
-<%@page import="com.busticketbooking.daoimpl.UserDaoImpl"%>
-<%@page import="com.busticketbooking.model.User"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="javax.servlet.http.HttpSession" %>
-    <%DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"); %>
-    <% List<BookedTickets> bookTicketsList=(List<BookedTickets>) session.getAttribute("BookingList"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Booking History</title>
@@ -44,18 +36,18 @@
     </style>
 </head>
 <body>
-    <div id="nav">
+   <div id="nav">
             <ul>
-                <li><span id="buslogo">BusHub</span></li>
-                <li><a href="SearchBus.jsp">Bus_Tickets</a></li>
-                <li><a href="AboutUs.jsp">About_us</a></li>
+                <li><h3 id="buslogo">BusHub</h3></li>
+                <li><a href="SearchBus">Bus_Tickets</a></li>
+                <li><a href="aboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
                       <a href="UserBookingHistory">Booking History</a>
-                      <a href="MyTicket.jsp">My Ticket</a>
-                      <a href="CancelTicket.jsp">Cancel Ticket</a>
+                      <a href="myTicket.jsp">My Ticket</a>
+                      <a href="cancelTicket.jsp">Cancel Ticket</a>
                     </div>
                   </div> </li>
     
@@ -63,11 +55,11 @@
                     <button class="dropbtn">Wallet 
                     </button>
                     <div class="dropdown-content">
-                      <a href="ShowBalance.jsp">Show Balance</a>
-                      <a href="UpdateWallet.jsp">Update Wallet</a>
+                      <a href="showBalance.jsp">Show Balance</a>
+                      <a href="updateWallet.jsp">Update Wallet</a>
                     </div>
                   </div> 
-                  <li><a href="UserProfile.jsp">Profile</a></li>
+                  <li><a href="userProfile.jsp">Profile</a></li>
                   <li><a href="logout">LogOut</a></li>
                 </ul>
         </div>
@@ -87,18 +79,25 @@
                     <th>Total Price</th>
                     <th>Booking Status</th>
                 </tr>
-                <%for(BookedTickets bookTicket:bookTicketsList){%>
+               <c:forEach items="${BookingList}" var="bookticket">
 				<tr>
-                    <td><%=bookTicket.getTicketNo() %></td>
-                    <td><%=bookTicket.getBookingDate() %></td>
-                    <td><%=bookTicket.getBusModel().getBusCategory() %></td>
-                    <td><%=bookTicket.getBusModel().getDeparture().format(format) %></td>
-                    <td><%=bookTicket.getBusModel().getArrival().format(format) %></td>
-                    <td><%=bookTicket.getTicketCount() %></td>
-                    <td><%=bookTicket.getTotalPrice() %></td>
-                    <td><%=bookTicket.getBookingStatus() %></td>
+                    <td>${bookticket.getTicketNo() }</td>
+                    <td>${bookticket.getBookingDate() }</td>
+                    <td>${bookticket.getBusModel().getBusCategory() }</td>
+                    
+                    <fmt:parseDate value="${bookticket.getBusModel().getDeparture()}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="depature" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${depature}" /></td>
+                            
+					<fmt:parseDate value="${bookticket.getBusModel().getArrival()}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="arrival" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${arrival}" /></td>
+                            
+                    <td>${bookticket.getTicketCount() }</td>
+                    <td>${bookticket.getTotalPrice() }</td>
+                    <td>${bookticket.getBookingStatus() }</td>
                 </tr>
-                <%} %>
+                </c:forEach>
             </table>
             
       </div>

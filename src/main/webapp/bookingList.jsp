@@ -1,20 +1,9 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.busticketbooking.model.BookedTickets"%>
-<%@page import="java.util.List"%>
-<%@page import="java.time.format.DateTimeFormatter"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="com.busticketbooking.daoimpl.BookedTicketsDaoImpl" %>
-    <%@page import="java.time.LocalDate" %>
-    <%@page import="java.sql.ResultSet" %>
-    <% 
-    List<BookedTickets> bookingListAdmin=(List<BookedTickets>) session.getAttribute("BookingListAdmin");
-    
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy   HH:mm");
-    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <link href="css/bootstrap.css" rel="stylesheet" >
@@ -56,9 +45,9 @@
 <body>
     <div id="homeadmin">
        <ul>
-            <li><a href="AdminHome.jsp">Home</a></li>
-            <li><a href="AddBus.jsp">Add Bus</a></li>
-            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="adminHome.jsp">Home</a></li>
+            <li><a href="addBus.jsp">Add Bus</a></li>
+            <li><a href="addOperator.jsp">Add Operator</a></li>
             <li><a href="BusList">Bus list</a></li>
             <li><a href="OperatorList">Operator list</a></li>
             <li><a href="UserList">User list</a></li>
@@ -82,20 +71,24 @@
                     <th>Booking Status</th>
                     <th>Payment Status</th>
                 </tr>
-                <%for(BookedTickets bookTickets:bookingListAdmin){%>
+                <c:forEach items="${BookingListAdmin}" var="booktickets">
                 <tr>
-                	<td><%=bookTickets.getBookingId() %></td>
-                    <td><%=bookTickets.getTicketNo() %></td>
-                    <td><%=bookTickets.getUserModel().getUserId() %></td>
-                    <td><%=bookTickets.getBusModel().getBusId() %></td>
-                    <td><%=bookTickets.getBookingDate() %></td>
-                    <td><%=bookTickets.getBusModel().getDeparture().format(format)%></td>
-                    <td><%=bookTickets.getTicketCount() %></td>
-                    <td><%=bookTickets.getTotalPrice() %></td>
-                    <td><%=bookTickets.getBookingStatus() %></td>
-                    <td><%=bookTickets.getPaymentStatus() %></td>
+                	<td>${booktickets.getBookingId() }</td>
+                    <td>${booktickets.getTicketNo() }</td>
+                    <td>${booktickets.getUserModel().getUserId() }</td>
+                    <td>${booktickets.getBusModel().getBusId() }</td>
+                    <td>${booktickets.getBookingDate() }</td>
+                    
+                    <fmt:parseDate value="${booktickets.getBusModel().getDeparture()}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="Depature" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${Depature}" /></td>
+                            
+                    <td>${booktickets.getTicketCount() }</td>
+                    <td>${booktickets.getTotalPrice() }</td>
+                    <td>${booktickets.getBookingStatus() }</td>
+                    <td>${booktickets.getPaymentStatus() }</td>
                 </tr>
-                <%} %>
+                </c:forEach>
             </table>
       </div>
     </fieldset>

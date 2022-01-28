@@ -17,6 +17,7 @@ public class UpdateWallet extends HttpServlet  {
 
 	UserDaoImpl userDao=new UserDaoImpl();
 	
+	@Override
 	public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
 		HttpSession session=req.getSession();
 		
@@ -30,13 +31,14 @@ public class UpdateWallet extends HttpServlet  {
 	    
 	    boolean walletUpdateFlag=userDao.updateWallet(totalAmount, userModel.getUserContact());
 	    PrintWriter out=res.getWriter();
+	    
 	    if(walletUpdateFlag) {
 //	    User userModel2=new User(userModel1.getUserId(),userModel1.getUserName(),userModel1.getUserDOB(),userModel1.getUserEmail(),
 //	  		  userModel1.getUserContact(),userModel1.getUserGender(),userModel1.getUserPassword(),totalAmount);
 //	    session.setAttribute("user", userModel2);
 	    	out.println("<script type=\"text/javascript\">");
 			out.println("alert('Successfully Updated');");
-			out.println("location='UpdateWallet.jsp';");
+			out.println("location='updateWallet.jsp';");
 			out.println("</script>");
 	    }
 	}

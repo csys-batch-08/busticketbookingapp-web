@@ -1,12 +1,10 @@
-<%@page import="com.busticketbooking.model.User"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%User userModel=(User)session.getAttribute("userModel");  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>About BusHub</title>
 
 
 <link rel="stylesheet" href="css/NavigationUser.css">
@@ -29,19 +27,21 @@
 
 
 <body>
-           <%if(userModel!=null){ %>
+		<c:set var="currentUserModel" scope="session" value="${userModel}"></c:set>
+	
+		<c:if test="${currentUserModel!=null }">
     <div id="nav">
             <ul>
-                <li><span id="buslogo">BusHub</span></li>
-                <li><a href="SearchBus.jsp">Bus_Tickets</a></li>
-                <li><a href="AboutUs.jsp">About_us</a></li>
+                <li><h3 id="buslogo">BusHub</h3></li>
+                <li><a href="SearchBus">Bus_Tickets</a></li>
+                <li><a href="aboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
                       <a href="UserBookingHistory">Booking History</a>
-                      <a href="MyTicket.jsp">My Ticket</a>
-                      <a href="CancelTicket.jsp">Cancel Ticket</a>
+                      <a href="myTicket.jsp">My Ticket</a>
+                      <a href="cancelTicket.jsp">Cancel Ticket</a>
                     </div>
                   </div> </li>
     
@@ -49,28 +49,28 @@
                     <button class="dropbtn">Wallet 
                     </button>
                     <div class="dropdown-content">
-                      <a href="ShowBalance.jsp">Show Balance</a>
-                      <a href="UpdateWallet.jsp">Update Wallet</a>
+                      <a href="showBalance.jsp">Show Balance</a>
+                      <a href="updateWallet.jsp">Update Wallet</a>
                     </div>
                   </div> 
-                  <li><a href="UserProfile.jsp">Profile</a></li>
+                  <li><a href="userProfile.jsp">Profile</a></li>
                   <li><a href="logout">LogOut</a></li>
                 </ul>
         </div>
-        <%} 
-           else{%>
+        </c:if>
+        <c:if test="${currentUserModel==null }">
            <div id="nav">
         <ul>
             <li><span id="buslogo">BusHub</span></li>
             <li><a href="index.jsp">Bus_Tickets</a></li>
-            <li><a href="AboutUs.jsp">About_us</a></li>
+            <li><a href="aboutUs.jsp">About_us</a></li>
             
-            <li id="loginlink"><a href="Login.jsp">SignIn</a></li>
-            <li><a href="UserRegister.jsp">SignUp</a></li>
+            <li id="loginlink"><a href="login.jsp">SignIn</a></li>
+            <li><a href="userRegister.jsp">SignUp</a></li>
             </ul>
             
         </div>
-        <%} %>
+        </c:if>
 
 
 	<div id="contentdiv">

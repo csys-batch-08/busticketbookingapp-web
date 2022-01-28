@@ -1,12 +1,7 @@
-<%@page import="com.busticketbooking.daoimpl.UserDaoImpl"%>
-<%@page import="com.busticketbooking.model.BookedTickets"%>
-<%@page import="com.busticketbooking.daoimpl.BookedTicketsDaoImpl"%>
-<%@page import="com.busticketbooking.model.User"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="javax.servlet.http.HttpSession" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Cancel Ticket</title>
@@ -82,28 +77,23 @@
     </style>
 </head>
 <body>
-
-	<%String cancelMessage=(String)session.getAttribute("userHome");
-    if(cancelMessage.equals("cancelSuccess")){
-    	session.setAttribute("userHome", "homeSession");
-    	%>
-    	<script>
-    	alert("Ticket cancelled successfully");
-    	alert("Your (85%)refund amount will be credit with your wallet with in 7 working days ")
-    </script>
-    <%} %>
-    <div id="nav">
+    
+    <c:set var="wrongnumbermessage" scope="session" value="${WrongNumber}"></c:set>
+     <c:set var="alreadycancelmessage" scope="session" value="${AlreadyCancel}"></c:set>
+     <c:set var="dateendedmessage" scope="session" value="${DateEnded}"></c:set>
+    
+   <div id="nav">
             <ul>
-                <li><span id="buslogo">BusHub</span></li>
-                <li><a href="SearchBus.jsp">Bus_Tickets</a></li>
-                <li><a href="AboutUs.jsp">About_us</a></li>
+                <li><h3 id="buslogo">BusHub</h3></li>
+                <li><a href="SearchBus">Bus_Tickets</a></li>
+                <li><a href="aboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
                       <a href="UserBookingHistory">Booking History</a>
-                      <a href="MyTicket.jsp">My Ticket</a>
-                      <a href="CancelTicket.jsp">Cancel Ticket</a>
+                      <a href="myTicket.jsp">My Ticket</a>
+                      <a href="cancelTicket.jsp">Cancel Ticket</a>
                     </div>
                   </div> </li>
     
@@ -111,11 +101,11 @@
                     <button class="dropbtn">Wallet 
                     </button>
                     <div class="dropdown-content">
-                      <a href="ShowBalance.jsp">Show Balance</a>
-                      <a href="UpdateWallet.jsp">Update Wallet</a>
+                      <a href="showBalance.jsp">Show Balance</a>
+                      <a href="updateWallet.jsp">Update Wallet</a>
                     </div>
                   </div> 
-                  <li><a href="UserProfile.jsp">Profile</a></li>
+                  <li><a href="userProfile.jsp">Profile</a></li>
                   <li><a href="logout">LogOut</a></li>
                 </ul>
         </div>
@@ -130,20 +120,18 @@
         </table>
         <label for="deductedmessage" id="deductedmessage">If you want to cancel your ticket(15% amount will be deducted)</label>
        	
-    <%String wrongNumberMessage=(String)session.getAttribute("WrongNumber");
-    if(wrongNumberMessage!=null){%>
-    	<p id="msgtag"><%=wrongNumberMessage %></p>
-    <%}session.removeAttribute("WrongNumber");%>
+       	<c:if test="${wrongnumbermessage!=null}">
+    	<p id="msgtag">${wrongnumbermessage }</p>
+    	</c:if>
+    <%-- <%}session.removeAttribute("WrongNumber");%> --%>
     
-    <%String alreadyCancelMessage=(String)session.getAttribute("AlreadyCancel");
-    if(alreadyCancelMessage!=null){%>
-    	<p id="msgtag"><%=alreadyCancelMessage %></p>
-    <%}session.removeAttribute("AlreadyCancel");%>
+    <c:if test="${alreadycancelmessage!=null}">
+    	<p id="msgtag">${alreadycancelmessage  }</p>
+    </c:if>
     
-    <%String DateEndedMessage=(String)session.getAttribute("DateEnded");
-    if(DateEndedMessage!=null){%>
-    	<p id="msgtag"><%=DateEndedMessage %></p>
-    <%}session.removeAttribute("DateEnded");%>
+    <c:if test="${dateendedmessage!=null}">
+    	<p id="msgtag">${dateendedmessage }</p>
+    </c:if>
     
         <button id="submitbutton" type="submit" >Submit</button>
         </form>

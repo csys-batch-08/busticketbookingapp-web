@@ -1,10 +1,13 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,18 +32,19 @@ public class ConfirmBookingController extends HttpServlet {
 	SeatDetailsDaoImpl seatDetailsDao=new SeatDetailsDaoImpl();
 	SeatDetails seatDetails=new SeatDetails();
 
-	public void service(HttpServletRequest req, HttpServletResponse res) {
+	@Override
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
 		HttpSession session = req.getSession();
+		PrintWriter out=res.getWriter();
+		
 		//getting userDetails from session from loginController
 		User userModel = (User) session.getAttribute("userModel");
 
-		
 		//getting bus object from session
 		Bus busModel = (Bus)session.getAttribute("CurrentBusObject");
 		
-		
-		//getting details from seatbooking jsp page input entered by user
+		//getting details from seatBooking jsp page input entered by user
 		String randomNo = req.getParameter("randomnumber");
 		int ticketCount = Integer.parseInt(req.getParameter("noofseats"));
 		int totalPrice = Integer.parseInt(req.getParameter("totalFair"));
@@ -59,38 +63,36 @@ public class ConfirmBookingController extends HttpServlet {
 			//getting seat no from dao 
 			try {
 				seatDetailsDao.ticketexist(ticketCount, randomNo, busModel, userModel);
-			} catch (ClassNotFoundException e1) {
-				System.out.println(e1.getMessage());
-			} catch (SQLException e1) {
-				System.out.println(e1.getMessage());
+			} catch (ClassNotFoundException | SQLException e1) {
+				e1.printStackTrace();
 			}
 			
-			//inserting all getting values in booked tickets dao
+			//inserting all getting values in booked tickets DAO
 			BookedTickets bookTickets = new BookedTickets(0, randomNo, userModel, busModel, busModel.getDeparture(),
 					ticketCount, totalPrice, "success");
 			boolean ticketInsertFlag = bookTicketsDao.insertBookedTickets(bookTickets);
 
 			//creating final session by using all
-			session.setAttribute("FinalBookTicketsModel", bookTickets);
+			req.setAttribute("FinalBookTicketsModel", bookTickets);
 
+			
 			if (ticketInsertFlag) {
 				try {
-					res.sendRedirect("BookSuccess.jsp");
-				} catch (IOException e) {
-					System.out.println(e.getMessage());
+					RequestDispatcher reqDispatcher=req.getRequestDispatcher("bookSuccess.jsp");
+	 	    		reqDispatcher.forward(req, res);
+				} catch (IOException | ServletException e) {
+					e.printStackTrace();
 				}
 			}	
 		}
-		
-		//if user wallet is insufficient 
 		else {
-			try {
-				session.setAttribute("userHome", "insufficient");
-				res.sendRedirect("UpdateWallet.jsp");
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Insufficient Balance please recharge your wallet');");
+			out.println("location='UpdateWallet.jsp';");
+			out.println("</script>");
+
 		}
 
 	}
 }
+

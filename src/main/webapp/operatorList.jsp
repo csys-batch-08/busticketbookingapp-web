@@ -1,16 +1,8 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.busticketbooking.model.Operator"%>
-<%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="com.busticketbooking.daoimpl.OperatorDaoImpl" %>
-    <%@page import="java.sql.ResultSet" %>
-    <%
-    List<Operator> operatorList=(List<Operator>) session.getAttribute("OperatorListAdmin");
-    %>
-   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <link href="css/bootstrap.css" rel="stylesheet" >
@@ -54,9 +46,9 @@
 	
     <div id="homeadmin">
        <ul>
-            <li><a href="AdminHome.jsp">Home</a></li>
-            <li><a href="AddBus.jsp">Add Bus</a></li>
-            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="adminHome.jsp">Home</a></li>
+            <li><a href="addBus.jsp">Add Bus</a></li>
+            <li><a href="addOperator.jsp">Add Operator</a></li>
             <li><a href="BusList">Bus list</a></li>
             <li><a href="OperatorList">Operator list</a></li>
             <li><a href="UserList">User list</a></li>
@@ -76,24 +68,26 @@
                 <th>Operator Contact</th>
                 <th>Operator Age</th>
                 <th>Operator Status</th>
-                <th>edit&delete</th>
+                <th>edit and delete</th>
             </tr>
-           <%for(Operator operator:operatorList){%>
+           <c:forEach items="${OperatorListAdmin}" var="operator">
                 <tr>
-                    <td><%=operator.getOperatorId() %></td>
-                    <td><%=operator.getOperatorName() %></td>
-                    <td><%=operator.getOperatorEmail() %></td>
-                    <td><%=operator.getOperatorContact() %></td>
-                    <td><%=operator.getOperatorAge() %></td>
-                    <td><%=operator.getOperatorStatus() %>
-                    <%if(operator.getOperatorStatus().equals("active")){ %>
-                    <td><a href="OperatorUpdate?operatorId=<%=operator.getOperatorId()%>">edit</a> / <a href="operatorDelete?operatorId=<%=operator.getOperatorId()%>">delete</a></td>
-                    <%}
-           			  else{%>
-           			<td><a href="OperatorUpdate?operatorId=<%=operator.getOperatorId()%>">edit</a></td>
-           			  <%} %>
+                    <td>${operator.getOperatorId() }</td>
+                    <td>${operator.getOperatorName() }</td>
+                    <td>${operator.getOperatorEmail() }</td>
+                    <td>${operator.getOperatorContact() }</td>
+                    <td>${operator.getOperatorAge() }</td>
+                    <td>${operator.getOperatorStatus() }</td>
+                    
+                    <c:if test="${operator.getOperatorStatus().equals('active') }">
+                    <td><a href="OperatorUpdate?operatorId=${operator.getOperatorId()}">edit</a> / <a href="operatorDelete?operatorId=${operator.getOperatorId()}">delete</a></td>
+                    </c:if>
+                    
+           			<c:if test="${operator.getOperatorStatus().equals('inactive') }">
+           			<td></td>
+           		    </c:if>
                 </tr>
-                <% } %>
+                </c:forEach>
         
         </table>
   </div>

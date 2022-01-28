@@ -30,15 +30,8 @@ public class DeleteOperatorController extends HttpServlet{
 		
 		if(deleteOperatorFlag) {
 			
-			System.out.println("chumma");
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Successfully deleted');");
-			out.println("location='OperatorList';");
-			out.println("</script>");
-		}
-		else {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('This operator is currently inactive you can't delete');");
 			out.println("location='OperatorList';");
 			out.println("</script>");
 		}

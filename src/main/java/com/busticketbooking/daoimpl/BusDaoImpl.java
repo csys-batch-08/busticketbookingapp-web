@@ -25,7 +25,6 @@ public class BusDaoImpl implements BusDAO {
 	public boolean insertBus(Bus busModel) {
 		String busInsert = "insert into bus_details (bus_category, from_city, to_city, departure, arrival, seater_fare, total_seat,seat_status) values (?,?,?,?,?,?,?,?)";
 		int result = 0 ;
-		System.out.println("busdao"+busInsert);
 		try {
 			Connection con = ConnectionUtill.connectdb();
 			PreparedStatement pstatement = con.prepareStatement(busInsert);

@@ -30,6 +30,7 @@ public class MyTicketController extends HttpServlet {
 	UserDaoImpl dao=new UserDaoImpl();
 	List<SeatDetails> seatNoList=new ArrayList<SeatDetails>();
 
+	@Override
 	public void service(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 
@@ -54,11 +55,9 @@ public class MyTicketController extends HttpServlet {
 			if (resultCheck) { 
 				session.setAttribute("ticketdetailsresult", bookTickets);
 				session.setAttribute("seatnumberdetailsresult", bookSeatNum);
-				try {
-					res.sendRedirect("TicketInvoice.jsp");
-				} catch (IOException e) {
-					System.out.println(e.getMessage());
-				}
+				
+					res.sendRedirect("ticketInvoice.jsp");
+				
 			} else {
 				throw new WrongTicketNumber();
 			}
@@ -69,12 +68,11 @@ public class MyTicketController extends HttpServlet {
 			throw new WrongTicketNumber();
 		}
 		}
-		catch(WrongTicketNumber t) {
-			session.setAttribute("WrongNumber", t.getWrongNumber());
+		catch(WrongTicketNumber | IOException t) {
+			session.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
 			try {
-				res.sendRedirect("MyTicket.jsp");
+				res.sendRedirect("myTicket.jsp");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

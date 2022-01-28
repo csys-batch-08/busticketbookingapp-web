@@ -1,6 +1,7 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -35,12 +36,12 @@ public class CancelTicketController extends HttpServlet {
 	SeatDetailsDaoImpl seatDetails = new SeatDetailsDaoImpl();
 	BookedTickets bookedTicketsModel = new BookedTickets();
 
-	public void service(HttpServletRequest req, HttpServletResponse res) {
+	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
 		HttpSession session = req.getSession();
 		User userModel = (User) session.getAttribute("userModel");
 		
-		// ticket number entered by user in cancel ticket jsp
+		// ticket number entered by user in cancel ticket JSP
 		String ticketNo = req.getParameter("tickettext");
 
 		// to find booked tickets pojo class by using ticket no entered by user in cancel ticket JSP
@@ -56,7 +57,7 @@ public class CancelTicketController extends HttpServlet {
 				// to check whether departure date is finished or not
 				if (resultCheck) {
 
-					if (!(bookedTicketsModel.getBookingStatus().equals("Cancelled"))) {
+					if (!(bookedTicketsModel.getBookingStatus().equals("cancelled"))) {
 
 						// to update seat by using bus object from bookedTickets model
 						int totalSeatAlreadyAvailable = bookedTicketsModel.getBusModel().getTotalseat();
@@ -96,19 +97,19 @@ public class CancelTicketController extends HttpServlet {
 								// to delete the ticketSeats from ticket details table using ticket no and seat
 								try {
 									seatDetails.cancelSeatDetails(ticketNo);
-								} catch (ClassNotFoundException e1) {
-									System.out.println(e1.getMessage());
-								} catch (SQLException e1) {
-									System.out.println(e1.getMessage());
-								}
+								} catch (ClassNotFoundException  | SQLException e1) {
+									e1.printStackTrace();
+								} 
 
+								PrintWriter out=res.getWriter();
 								if (ticketCancelFlag) {
-									try {
-										session.setAttribute("userHome", "cancelSuccess");
-										res.sendRedirect("CancelTicket.jsp");
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
+									
+									out.println("<script type=\"text/javascript\">");
+									out.println("alert('Ticket cancelled successfully');");
+									out.println("alert('Your (85%)refund amount will be credit with your wallet with in 7 working days ');");
+									out.println("location='cancelTicket.jsp';");
+									out.println("</script>");
+									
 								}
 							}
 						}
@@ -129,21 +130,21 @@ public class CancelTicketController extends HttpServlet {
 		} catch (WrongTicketNumber t) {
 			session.setAttribute("WrongNumber", t.getWrongNumber());
 			try {
-				res.sendRedirect("CancelTicket.jsp");
+				res.sendRedirect("cancelTicket.jsp");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} catch (TicketAlreadyCancel t1) {
 			session.setAttribute("AlreadyCancel", t1.getAlreadyCancelMessage());
 			try {
-				res.sendRedirect("CancelTicket.jsp");
+				res.sendRedirect("cancelTicket.jsp");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} catch (BusDepartureDateEnded b) {
 			session.setAttribute("DateEnded", b.getDepartureMessage());
 			try {
-				res.sendRedirect("CancelTicket.jsp");
+				res.sendRedirect("cancelTicket.jsp");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

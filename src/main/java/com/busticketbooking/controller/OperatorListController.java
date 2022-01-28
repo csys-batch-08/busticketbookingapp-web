@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,18 +18,19 @@ import com.busticketbooking.model.Operator;
 @WebServlet("/OperatorList")
 public class OperatorListController extends HttpServlet{
 
+	@Override
 	public void service(HttpServletRequest req,HttpServletResponse res) {
-		HttpSession session=req.getSession();
 		
 			    OperatorDaoImpl operatorDao=new OperatorDaoImpl();
 			    List<Operator> operatorList=operatorDao.viewOperator();
 	    
 	    if(operatorList!=null) {
 	    	try {
-	    		session.setAttribute("OperatorListAdmin", operatorList);
-				res.sendRedirect("OperatorList.jsp");
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
+	    		req.setAttribute("OperatorListAdmin", operatorList);
+	    		RequestDispatcher reqDispatcher=req.getRequestDispatcher("operatorList.jsp");
+ 	    		reqDispatcher.forward(req, res);
+			} catch (IOException | ServletException e) {
+				e.printStackTrace();
 			}
 	    }
 	        

@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Login</title>
@@ -93,6 +93,9 @@
     </style>
 </head>
 <body>
+
+	<c:set var="errorMsg" scope="session" value="${erroruserid}"></c:set>
+	
     <div id="login">
         <form action="loginWay">
        
@@ -112,12 +115,13 @@
             <button type="submit" id="buttonlogin">Login</button><br><br><br>
 
             <label for="signup">New User ? </label>
-            <a id="signup" href="UserRegister.jsp">SignUp</a>	
+            <a id="signup" href="userRegister.jsp">SignUp</a>	
 		
-			<%String erroruserid=(String)session.getAttribute("erroruserid");
-			if(erroruserid!=null){ %>
-			<p id="errorcontent"><%=erroruserid %></p>
-			<%} session.removeAttribute("erroruserid"); %>
+		<c:if test="${not empty errorMsg}">
+			<p id="errorcontent">${errorMsg }</p>
+			 <c:remove var="errorMsg"/>
+		</c:if>
+		
          </form>        
            
  </div>

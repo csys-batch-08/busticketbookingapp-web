@@ -1,9 +1,7 @@
-
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
       
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="css/NavigationUser.css">
@@ -50,7 +48,7 @@
         #msgtag{
         	margin-left: 130px;
     		font-size: 25px;
-    		margin-top: -10px;
+    		margin-top: 10px;
     		color:red;
     		position: absolute;
     		font-variant: all-petite-caps;
@@ -79,34 +77,35 @@
 </head>
 <body>
     
+    <c:set var="cancelMessage" scope="session" value="${WrongNumber }"></c:set>
     
     <div id="nav">
-        <ul>
-            <li><span id="buslogo">BusHub</span></li>
-            <li><a href="SearchBus.jsp" onclick="searchbusfunc()">Bus_Tickets</a></li>
-            <li><a href="AboutUs.jsp" onclick="aboutusfunc()">About_us</a></li>
-              <li><div class="dropdown">
-                <button class="dropbtn">Ticket 
-                </button>
-                <div class="dropdown-content">
-                  <a href="UserBookingHistory" onclick="bookinghistoryfunc()">Booking History</a>
-                  <a href="MyTicket.jsp" onclick="myticketfunc()">My Ticket</a>
-                  <a href="CancelTicket.jsp" onclick="cancelticketfunc()">Cancel Ticket</a>
-                </div>
-              </div> </li>
-
-              <li><div class="dropdown">
-                <button class="dropbtn">Wallet 
-                </button>
-                <div class="dropdown-content">
-                  <a href="ShowBalance.jsp" onclick="showbalancefunc()">Show Balance</a>
-                  <a href="UpdateWallet.jsp" onclick="updatewalletfunc()">Update Wallet</a>
-                </div>
-              </div> 
-              <li><a href="UserProfile.jsp" onclick="profilefunc()">Profile</a></li>
-              <li><a href="logout" onclick="logoutfunc()">LogOut</a></li>
-            </ul>
-    </div>
+            <ul>
+                <li><h3 id="buslogo">BusHub</h3></li>
+                <li><a href="SearchBus">Bus_Tickets</a></li>
+                <li><a href="aboutUs.jsp">About_us</a></li>
+                  <li><div class="dropdown">
+                    <button class="dropbtn">Ticket 
+                    </button>
+                    <div class="dropdown-content">
+                      <a href="UserBookingHistory">Booking History</a>
+                      <a href="myTicket.jsp">My Ticket</a>
+                      <a href="cancelTicket.jsp">Cancel Ticket</a>
+                    </div>
+                  </div> </li>
+    
+                  <li><div class="dropdown">
+                    <button class="dropbtn">Wallet 
+                    </button>
+                    <div class="dropdown-content">
+                      <a href="showBalance.jsp">Show Balance</a>
+                      <a href="updateWallet.jsp">Update Wallet</a>
+                    </div>
+                  </div> 
+                  <li><a href="userProfile.jsp">Profile</a></li>
+                  <li><a href="logout">LogOut</a></li>
+                </ul>
+        </div>
 
     <div id="myticketdiv">
         <form action="myticketservlet">
@@ -117,10 +116,10 @@
             </tr>
         </table>
         
-        <%String cancelMessage=(String)session.getAttribute("WrongNumber");
-    if(cancelMessage!=null){%>
-    	<p id="msgtag"><%=cancelMessage %></p>
-    <%}session.removeAttribute("WrongNumber");%>
+        <c:if test="${cancelMessage!=null }">
+    	<p id="msgtag"><c:out value="${cancelMessage }"></c:out></p>
+        </c:if>
+        <c:remove var="cancelMessage"/>
         
         <button id="searchbutton" type="submit" >Submit</button>
 		</form>

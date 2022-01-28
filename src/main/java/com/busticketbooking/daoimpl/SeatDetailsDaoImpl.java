@@ -164,20 +164,20 @@ public class SeatDetailsDaoImpl {
 	
 	
 	public List<SeatDetails> getSeatDetailsUsingTicketNo(String ticketNo) {
-		String seatDetailsQuery="select ticket_no,user_id,bus_id,seat_no,seat_status from seat_details where ticket_NO=?";
+		String seatDetailsQuery="select ticket_no,seat_no,seat_status from seat_details where ticket_no=?";
+		
 		Connection con;
 		BookedTickets bookTickets=null;
-	   	ResultSet rs = null;
 	   	List<SeatDetails> seatDetailsList=new ArrayList<SeatDetails>();
 			try {
 				con = ConnectionUtill.connectdb();	
 				PreparedStatement pstatement=con.prepareStatement(seatDetailsQuery);
 				pstatement.setString(1, ticketNo);
-				rs=pstatement.executeQuery();
+				ResultSet rs=pstatement.executeQuery();
 				
 				while(rs.next()) {
 					bookTickets=tickedDao.findBookedTicketsObjectDetails(rs.getString(1));
-					SeatDetails seatDetails=new SeatDetails(bookTickets,rs.getInt(4),rs.getString(5));
+					SeatDetails seatDetails=new SeatDetails(bookTickets,rs.getInt(2),rs.getString(3));
 					seatDetailsList.add(seatDetails);
 				}
 				return seatDetailsList;

@@ -1,16 +1,9 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.busticketbooking.model.Bus"%>
-<%@page import="java.util.List"%>
-<%@page import="java.time.format.DateTimeFormatter"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="com.busticketbooking.daoimpl.BusDaoImpl" %>
-    <%@page import="java.sql.ResultSet" %>
-    <%@page import="javax.servlet.http.HttpSession" %>
-    <% DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-       List<Bus> busList=(List<Bus>) session.getAttribute("BusListAdmin");  %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+    
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <link href="css/bootstrap.css" rel="stylesheet" >
@@ -56,9 +49,9 @@
     
         <div id="homeadmin">
        <ul>
-            <li><a href="AdminHome.jsp">Home</a></li>
-            <li><a href="AddBus.jsp">Add Bus</a></li>
-            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="adminHome.jsp">Home</a></li>
+            <li><a href="addBus.jsp">Add Bus</a></li>
+            <li><a href="addOperator.jsp">Add Operator</a></li>
             <li><a href="BusList">Bus list</a></li>
             <li><a href="OperatorList">Operator list</a></li>
             <li><a href="UserList">User list</a></li>
@@ -85,22 +78,30 @@
                     <th>Seat Status</th>
                     <th>Edit</th>
                 </tr>
-                <%for(Bus bus:busList){%>
+                <c:forEach items="${BusListAdmin}" var="bus">
+                
                 <tr>
-                    <td><%=bus.getBusId() %></td>
-                    <td><%=bus.getBusNo() %></td>
-                    <td><%=bus.getOperatorId() %></td>
-                    <td><%=bus.getBusCategory() %></td>
-                    <td><%=bus.getFromCity() %></td>
-                    <td><%=bus.getToCity() %></td>
-                    <td><%=bus.getDeparture().format(format)%></td>
-                    <td><%=bus.getArrival().format(format)%></td>
-                    <td><%=bus.getSeaterFare() %></td>
-                    <td><%=bus.getTotalseat() %></td>
-                    <td><%=bus.getSeatStatus() %></td>
-                    <td><a href="BusUpdate?busId=<%=bus.getBusId()%>">Edit</a></td>
+                    <td>${bus.getBusId() }</td>
+                    <td>${bus.getBusNo() }</td>
+                    <td>${bus.getOperatorId() }</td>
+                    <td>${bus.getBusCategory() }</td>
+                    <td>${bus.getFromCity() }</td>
+                    <td>${bus.getToCity() }</td>
+                    
+                    <fmt:parseDate value="${bus.getDeparture()}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="depature" type="both" />
+					<td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${depature}" /></td>
+                            
+                    <fmt:parseDate value="${bus.getArrival() }" 
+                    		pattern="yyyy-MM-dd'T'HH:mm" var="arrival" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy HH:mm" value="${arrival }" /></td>
+                    
+                    <td>${bus.getSeaterFare() }</td>
+                    <td>${bus.getTotalseat() }</td>
+                    <td>${bus.getSeatStatus() }</td>
+                    <td><a href="BusUpdate?busId=${bus.getBusId()}">Edit</a></td>
                 </tr>
-                <%} %>
+                </c:forEach>
             </table>
       </div>
     </fieldset>

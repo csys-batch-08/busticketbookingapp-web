@@ -1,11 +1,7 @@
-<%@page import="com.busticketbooking.daoimpl.UserDaoImpl"%>
-<%@page import="com.busticketbooking.model.User"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="javax.servlet.http.HttpSession" %>
-    <% User userModel=(User)session.getAttribute("userModel"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Wallet</title>
@@ -71,18 +67,21 @@
     </style>
 </head>
 <body>
+
+	<c:set var="usermodel" scope="session" value="${userModel }"></c:set>
+
     <div id="nav">
             <ul>
-                <li><span id="buslogo">BusHub</span></li>
-                <li><a href="SearchBus.jsp">Bus_Tickets</a></li>
-                <li><a href="AboutUs.jsp">About_us</a></li>
+                <li><h3 id="buslogo">BusHub</h3></li>
+                <li><a href="SearchBus">Bus_Tickets</a></li>
+                <li><a href="aboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
                       <a href="UserBookingHistory">Booking History</a>
-                      <a href="MyTicket.jsp">My Ticket</a>
-                      <a href="CancelTicket.jsp">Cancel Ticket</a>
+                      <a href="myTicket.jsp">My Ticket</a>
+                      <a href="cancelTicket.jsp">Cancel Ticket</a>
                     </div>
                   </div> </li>
     
@@ -90,18 +89,19 @@
                     <button class="dropbtn">Wallet 
                     </button>
                     <div class="dropdown-content">
-                      <a href="ShowBalance.jsp">Show Balance</a>
-                      <a href="UpdateWallet.jsp">Update Wallet</a>
+                      <a href="showBalance.jsp">Show Balance</a>
+                      <a href="updateWallet.jsp">Update Wallet</a>
                     </div>
                   </div> 
-                  <li><a href="UserProfile.jsp">Profile</a></li>
+                  <li><a href="userProfile.jsp">Profile</a></li>
                   <li><a href="logout">LogOut</a></li>
                 </ul>
         </div>
+        
       <form action="UpdateWallet.jsp">
         <div id="balancediv">
             <label for="balance" class="currentbalance">Current Balance</label>
-            <span id="availableamount"><%=userModel.getUserWallet() %></span> <br><br>
+            <span id="availableamount">${usermodel.getUserWallet() }</span> <br><br>
             <h3 class="clickmsg">Click here to Recharge your wallet</h3>
             <button id="btn" name="btn" type="submit">Deposit</button>
         </div>

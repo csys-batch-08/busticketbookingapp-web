@@ -1,9 +1,9 @@
-<%@page import="com.busticketbooking.model.Bus"%>
-<%@page import="com.busticketbooking.daoimpl.BusDaoImpl"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <link href="css/bootstrap.css" rel="stylesheet" >
@@ -118,9 +118,9 @@ margin-left:20px;
  
      <div id="homeadmin">
        <ul>
-            <li><a href="AdminHome.jsp">Home</a></li>
-            <li><a href="AddBus.jsp">Add Bus</a></li>
-            <li><a href="AddOperator.jsp">Add Operator</a></li>
+            <li><a href="adminHome.jsp">Home</a></li>
+            <li><a href="addBus.jsp">Add Bus</a></li>
+            <li><a href="addOperator.jsp">Add Operator</a></li>
             <li><a href="BusList">Bus list</a></li>
             <li><a href="OperatorList">Operator list</a></li>
             <li><a href="UserList">User list</a></li>
@@ -135,9 +135,9 @@ margin-left:20px;
             <form action="updateBusPage">
                 <table>
                     <tr>
-                    <!-- pattern="[A-Za-z]{3,}" -->
+                  <!--  pattern="[A-Za-z][ ]"  -->
                         <th><label for="busCategory">Bus Category</label></th>
-                        <th><input name="busCategory" type="text" id="busCategory"  title="please enter correct bus category" placeholder="Enter the category"  autofocus autocomplete="off" required ></th>
+                        <th><input name="busCategory" type="text" id="busCategory" title="please enter correct bus category" placeholder="Enter the category"  autofocus autocomplete="off" required ></th>
                     </tr>
                     <tr>
                 <th><label for="fromCity">From City</label></th>
@@ -199,19 +199,19 @@ margin-left:20px;
             </div>
 
      <script type="text/javascript">
-     	<% 
-         Bus busModel=(Bus) session.getAttribute("BusObject");
-     	%> 
-     	document.getElementById("busno").value="<%=busModel.getBusNo()%>";
-     	document.getElementById("operatorId").value="<%=busModel.getOperatorId()%>";
-     	document.getElementById("busCategory").value="<%=busModel.getBusCategory()%>";
-     	document.getElementById("fromCity").value="<%=busModel.getFromCity()%>";
-     	document.getElementById("toCity").value="<%=busModel.getToCity()%>";
-     	document.getElementById("departure").value="<%=busModel.getDeparture()%>";
-     	document.getElementById("arrival").value="<%=busModel.getArrival()%>";
-     	document.getElementById("seaterFare").value="<%=busModel.getSeaterFare()%>";
-     	document.getElementById("totalSeat").value="<%=busModel.getTotalseat()%>";
-     	document.getElementById("seatStatus").value="<%=busModel.getSeatStatus()%>";
+     
+     	<c:set var="busModel" scope="session" value="${BusObject}"></c:set>
+     	
+     	document.getElementById("busno").value=`${busModel.getBusNo()}`;
+     	document.getElementById("operatorId").value=`${busModel.getOperatorId()}`;
+     	document.getElementById("busCategory").value=`${busModel.getBusCategory()}`;
+     	document.getElementById("fromCity").value=`${busModel.getFromCity()}`;
+     	document.getElementById("toCity").value=`${busModel.getToCity()}`;
+     	document.getElementById("departure").value=`${busModel.getDeparture()}`;
+     	document.getElementById("arrival").value=`${busModel.getArrival()}`; 
+     	document.getElementById("seaterFare").value=`${busModel.getSeaterFare()}`;
+     	document.getElementById("totalSeat").value=`${busModel.getTotalseat()}`;
+     	document.getElementById("seatStatus").value=`${busModel.getSeatStatus()}`;
      </script>
 </body>
 </html>

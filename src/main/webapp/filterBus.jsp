@@ -1,21 +1,9 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.busticketbooking.model.Bus"%>
-<%@page import="java.util.List"%>
-<%@page import="com.busticketbooking.model.User"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="com.busticketbooking.daoimpl.BusDaoImpl" %>
-    <%@page import="java.sql.ResultSet" %>
-    <%@page import="java.time.LocalDate" %>
-    <%@page import="java.time.format.DateTimeFormatter" %>
-     <%User userModel=(User)session.getAttribute("userModel");
-       List<Bus> busFilterList=(List<Bus>)session.getAttribute("BusList");%>
-    <%
-    DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("HH:mm");
-    DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("dd-mm-yyyy");  
-    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Bus Hub</title>
@@ -33,6 +21,8 @@
              padding: 5px;
              border-radius: 10px;
              background-color: rgb(224, 209, 209);
+             font-size:20px;
+             text-align:-webkit-center;
          }
          legend h3{
              margin-left: 7px;
@@ -107,20 +97,27 @@
         </style>
     </head>
     <body>
+    
+     <c:set var="busList" scope="session" value="${BusList}"></c:set>
+     <c:set var="fromLocation" scope="session" value="${FromLocation}"></c:set>
+     <c:set var="toLocation" scope="session" value="${ToLocation}"></c:set>
+     <c:set var="date" scope="session" value="${Date}"></c:set>
+     <c:set var="UserSession" scope="session" value="${userModel}"></c:set>
+    
     <form action="SeatBooking">
         <div>
             <fieldset id="fieldsettable">
-                <legend><h3>Available Buses</h3></legend>
+                <legend>Available Buses</legend>
             
-            	<%for(Bus busList:busFilterList){%>
+            	
             	
                 <div id="forcontent">
                       <ul id="forcontentinlist">
-                        <li><h4><%=busList.getFromCity() %></h4></li>
+                        <li><h4>${fromLocation}</h4></li>
                         <li><p>to</p></li>
-                        <li><h4><%=busList.getToCity() %></h4></li>
+                        <li><h4>${toLocation}</h4></li>
                         <li><p>Journey Date :</p></li>
-                        <li><h4><%=busList.getDeparture().toLocalDate() %></h4></li>
+                        <li><h4>${date}</h4></li>
                     </ul>
                 </div>
                 <div id="outerlinetable">
@@ -134,32 +131,40 @@
                             <th>Seater Fare</th>
                             <th>Select Service</th>
                         </tr>
-                        
+                        <c:forEach items="${busList}" var="busList">
                         <tr>
-                            <td><%=busList.getBusCategory() %></td>
-                            <td><%=busList.getFromCity() %></td>
-                            <td><%=busList.getToCity() %></td>
-                            <td><%=busList.getDeparture().toLocalTime().format(formatTime)%></td>
-                            <td><%=busList.getArrival().toLocalTime().format(formatTime)%></td>
-                            <td><%=busList.getSeaterFare() %></td>
-                            <%if(userModel!=null){ %>
-                            <td><button id="busId" name="busIdValue" value="<%=busList.getBusId()%>">BOOK</button></td>
-                            <%} %>
+                            <td>${busList.getBusCategory() }</td>
+                            <td>${busList.getFromCity()}</td>
+                            <td>${busList.getToCity()}</td>
                             
+                           <fmt:parseDate value="${busList.getDeparture()}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="DepatureTime" type="both" />
+                            <td><fmt:formatDate pattern="HH:mm" value="${DepatureTime}" /></td>
+                            
+                            <fmt:parseDate value="${busList.getArrival()}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="ArrivalTime" type="both" />
+                            <td><fmt:formatDate pattern="HH:mm" value="${ArrivalTime}" /></td>
+                            
+                            <td>${busList.getSeaterFare()}</td>
+                            <c:if test="${UserSession!=null }"> 
+                            <td><button id="busId" name="busIdValue" value="${busList.getBusId()}">BOOK</button></td>
+                            </c:if>
                         </tr>
-                        <% } %>
+                    
+            			 </c:forEach>
                     </table>
                 </div>
-             
+               
             </fieldset>
-            <%if(userModel!=null){ %>
-            <a href="SearchBus.jsp" id="backlink">GO BACK TO HOME</a>
-            <%} else{%>
+            <c:if test="${UserSession!=null }"> 
+            <a href="SearchBus" id="backlink">GO BACK TO HOME</a>
+            </c:if>
+            <c:if test="${UserSession==null }"> 
             <script type="text/javascript">
             	alert("please log in for booking...");
             </script>
             <a href="index.jsp" id="backlink">GO BACK TO HOME</a>
-            <%} %>
+            </c:if>
         </div>
          </form>
     </body>

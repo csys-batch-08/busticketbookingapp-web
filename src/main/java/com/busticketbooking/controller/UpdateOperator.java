@@ -2,6 +2,8 @@ package com.busticketbooking.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +16,10 @@ import com.busticketbooking.model.Operator;
 @WebServlet("/OperatorUpdate")
 public class UpdateOperator extends HttpServlet {
 
+	@Override
 	public void service(HttpServletRequest req,HttpServletResponse res) {
-		
-		HttpSession session=req.getSession();
+				
+		HttpSession session = req.getSession();
 		
 		int operatorId=Integer.parseInt(req.getParameter("operatorId")); 
      	OperatorDaoImpl operatorDao=new OperatorDaoImpl();
@@ -25,9 +28,10 @@ public class UpdateOperator extends HttpServlet {
          if(operatorModel!=null) {
         	 try {
         		 session.setAttribute("OperatorObject", operatorModel);
-				res.sendRedirect("UpdateOperator.jsp");
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
+        		 RequestDispatcher reqDispatcher=req.getRequestDispatcher("updateOperator.jsp");
+  	    		reqDispatcher.forward(req, res);
+			} catch (IOException | ServletException e) {
+				e.printStackTrace();
 			}
          }
 		

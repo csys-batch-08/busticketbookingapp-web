@@ -19,6 +19,7 @@ public class UserRegisterController extends HttpServlet {
 
 	UserDaoImpl userDao = new UserDaoImpl();
 
+	@Override
 	public void service(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 
@@ -44,7 +45,7 @@ public class UserRegisterController extends HttpServlet {
 						out = res.getWriter();
 						out.println("<script type=\"text/javascript\">");
 						out.println("alert('Registered successfully');");
-						out.println("location='UserRegister.jsp';");
+						out.println("location='userRegister.jsp';");
 						out.println("</script>");
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -59,7 +60,7 @@ public class UserRegisterController extends HttpServlet {
 		} catch (UserRegister e) {
 			session.setAttribute("registerMessage", e.getPhoneRegisterMessage());
 			try {
-				res.sendRedirect("UserRegister.jsp");
+				res.sendRedirect("userRegister.jsp");
 			} catch (IOException e1) {
 				System.out.println(e.getMessage());
 			}

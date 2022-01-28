@@ -1,6 +1,7 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,9 +24,10 @@ public class AddBusController extends HttpServlet {
 	BusDaoImpl busDao=new BusDaoImpl();
 	
 	
-	public void service(HttpServletRequest req,HttpServletResponse res) {
+	@Override
+	public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
 		
-		HttpSession session=req.getSession();
+		PrintWriter out=res.getWriter();
 
 		String busCategory=req.getParameter("busCategory").toLowerCase();
 		String fromCity=req.getParameter("fromCity").toLowerCase();
@@ -41,17 +43,11 @@ public class AddBusController extends HttpServlet {
 		boolean busInsertFlag=busDao.insertBus(busmodel);
 				
 		if(busInsertFlag) {
-			try {
-				session.setAttribute("AdminHome", "AddBusSession");
-				req.getRequestDispatcher("AddBus.jsp").forward(req,res);
-			} catch (ServletException e) {
-				System.out.println(e.getMessage());
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Successfully Added');");
+			out.println("location='addBus.jsp';");
+			out.println("</script>");
 		}
-		
-		
-		
 	}
 }

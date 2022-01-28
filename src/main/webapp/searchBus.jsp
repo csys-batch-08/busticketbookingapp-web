@@ -1,16 +1,7 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.busticketbooking.daoimpl.BusDaoImpl"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@page import="com.busticketbooking.model.User" %>
-    <%@page import="com.busticketbooking.daoimpl.UserDaoImpl" %>
-    <%@page import="javax.servlet.http.HttpSession" %>
-    <%
-    List<String> locationList= (List<String>) session.getAttribute("LocationList");
-    %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+ 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Home</title>
@@ -79,19 +70,20 @@
 
 
 <body>
-           
+     <c:set var="locationList" scope="session" value="${LocationList}"></c:set>      
+     
     <div id="nav">
             <ul>
                 <li><h3 id="buslogo">BusHub</h3></li>
                 <li><a href="SearchBus">Bus_Tickets</a></li>
-                <li><a href="AboutUs.jsp">About_us</a></li>
+                <li><a href="aboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
                     <button class="dropbtn">Ticket 
                     </button>
                     <div class="dropdown-content">
                       <a href="UserBookingHistory">Booking History</a>
-                      <a href="MyTicket.jsp">My Ticket</a>
-                      <a href="CancelTicket.jsp">Cancel Ticket</a>
+                      <a href="myTicket.jsp">My Ticket</a>
+                      <a href="cancelTicket.jsp">Cancel Ticket</a>
                     </div>
                   </div> </li>
     
@@ -99,11 +91,11 @@
                     <button class="dropbtn">Wallet 
                     </button>
                     <div class="dropdown-content">
-                      <a href="ShowBalance.jsp">Show Balance</a>
-                      <a href="UpdateWallet.jsp">Update Wallet</a>
+                      <a href="showBalance.jsp">Show Balance</a>
+                      <a href="updateWallet.jsp">Update Wallet</a>
                     </div>
                   </div> 
-                  <li><a href="UserProfile.jsp">Profile</a></li>
+                  <li><a href="userProfile.jsp">Profile</a></li>
                   <li><a href="logout">LogOut</a></li>
                 </ul>
         </div>
@@ -118,17 +110,17 @@
                         <span>FROM</span><br>
                         <input name="fromlocation"  id="fromlocation" pattern="[a-zA-Z]{2,}" title="please enter correct city" autocomplete="off" placeholder="Search Locations" list = "from" required>
                             <datalist id = "from">
-                            <%for(int i=0;i<locationList.size();i++){%>
-                        	<option value="<%=locationList.get(i)%>"><%=locationList.get(i)%></option>
-                       	    <%}%>
+                            <c:forEach items="${locationList }" var="location">
+                        <option value="${location }">${location }</option>
+ 							</c:forEach>
                             </datalist></div></td																																																																																																		>
                     <td><div class="fromto">
                         <span>TO</span><br>
                         <input name="tolocation" id="tolocation" pattern="[a-zA-Z]{2,}" title="please enter correct city" autocomplete="off" placeholder="Search Locations" list = "to" required>
                         <datalist id = "to">
-                        <%for(int i=0;i<locationList.size();i++){%>
-                        <option value="<%=locationList.get(i)%>"><%=locationList.get(i)%></option>
-                        <%}%>
+                        <c:forEach items="${locationList }" var="location">
+                        <option value="${location }">${location }</option>
+                        </c:forEach>
                         </datalist></div></td>
                     <td><div class="fromto">
                         <span>DATE</span><br>
@@ -156,24 +148,29 @@
     document.getElementById("date").setAttribute("max",maxdate);
     document.getElementById("date").setAttribute("min",mindate);
     }
+    
     function validate(){
         var from=document.getElementById("fromlocation");
         var to=document.getElementById("tolocation");
-        if(from.value.trim()==to.value.trim()){
+        
+       if(from.value.trim()==to.value.trim()){
         	alert("please enter correct location");
             return false;
         }
-        <%for(int i=0;i<locationList.size();i++){
-         for(int j=0;j<locationList.size();j++){%>
-        else if((from.value.trim()=="<%=locationList.get(i)%>") && (to.value.trim()=="<%=locationList.get(j)%>")){
+        <c:forEach items="${LocationList }" var="location1" >
+        <c:forEach items="${LocationList }" var="location2" >
+        else if((from.value.trim()=="${location1}") && (to.value.trim()=="${location2}")){
         	return true;
         }
-        <%}}%>
+       </c:forEach>
+       </c:forEach>
         else{
         	alert("please enter correct location");
         return false;
-        }
-    }
+        } 
+    } 
     </script>
+    
+    
 </body>
 </html>

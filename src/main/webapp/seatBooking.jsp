@@ -1,18 +1,7 @@
-<%@page import="com.busticketbooking.exception.SeatsUnavailable"%>
-<%@page import="com.busticketbooking.daoimpl.UserDaoImpl"%>
-<%@page import="com.busticketbooking.model.User"%>
-<%@page import="com.busticketbooking.model.BookedTickets"%>
-<%@page import="com.busticketbooking.model.Bus"%>
-<%@page import="com.busticketbooking.daoimpl.BusDaoImpl"%>
-<%@page import="javax.servlet.http.HttpSession" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <% Bus busModel=(Bus)session.getAttribute("CurrentBusObject");
-    BusDaoImpl busDao=new BusDaoImpl();%>
-       
-       
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Booking</title>
@@ -99,30 +88,34 @@ element.style {
     color: white;
 }
     </style>
+    
 </head>
 <body onmouseover="check()">
   
+    					
     <fieldset>
         <legend>Booking Form</legend>
-        <form  action="confirmBooking" >
-        <div id="bookingdiv" >
+        
+        <div id="bookingdiv">
+         <form  action="confirmBooking" >
         <table id="seatbookingtable">
+       
             <tr>
-                <td><label for="pickuppoint">Pickup Point : <input type="text" id="pickuppoint" value="<%=busModel.getFromCity() %>"></label></td>
-                <td><label for="pickuptime">Pickup Time  : <input type="text" id="pickuptime" value="<%=busModel.getDeparture().toLocalTime()%>"></label></td>
+                <td><label for="pickuppoint">Pickup Point : <input type="text" id="pickuppoint" value="${CurrentBusObject.getFromCity()}"></label></td>
+                <td><label for="pickuptime">Pickup Time  : <input type="text" id="pickuptime" value="${CurrentBusObject.getDeparture().toLocalTime()}"></label></td>
             </tr>
             <tr>
-                <td><label for="dropoffpoint">DropOff Point  : <input id="dropoffpoint" type="text" value="<%=busModel.getToCity()%>"></label></td>
-                <td><label for="dropofftime">DropOff Time  : <input id="dropofftime" type="text" value="<%=busModel.getArrival().toLocalTime()%>"></label></td>
+                <td><label for="dropoffpoint">DropOff Point  : <input id="dropoffpoint" type="text" value="${CurrentBusObject.getToCity()}"></label></td>
+                <td><label for="dropofftime">DropOff Time  : <input id="dropofftime" type="text" value="${CurrentBusObject.getArrival().toLocalTime()}"></label></td>
             </tr>
         </table>
         <table id="seatinfotable">
             <tr>
-                <td> <label for="buscategory">Bus Category :  <input id="buscategory" type="text" value="<%=busModel.getBusCategory() %>" ></label></td>
+                <td> <label for="buscategory">Bus Category :  <input id="buscategory" type="text" value="${CurrentBusObject.getBusCategory() }" ></label></td>
                 
             </tr>
             <tr>
-                <td><label for="availableseat">Available Seat : <input id="availableseat" type="text" value="<%=busModel.getTotalseat()%> "readonly ></label></td>
+                <td><label for="availableseat">Available Seat : <input id="availableseat" type="text" value="${CurrentBusObject.getTotalseat()}"readonly ></label></td>
             </tr>
             <tr>
                 <td><label for="noofselectedseat">No OF Seats Selected :  <input id="noofseatsselected" name="noofseats" type="text" readonly ></label></td>
@@ -135,35 +128,34 @@ element.style {
             </tr>
          </table>
 
-         <div id="seatcountdiv">
+        <div id="seatcountdiv">
             <label for="seatercount">Select Seater Count</label>
             <select name="seatcount" id="seatcount" >
-            <%int totalSeat=busModel.getTotalseat();
-            for(int i=1;i<=totalSeat;i++) { %>
-                <option  value="<%=i%>"><%=i%></option>
-               <%} %>
+            <c:forEach begin="1" end="${CurrentBusObject.getTotalseat() }" var="count">
+                <option  value="${count }">${count }</option>
+              </c:forEach>
               </select>
-           </div>
-           
-		<%try{
-		if(totalSeat!=0){ %>
-         <button id="btn" name="btn" type="submit">BookTicket</button>
-         <%} else{ 
-         busDao.updateBusStatus("unavailable", busModel.getBusId());
-         throw new SeatsUnavailable();
-         }
-         }
-         catch(SeatsUnavailable un){%>
-         <p id="seatsunavailable"><%=un.getUnavailableMessage()%></p>
-         <%} %>
-         
+           </div> 
+                      
+                 <jsp:useBean id="busDao" class="com.busticketbooking.daoimpl.BusDaoImpl"/>
+                      
+           <c:choose>
+           		<c:when test="${totalSeat!=0 }">
+           		<button id="btn" name="btn" type="submit">BookTicket</button></c:when>
+           		<c:otherwise>
+           		${busDao.updateBusStatus("unavailable", CurrentBusObject.getBusId()) }
+           		<p id="seatsunavailable">Seats are Unavailable</p>
+           		</c:otherwise>
+           </c:choose>
+         </form>  
     </div>
-    </form>  
+    
         </fieldset>
+     
 
 </body>
 
-<script type="text/javascript">
+ <script type="text/javascript">
 function check(){
 var numberSeats=document.getElementById('noofseatsselected'); 
 var price=document.getElementById('totalFair');
@@ -172,7 +164,7 @@ var randomNo=document.getElementById('randomnumber');
 var count=seatcount.options[seatcount.selectedIndex].value;
 
 numberSeats.value=count;
-price.value=<%=busModel.getSeaterFare()%>*count;
+price.value=`${CurrentBusObject.getSeaterFare()}`*count;
 
 var text = "";
 var random = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
