@@ -119,7 +119,7 @@
         <c:if test="${cancelMessage!=null }">
     	<p id="msgtag"><c:out value="${cancelMessage }"></c:out></p>
         </c:if>
-        <c:remove var="cancelMessage"/>
+        <c:remove var="cancelMessage" scope="session"/>
         
         <button id="searchbutton" type="submit" >Submit</button>
 		</form>

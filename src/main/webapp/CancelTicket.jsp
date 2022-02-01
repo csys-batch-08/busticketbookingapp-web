@@ -112,17 +112,19 @@
 	
 	<div id="cancelticketdiv">
         <form action="cancelticketservlet">
-        <table id="ticketnotable">
+        <table id="ticketnotable" aria-describedby="cancelbus">
+        
             <tr>
                 <td>TICKET NO :</td>
                 <td><input id="tickettext" name="tickettext" type="text" placeholder="Enter the ticket number" pattern="[A-Za-z0-9]{7}" title="please enter 7 digit ticket number" autofocus autocomplete="off" required></td>
             </tr>
+            
         </table>
         <label for="deductedmessage" id="deductedmessage">If you want to cancel your ticket(15% amount will be deducted)</label>
        	
-       	<c:if test="${wrongnumbermessage!=null}">
+    <c:if test="${wrongnumbermessage!=null}">
     	<p id="msgtag">${wrongnumbermessage }</p>
-    	</c:if>
+    </c:if> 
     <%-- <%}session.removeAttribute("WrongNumber");%> --%>
     
     <c:if test="${alreadycancelmessage!=null}">
@@ -133,11 +135,17 @@
     	<p id="msgtag">${dateendedmessage }</p>
     </c:if>
     
-        <button id="submitbutton" type="submit" >Submit</button>
+        <button onclick="check()" id="submitbutton" type="submit" >Submit</button>
         </form>
         </div>
 <script type="text/javascript">
+function check() {
+	var result = confirm("if you want to cancel 15% cancelation charge will be detected on your total price");
 
+	if (result == false) {
+		event.preventDefault();
+	}
+}
 </script>
 </body>
 </html>

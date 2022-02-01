@@ -43,7 +43,6 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 			Timestamp departureDateTime = Timestamp.valueOf(bookedTicketsModel.getBusModel().getDeparture());
 			pstatement.setTimestamp(4, departureDateTime);
 			pstatement.setInt(5, bookedTicketsModel.getTicketCount());
-			//pstatement.setString(5, bookedTicketsModel.getSeatNo());
 			pstatement.setDouble(6, bookedTicketsModel.getTotalPrice());
 			pstatement.setString(7, bookedTicketsModel.getPaymentStatus());
 			
@@ -255,7 +254,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 	
 	
 	public boolean dateChecking(String ticketNo,LocalDate departureDate) {
-		String checkDate="select departure_date from booked_tickets where ticket_no=? and to_date(?,'yyyy-MM-dd')>= to_date(sysdate,'yyyy-MM-dd')";
+		String checkDate="select departure_date from booked_tickets where ticket_no=? and to_date(?,'dd-MM-yyyy')>= to_date(sysdate,'dd-MM-yyyy')";
 		
 		Connection con;
 		PreparedStatement pstatement;
