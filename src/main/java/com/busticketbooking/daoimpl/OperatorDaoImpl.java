@@ -19,49 +19,51 @@ public class OperatorDaoImpl implements OperatorDAO{
 	public boolean insertOperator(Operator OperatorModel) {
 		String insertbus = "insert into bus_operators (OPERATOR_NAME,OPERATOR_EMAIL,OPERATOR_CONTACT, OPERATOR_AGE) values (?,?,?,?)";
 		int result=0;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		try {
-			Connection con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(insertbus);
+			con = ConnectionUtill.connectdb();
+			pstatement = con.prepareStatement(insertbus);
 
 			pstatement.setString(1, OperatorModel.getOperatorName());
 			pstatement.setString(2, OperatorModel.getOperatorEmail());
 			pstatement.setLong(3, OperatorModel.getOperatorContact());
 			pstatement.setInt(4, OperatorModel.getOperatorAge());
 			
-
 			result = pstatement.executeUpdate();
-			pstatement.close();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result>0;
 	} 
 	
 	
-   public boolean updateOperator (Operator OperatorModel) {
+   public boolean updateOperator (Operator operatorModel) {
     	
-    	String operatorUpdate="update bus_operators set operator_name=?, operator_email=?, operator_contact=?, operator_age=? where operator_id='"+OperatorModel.getOperatorId()+"'";
+    	String operatorUpdate="update bus_operators set operator_name=?, operator_email=?, operator_contact=?, operator_age=? where operator_id=?";
     	
-    	Connection con;
+    	Connection con = null;
+    	PreparedStatement pstatement=null;
     	int result=0;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement=con.prepareStatement(operatorUpdate);
+			pstatement=con.prepareStatement(operatorUpdate);
 			
-			pstatement.setString(1,OperatorModel.getOperatorName());
-			pstatement.setString(2, OperatorModel.getOperatorEmail());
-			pstatement.setLong(3, OperatorModel.getOperatorContact());
-			pstatement.setInt(4, OperatorModel.getOperatorAge());
+			pstatement.setString(1,operatorModel.getOperatorName());
+			pstatement.setString(2, operatorModel.getOperatorEmail());
+			pstatement.setLong(3, operatorModel.getOperatorContact());
+			pstatement.setInt(4, operatorModel.getOperatorAge());
+			pstatement.setInt(5, operatorModel.getOperatorId());
 			
 			result=pstatement.executeUpdate();
 			pstatement.executeUpdate("commit");
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result>0;
     }
@@ -72,12 +74,13 @@ public class OperatorDaoImpl implements OperatorDAO{
 		
 		String operatorDelete="update bus_operators set operator_status=? where operator_id=? ";
 		String commitQuery="commit";
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		int result=0;
 		
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement=con.prepareStatement(operatorDelete);
+			pstatement=con.prepareStatement(operatorDelete);
 			
 			pstatement.setString(1, "inactive");
 			pstatement.setInt(2, operatorId);
@@ -85,10 +88,10 @@ public class OperatorDaoImpl implements OperatorDAO{
 			result=pstatement.executeUpdate();
 			pstatement.executeQuery(commitQuery);
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 	return result>0;	
 	}
@@ -96,25 +99,26 @@ public class OperatorDaoImpl implements OperatorDAO{
    
    public List<Operator> viewOperator(){
    	
-   	String operatorView="select * from bus_operators";
+   	String operatorView="select operator_id,operator_name,operator_email,operator_contact,operator_age,operator_status from bus_operators";
    	
-   	Connection con;
+   	Connection con=null;
+   	PreparedStatement pstatement=null;
    	ResultSet rs = null;
    	List<Operator> operatorList=new ArrayList<Operator>();
 		try {
 			con = ConnectionUtill.connectdb();	
-			Statement pstatement=con.createStatement();
-			rs=pstatement.executeQuery(operatorView);
+			pstatement=con.prepareStatement(operatorView);
+			rs=pstatement.executeQuery();
 			
 			while(rs.next()) {
-				Operator operator=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5),rs.getString(6));
+				Operator operator=new Operator(rs.getInt("operator_id"),rs.getString("operator_name"),rs.getString("operator_email"),rs.getLong("operator_contact"),rs.getInt("operator_age"),rs.getString("operator_status"));
 				operatorList.add(operator);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con,rs);
 		}
 		
 		return operatorList;
@@ -125,7 +129,7 @@ public class OperatorDaoImpl implements OperatorDAO{
  
 	public Operator getOperatorById(int operatorId) {
 		
-		String getOperator ="select * from bus_operators where operator_id=?";
+		String getOperator ="select operator_id,operator_name,operator_email,operator_contact,operator_age,operator_status from bus_operators where operator_id=?";
 		Connection con = null;
 		PreparedStatement pstatement = null;
 		Operator operatormodel=null;
@@ -136,14 +140,12 @@ public class OperatorDaoImpl implements OperatorDAO{
 			 pstatement.setInt(1, operatorId);
 			rs = pstatement.executeQuery();
 			 if (rs.next()) {
-				 operatormodel=new Operator(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getLong(4),rs.getInt(5),rs.getString(6));
-				con.close();
-				pstatement.close();
+				 operatormodel=new Operator(rs.getInt("operator_id"),rs.getString("operator_name"),rs.getString("operator_email"),rs.getLong("operator_contact"),rs.getInt("operator_age"),rs.getString("operator_status"));
 				}
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con,rs);
 		}
 		
 		 return operatormodel;

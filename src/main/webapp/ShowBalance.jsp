@@ -98,7 +98,7 @@
                 </ul>
         </div>
         
-      <form action="UpdateWallet.jsp">
+      <form action="updateWallet.jsp">
         <div id="balancediv">
             <label for="balance" class="currentbalance">Current Balance</label>
             <span id="availableamount">${usermodel.getUserWallet() }</span> <br><br>

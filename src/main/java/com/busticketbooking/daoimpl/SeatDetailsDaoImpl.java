@@ -17,20 +17,18 @@ import com.busticketbooking.model.User;
 
 public class SeatDetailsDaoImpl {
 	
-//	BusDaoImpl busDao=new BusDaoImpl();s
-//	UserDaoImpl userDao=new UserDaoImpl();
 	BookedTicketsDaoImpl tickedDao=new BookedTicketsDaoImpl();
 
 	public boolean insertSeat(SeatDetails seatDetails) {
 		String seatInsert = "insert into seat_details (booking_id,user_id,bus_id,seat_no,seat_status) values (?,?,?,?,?)"; 
 		
-		//,seat_no
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		int result=0;
 		
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement=con.prepareStatement(seatInsert);
+			pstatement=con.prepareStatement(seatInsert);
 			
 			pstatement.setInt(1, seatDetails.getBookedTickets().getBookingId());
 			pstatement.setInt(2, seatDetails.getBookedTickets().getUserModel().getUserId());
@@ -40,68 +38,89 @@ public class SeatDetailsDaoImpl {
 		
 			result=pstatement.executeUpdate();
 			
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.getMessage();
-		} catch (SQLException e) {
-			e.getMessage();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result>0;
 	}
 	
-	public boolean ticketexist(int ticketCountEntered,String ticketRandomNumber,Bus bus,User user) throws ClassNotFoundException, SQLException {
+	public boolean ticketexist(int ticketCountEntered,String ticketRandomNumber,Bus bus,User user)  {
 		
-	Connection	con = ConnectionUtill.connectdb();
-	String query = "select ticket_no,user_id,bus_id,seat_no,seat_status from seat_details where seat_no=?  and bus_id=? and seat_status in 'booked'";
-	String query1 = "insert into seat_details(ticket_no,user_id,bus_id,seat_no) values(?,?,?,?)";
-	PreparedStatement pstatement=con.prepareStatement(query);
-	int busseat = bus.getTotalseat();
-	int seatcount = 0;
-	int seatno = 1;
-	if(busseat >= 0) {
-	while(seatcount < ticketCountEntered) {
-	
-		pstatement.setInt(1, seatno);
-		pstatement.setInt(2, bus.getBusId());
-		ResultSet rs = pstatement.executeQuery();
-		if(rs.next()) {
+	Connection con = null;
+	PreparedStatement pstatement=null;
+	PreparedStatement pstatement1=null;
+	boolean resultFlag=true;
+	ResultSet rs = null;
+	try {
+		con = ConnectionUtill.connectdb();
+		String query = "select ticket_no,user_id,bus_id,seat_no,seat_status from seat_details where seat_no=?  and bus_id=? and seat_status in 'booked'";
+		String query1 = "insert into seat_details(ticket_no,user_id,bus_id,seat_no) values(?,?,?,?)";
+		pstatement=con.prepareStatement(query);
+		int busseat = bus.getTotalseat();
+		int seatcount = 0;
+		int seatno = 1;
+		if(busseat >= 0) {
+		while(seatcount < ticketCountEntered) {
+		
+			pstatement.setInt(1, seatno);
+			pstatement.setInt(2, bus.getBusId());
+			rs = pstatement.executeQuery();
+			if(rs.next()) {
+				
+			}
+			else {
+				
+				pstatement1=con.prepareStatement(query1);
+				
+				pstatement1.setString(1, ticketRandomNumber);
+				pstatement1.setInt(2, user.getUserId());
+				pstatement1.setInt(3, bus.getBusId());
+				pstatement1.setInt(4, seatno);
+				pstatement1.executeUpdate();
+				pstatement1.executeUpdate("commit");
+				seatcount++;
+			}
 			
-		}
-		else {
-			
-			PreparedStatement pstatement1=con.prepareStatement(query1);
-			
-			pstatement1.setString(1, ticketRandomNumber);
-			pstatement1.setInt(2, user.getUserId());
-			pstatement1.setInt(3, bus.getBusId());
-			pstatement1.setInt(4, seatno);
-			pstatement1.executeUpdate();
-			pstatement1.executeUpdate("commit");
-			seatcount++;
+			seatno++;
 		}
 		
-		seatno++;
+		if(seatcount == ticketCountEntered) {
+			resultFlag=true;
+		}}else {
+			
+			resultFlag=false;
+		}
+//		return false;
+	} catch (ClassNotFoundException | SQLException e) {
+		e.printStackTrace();
+	} finally {
+		ConnectionUtill.closeStatement(pstatement, con, rs);
+		ConnectionUtill.closeStatement(pstatement1, con);
+	}
+	return resultFlag;
 	}
 	
-	if(seatcount == ticketCountEntered) {
-		return true;
-	}}else {
-		//System.out.println("bus out of seat!!");
-		return false;
-	}
 	
-	return false;
-	}
-	
-	
-	public boolean cancelSeatDetails(String ticketNo) throws ClassNotFoundException, SQLException {
+	public boolean cancelSeatDetails(String ticketNo)  {
 		String seatCancel="delete from seat_details where ticket_no=?";
 		
-		Connection	con = ConnectionUtill.connectdb();
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		int result=0;
-		PreparedStatement pstatement=con.prepareStatement(seatCancel);
+		try {
+			con = ConnectionUtill.connectdb();
+			pstatement=con.prepareStatement(seatCancel);
+			
+			pstatement.setString(1, ticketNo);
+			result=pstatement.executeUpdate();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
+		}
 		
-		pstatement.setString(1, ticketNo);
-		result=pstatement.executeUpdate();
 		
 		return result>0;
 		
@@ -112,27 +131,27 @@ public class SeatDetailsDaoImpl {
 	public List<SeatDetails> showSeatList() {
 		String seatDetailsQuery="select ticket_no,user_id,bus_id,seat_no,seat_status from seat_details order by bus_id,seat_no";
 		
-		Connection con;
-
+		Connection con = null;
 		BookedTickets bookTickets=null;
 	   	ResultSet rs = null;
-	   	List<SeatDetails> seatDetailsList=new ArrayList<SeatDetails>();
+	   	PreparedStatement pstatement=null;
+	   	List<SeatDetails> seatDetailsList=new ArrayList<>();
 			try {
 				con = ConnectionUtill.connectdb();	
-				Statement pstatement=con.createStatement();
-				rs=pstatement.executeQuery(seatDetailsQuery);
+				pstatement=con.prepareStatement(seatDetailsQuery);
+				rs=pstatement.executeQuery();
 
 				while(rs.next()) {
-					bookTickets=tickedDao.findBookedTicketsObjectDetails(rs.getString(1));
-					SeatDetails seatDetails=new SeatDetails(bookTickets,rs.getInt(4),rs.getString(5));
+					bookTickets=tickedDao.findBookedTicketsObjectDetails(rs.getString("ticket_no"));
+					SeatDetails seatDetails=new SeatDetails(bookTickets,rs.getInt("seat_no"),rs.getString("seat_status"));
 					seatDetailsList.add(seatDetails);
 				}
 				
 				return seatDetailsList;
-			} catch (ClassNotFoundException e) {
-				System.out.println(e.getMessage());
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnectionUtill.closeStatement(pstatement, con, rs);
 			}
 			return seatDetailsList;
 	}
@@ -141,12 +160,13 @@ public class SeatDetailsDaoImpl {
 	public List<String> getSeatNoListUsingTicketNo(String ticketNo) {
 		String seatDetailsQuery="select seat_no from seat_details where ticket_NO=?";
 		
-		Connection con;
+		Connection con = null;
 	   	ResultSet rs = null;
-	   	List<String> seatList=new ArrayList<String>();
+	   	PreparedStatement pstatement=null;
+	   	List<String> seatList=new ArrayList<>();
 			try {
 				con = ConnectionUtill.connectdb();	
-				PreparedStatement pstatement=con.prepareStatement(seatDetailsQuery);
+				pstatement=con.prepareStatement(seatDetailsQuery);
 				pstatement.setString(1, ticketNo);
 				rs=pstatement.executeQuery();
 				
@@ -154,10 +174,10 @@ public class SeatDetailsDaoImpl {
 					seatList.add(rs.getString(1));
 				}
 				return seatList;
-			} catch (ClassNotFoundException e) {
-				System.out.println(e.getMessage());
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnectionUtill.closeStatement(pstatement, con, rs);
 			}
 			return seatList;
 	}
@@ -166,14 +186,16 @@ public class SeatDetailsDaoImpl {
 	public List<SeatDetails> getSeatDetailsUsingTicketNo(String ticketNo) {
 		String seatDetailsQuery="select ticket_no,seat_no,seat_status from seat_details where ticket_no=?";
 		
-		Connection con;
+		Connection con = null;
 		BookedTickets bookTickets=null;
-	   	List<SeatDetails> seatDetailsList=new ArrayList<SeatDetails>();
+		PreparedStatement pstatement=null;
+		ResultSet rs = null;
+	   	List<SeatDetails> seatDetailsList=new ArrayList<>();
 			try {
 				con = ConnectionUtill.connectdb();	
-				PreparedStatement pstatement=con.prepareStatement(seatDetailsQuery);
+				pstatement=con.prepareStatement(seatDetailsQuery);
 				pstatement.setString(1, ticketNo);
-				ResultSet rs=pstatement.executeQuery();
+				rs=pstatement.executeQuery();
 				
 				while(rs.next()) {
 					bookTickets=tickedDao.findBookedTicketsObjectDetails(rs.getString(1));
@@ -181,10 +203,10 @@ public class SeatDetailsDaoImpl {
 					seatDetailsList.add(seatDetails);
 				}
 				return seatDetailsList;
-			} catch (ClassNotFoundException e) {
-				System.out.println(e.getMessage());
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnectionUtill.closeStatement(pstatement, con, rs);
 			}
 			return seatDetailsList;
 	}

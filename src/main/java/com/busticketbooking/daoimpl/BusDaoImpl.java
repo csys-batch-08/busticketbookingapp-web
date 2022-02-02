@@ -25,9 +25,11 @@ public class BusDaoImpl implements BusDAO {
 	public boolean insertBus(Bus busModel) {
 		String busInsert = "insert into bus_details (bus_category, from_city, to_city, departure, arrival, seater_fare, total_seat,seat_status) values (?,?,?,?,?,?,?,?)";
 		int result = 0 ;
+		Connection con=null;
+		PreparedStatement pstatement =null;
 		try {
-			Connection con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(busInsert);
+			con = ConnectionUtill.connectdb();
+			pstatement = con.prepareStatement(busInsert);
 			
 			pstatement.setString(1, busModel.getBusCategory());
 			pstatement.setString(2, busModel.getFromCity());
@@ -42,10 +44,10 @@ public class BusDaoImpl implements BusDAO {
 			
 			result = pstatement.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result>0;
 	}
@@ -54,20 +56,19 @@ public class BusDaoImpl implements BusDAO {
 
 		String busDelete = "delete from bus_details where bus_id=?";
 		int result=0;
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement =null;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(busDelete);
+			pstatement = con.prepareStatement(busDelete);
 
 			pstatement.setInt(1, busId);
 			result = pstatement.executeUpdate();
 			
-			con.close();
-			pstatement.close();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}  finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result>0;
 	}
@@ -75,12 +76,13 @@ public class BusDaoImpl implements BusDAO {
 	//updating bus details without bus number and operator
 	public boolean updateBus(Bus busModel) {
 		
-            String busUpdate="update bus_details set bus_category=?, from_city=?, to_city=?, departure=?, arrival=?, seater_fare=?, total_seat=?,seat_status=? where bus_id='"+busModel.getBusId()+"'";
+            String busUpdate="update bus_details set bus_category=?, from_city=?, to_city=?, departure=?, arrival=?, seater_fare=?, total_seat=?,seat_status=? where bus_id=?";
             int result=0;
-    	    Connection con;
+    	    Connection con = null;
+    	    PreparedStatement pstatement=null;
     	    try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement=con.prepareStatement(busUpdate);
+			pstatement=con.prepareStatement(busUpdate);
 			
 			pstatement.setString(1, busModel.getBusCategory());
 			pstatement.setString(2, busModel.getFromCity());
@@ -93,14 +95,14 @@ public class BusDaoImpl implements BusDAO {
 			pstatement.setInt(7, busModel.getTotalseat());
 			pstatement.setString(8, busModel.getSeatStatus());
 			
+			pstatement.setInt(9, busModel.getBusId());
 			result=pstatement.executeUpdate();
-			con.close();
-			pstatement.close();
+			
 			}
-    	    catch (ClassNotFoundException e) {
-    	    	System.out.println(e.getMessage());
-    		} catch (SQLException e) {
-    			System.out.println(e.getMessage());
+    	    catch (ClassNotFoundException | SQLException e) {
+    	    	e.printStackTrace();
+    		} finally {
+    			ConnectionUtill.closeStatement(pstatement, con);
     		}
     	    return result>0;
 	}
@@ -110,22 +112,22 @@ public class BusDaoImpl implements BusDAO {
 	public boolean updateBusNoAndOperator(Bus busModel) {
 		String busUpdate="update bus_details set bus_no=?,operator_id=? where bus_id=?";
         int result=0;
-	    Connection con;
+        PreparedStatement pstatement=null;
+	    Connection con = null;
 	    try {
 		con = ConnectionUtill.connectdb();
-		PreparedStatement pstatement=con.prepareStatement(busUpdate);
+		pstatement=con.prepareStatement(busUpdate);
 		
 		pstatement.setInt(1, busModel.getBusNo());
 		pstatement.setInt(2, busModel.getOperatorId());
 		pstatement.setInt(3, busModel.getBusId());
 		result=pstatement.executeUpdate();
-		con.close();
-		pstatement.close();
+		
 		}
-	    catch (ClassNotFoundException e) {
-	    	System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+	    catch (ClassNotFoundException | SQLException e) {
+	    	e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 	    return result>0;
 	}
@@ -138,25 +140,25 @@ public class BusDaoImpl implements BusDAO {
 	    	
 	    	String busView="select bus_id,bus_no,operator_id,bus_category,from_city,to_city,departure,arrival,seater_fare,total_seat,seat_status from bus_details";
 	    	
-	    	Connection con;
+	    	Connection con = null;
 	    	ResultSet rs=null;
+	    	PreparedStatement pstatement=null;
 	    	Bus busModel;
 	    	List<Bus> busList=new ArrayList<Bus>();
 			try {
 				con = ConnectionUtill.connectdb();
-				PreparedStatement pstatement=con.prepareStatement(busView);
+				pstatement=con.prepareStatement(busView);
 				rs=pstatement.executeQuery();
 				
 				while(rs.next()) {					
-				busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getTimestamp(7).toLocalDateTime(),rs.getTimestamp(8).toLocalDateTime(),rs.getInt(9),rs.getInt(10),rs.getString(11));
+				busModel=new Bus(rs.getInt("bus_Id"),rs.getInt("bus_No"),rs.getInt("operator_Id"),rs.getString("bus_Category"),rs.getString("from_City"),rs.getString("to_City"),rs.getTimestamp("Departure").toLocalDateTime(),rs.getTimestamp("Arrival").toLocalDateTime(),rs.getInt("seater_Fare"),rs.getInt("total_Seat"),rs.getString("seat_Status"));
 				busList.add(busModel);
 			}
-//				con.close();
-//				pstatement.close();
-			} catch (ClassNotFoundException e) {
-				System.out.println(e.getMessage());
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
+
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnectionUtill.closeStatement(pstatement, con, rs);
 			}
 			
 			return busList;
@@ -185,14 +187,14 @@ public class BusDaoImpl implements BusDAO {
 					rs=pstatement.executeQuery();
 					
 					while(rs.next()) {					
-						busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getTimestamp(7).toLocalDateTime(),rs.getTimestamp(8).toLocalDateTime(),rs.getInt(9),rs.getInt(10),rs.getString(11));
+						busModel=new Bus(rs.getInt("bus_id"),rs.getInt("bus_no"),rs.getInt("operator_id"),rs.getString("bus_category"),rs.getString("from_city"),rs.getString("to_city"),rs.getTimestamp("departure").toLocalDateTime(),rs.getTimestamp("arrival").toLocalDateTime(),rs.getInt("seater_fare"),rs.getInt("total_seat"),rs.getString("seat_status"));
 						busFilterList.add(busModel);
 					}
-				} catch (ClassNotFoundException e) {
-					System.out.println(e.getMessage());
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
-				}	
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				} finally {
+					ConnectionUtill.closeStatement(pstatement, con, rs);
+				}
 				return busFilterList;
 		    }
 		
@@ -201,22 +203,23 @@ public class BusDaoImpl implements BusDAO {
 		public boolean updateSeatCount(Bus busModel) {
 			
 			String updateSeat="update bus_details set total_seat=? where bus_id=?";
-			 Connection con;
+			 Connection con = null;
+			 PreparedStatement pstatement=null;
 			 int result=0;
 	    	    try {
-				con = ConnectionUtill.connectdb();
-				PreparedStatement pstatement=con.prepareStatement(updateSeat);
+				
+					con = ConnectionUtill.connectdb();
+				pstatement=con.prepareStatement(updateSeat);
 				
 				pstatement.setInt(1, busModel.getTotalseat());
 				pstatement.setInt(2, busModel.getBusId());
 				result=pstatement.executeUpdate();
-				con.close();
-				pstatement.close();
+				
 				}
-	    	    catch (ClassNotFoundException e) {
-	    			System.out.println(e.getMessage());
-	    		} catch (SQLException e) {
-	    			System.out.println(e.getMessage());
+	    	    catch (ClassNotFoundException  | SQLException e) {
+	    	    	e.printStackTrace();
+	    		}  finally {
+	    			ConnectionUtill.closeStatement(pstatement, con);
 	    		}
 	    	    return result>0;
 		}
@@ -224,11 +227,12 @@ public class BusDaoImpl implements BusDAO {
 		
 		public boolean updateBusStatus(String status,int busId) {
 			String updateStatus="update bus_details set seat_status=? where bus_id=?";
-			Connection con;
+			Connection con = null;
+			PreparedStatement pstatement=null;
 			 int result=0;
 	    	    try {
 				con = ConnectionUtill.connectdb();
-				PreparedStatement pstatement=con.prepareStatement(updateStatus);
+				pstatement=con.prepareStatement(updateStatus);
 				
 				pstatement.setString(1, status);
 				pstatement.setInt(2, busId);
@@ -236,10 +240,10 @@ public class BusDaoImpl implements BusDAO {
 				con.close();
 				pstatement.close();
 				}
-	    	    catch (ClassNotFoundException e) {
-	    			System.out.println(e.getMessage());
-	    		} catch (SQLException e) {
-	    			System.out.println(e.getMessage());
+	    	    catch (ClassNotFoundException | SQLException e) {
+	    	    	e.printStackTrace();
+	    		}  finally {
+	    			ConnectionUtill.closeStatement(pstatement, con);
 	    		}
 	    	    return result>0;
 		}
@@ -250,26 +254,24 @@ public class BusDaoImpl implements BusDAO {
 			Connection	 con = null;
 			PreparedStatement pstatement=null;
 			Bus busModel = null;
+			ResultSet rs=null;
 			
 			 try {
 				 
 				con = ConnectionUtill.connectdb();
 				pstatement=con.prepareStatement(getBus);
 				pstatement.setInt(1, busId);
-				ResultSet rs = pstatement.executeQuery();
+				rs = pstatement.executeQuery();
 				
 				 if(rs.next()) {
-					 busModel=new Bus(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getTimestamp(7).toLocalDateTime(),rs.getTimestamp(8).toLocalDateTime(),rs.getInt(9),rs.getInt(10),rs.getString(11));
-				 
+						busModel=new Bus(rs.getInt("bus_id"),rs.getInt("bus_no"),rs.getInt("operator_id"),rs.getString("bus_category"),rs.getString("from_city"),rs.getString("to_city"),rs.getTimestamp("departure").toLocalDateTime(),rs.getTimestamp("arrival").toLocalDateTime(),rs.getInt("seater_fare"),rs.getInt("total_seat"),rs.getString("seat_status"));
 				 }
 				con.close();
 				pstatement.close();
-			} catch (ClassNotFoundException e) {
-				e.getMessage();
-				System.out.println("classnot found");
-			} catch (SQLException e) {
-				e.getMessage();
-				System.out.println("sql exception");
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			} finally {
+				ConnectionUtill.closeStatement(pstatement, con, rs);
 			}
 			
 			 return busModel;
@@ -279,20 +281,21 @@ public class BusDaoImpl implements BusDAO {
 	 		String locationQuery="select distinct(from_city) from bus_details";
 	 		Connection	 con = null;
 			PreparedStatement pstatement=null;
+			ResultSet rs=null;
 			List<String> locationList=new ArrayList<String>();
 	 		try {
 					con = ConnectionUtill.connectdb();
 					pstatement=con.prepareStatement(locationQuery);
-					ResultSet rs=pstatement.executeQuery();
+					rs=pstatement.executeQuery();
 					while(rs.next()) {
 						locationList.add(rs.getString(1));
 					}
 					con.close();
 					pstatement.close();
-				} catch (ClassNotFoundException e) {
-					System.out.println(e.getMessage());
-				} catch (SQLException e) {
-					System.out.println(e.getMessage());
+				} catch (ClassNotFoundException | SQLException e) {
+					e.printStackTrace();
+				} finally {
+					ConnectionUtill.closeStatement(pstatement, con, rs);
 				}
 				return locationList;
 	 	}

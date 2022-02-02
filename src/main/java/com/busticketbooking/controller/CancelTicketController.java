@@ -93,13 +93,7 @@ public class CancelTicketController extends HttpServlet {
 								
 								// to cancel the ticket(changing status) in bookedTicket class using cancelTicketdao
 								boolean ticketCancelFlag = bookTicketsDao.cancelTicket(ticketNo);
-
-								// to delete the ticketSeats from ticket details table using ticket no and seat
-								try {
-									seatDetails.cancelSeatDetails(ticketNo);
-								} catch (ClassNotFoundException  | SQLException e1) {
-									e1.printStackTrace();
-								} 
+								seatDetails.cancelSeatDetails(ticketNo); 
 
 								PrintWriter out=res.getWriter();
 								if (ticketCancelFlag) {

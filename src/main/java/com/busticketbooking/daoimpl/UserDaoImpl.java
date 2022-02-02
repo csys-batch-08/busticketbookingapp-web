@@ -20,23 +20,24 @@ public class UserDaoImpl implements UserDAO {
 	public User loginUser(long contact) {
 
 		String userLogin = "select user_id,user_name,user_dob,user_email,user_contact,user_gender,user_password,user_wallet from user_details where user_contact=?";
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
+		ResultSet rs=null;
 		User userModel = null;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(userLogin);
+			pstatement = con.prepareStatement(userLogin);
 			pstatement.setLong(1, contact);
-			ResultSet rs = pstatement.executeQuery();
+			rs = pstatement.executeQuery();
 
 			rs.next();
-			userModel = new User(rs.getInt(1), rs.getString(2), rs.getDate(3).toLocalDate(), rs.getString(4), rs.getLong(5),
-					rs.getString(6), rs.getString(7), rs.getDouble(8));
-			con.close();
-			pstatement.close();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			userModel = new User(rs.getInt("User_id"), rs.getString("User_name"), rs.getDate("User_dob").toLocalDate(), rs.getString("User_email"), rs.getLong("User_contact"),
+					rs.getString("User_gender"), rs.getString("User_password"), rs.getDouble("User_wallet"));
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con, rs);
 		}
 		return userModel;
 	}
@@ -45,11 +46,12 @@ public class UserDaoImpl implements UserDAO {
 	public boolean checkUser(long contact) {
 
 		String userLogin = "select user_id from user_details where user_contact=? and user_status='active'";
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		boolean checkUserFlag = true;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(userLogin);
+			pstatement = con.prepareStatement(userLogin);
 			pstatement.setLong(1, contact);
 			int i = pstatement.executeUpdate();
 			if (i > 0) {
@@ -57,11 +59,10 @@ public class UserDaoImpl implements UserDAO {
 			} else {
 				checkUserFlag = false;
 			}
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			;
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return checkUserFlag;
 	}
@@ -70,11 +71,12 @@ public class UserDaoImpl implements UserDAO {
 	public boolean registrationUser(User userModel) {
 
 		String insertUser = "insert into user_details (user_name,user_dob,user_email,user_contact,user_gender,user_password) values (?,?,?,?,?,?)";
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		int result =0;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(insertUser);
+			pstatement = con.prepareStatement(insertUser);
 
 			pstatement.setString(1, userModel.getUserName());
 			pstatement.setDate(2, java.sql.Date.valueOf(userModel.getUserDOB()));
@@ -84,10 +86,10 @@ public class UserDaoImpl implements UserDAO {
 			pstatement.setString(6, userModel.getUserPassword());
 
 			result	= pstatement.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}  finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		 return result>0;
 
@@ -97,10 +99,11 @@ public class UserDaoImpl implements UserDAO {
 
 		String userUpdate = "update user_details set user_name=?, user_dob=?, user_gender=?, user_password=? where user_contact=?";
 		int result=0;
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(userUpdate);
+			pstatement = con.prepareStatement(userUpdate);
 
 			pstatement.setString(1, userModel.getUserName());
 			pstatement.setDate(2, java.sql.Date.valueOf(userModel.getUserDOB()));
@@ -109,12 +112,11 @@ public class UserDaoImpl implements UserDAO {
 			pstatement.setLong(5, userModel.getUserContact());
 			
 			result=pstatement.executeUpdate();
-			pstatement.close();
-			con.close();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result>0;
 
@@ -126,25 +128,26 @@ public class UserDaoImpl implements UserDAO {
 
 		String userView = "select user_id,user_name,user_dob,user_email,user_contact,user_gender,user_password,user_wallet,user_status from user_details";
 
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
 		ResultSet rs = null;
 		List<User> userList = new ArrayList<User>();
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement = con.prepareStatement(userView);
+			pstatement = con.prepareStatement(userView);
 
 			rs = pstatement.executeQuery();
 
 			while (rs.next()) {
-				User userModel = new User(rs.getInt(1), rs.getString(2), rs.getDate(3).toLocalDate(), rs.getString(4),
-						rs.getLong(5), rs.getString(6), rs.getString(7), rs.getDouble(8));
+				User userModel = new User(rs.getInt("user_id"), rs.getString("user_name"), rs.getDate("user_dob").toLocalDate(), rs.getString("user_email"),
+						rs.getLong("user_contact"), rs.getString("user_gender"), rs.getString("user_password"), rs.getDouble("user_wallet"));
 				userList.add(userModel);
 			}
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con, rs);
 		}
 		return userList;
 
@@ -156,24 +159,24 @@ public class UserDaoImpl implements UserDAO {
 		String getUser = "select user_id,user_name,user_dob,user_email,user_contact,user_gender,user_password,user_wallet from user_details where user_id=?";
 		Connection con = null;
 		PreparedStatement pstatement = null;
+		ResultSet rs=null; 
 		User userModel = null;
 
 		try {
 			con = ConnectionUtill.connectdb();
 			pstatement = con.prepareStatement(getUser);
 			pstatement.setInt(1, userId);
-			ResultSet rs = pstatement.executeQuery();
+			rs = pstatement.executeQuery();
 
 			if (rs.next()) {
-				userModel = new User(rs.getInt(1), rs.getString(2),  rs.getDate(3).toLocalDate(), rs.getString(4), rs.getLong(5),
-						rs.getString(6), rs.getString(7), rs.getDouble(8));
+				userModel = new User(rs.getInt("user_id"), rs.getString("user_name"), rs.getDate("user_dob").toLocalDate(), rs.getString("user_email"),
+						rs.getLong("user_contact"), rs.getString("user_gender"), rs.getString("user_password"), rs.getDouble("user_wallet"));
 			}
-			con.close();
-			pstatement.close();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con, rs);
 		}
 		return userModel;
 
@@ -182,8 +185,8 @@ public class UserDaoImpl implements UserDAO {
 	public boolean updateWallet(double updatedWallet, long userContact) {
 		String wallet = "update user_details set user_wallet=? where user_contact=?";
 
-		Connection con;
-		PreparedStatement pstatement;
+		Connection con = null;
+		PreparedStatement pstatement = null;
 		int result = 0;
 		try {
 			con = ConnectionUtill.connectdb();
@@ -192,10 +195,10 @@ public class UserDaoImpl implements UserDAO {
 			pstatement.setDouble(1, updatedWallet);
 			pstatement.setLong(2, userContact);
 			result = pstatement.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionUtill.closeStatement(pstatement, con);
 		}
 		return result > 0;
 

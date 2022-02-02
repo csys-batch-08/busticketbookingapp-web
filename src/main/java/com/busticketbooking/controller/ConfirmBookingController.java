@@ -60,12 +60,7 @@ public class ConfirmBookingController extends HttpServlet {
 			boolean updateSeatFlag = busDao.updateSeatCount(busModel);
 
 			
-			//getting seat no from dao 
-			try {
-				seatDetailsDao.ticketexist(ticketCount, randomNo, busModel, userModel);
-			} catch (ClassNotFoundException | SQLException e1) {
-				e1.printStackTrace();
-			}
+			seatDetailsDao.ticketexist(ticketCount, randomNo, busModel, userModel);
 			
 			//inserting all getting values in booked tickets DAO
 			BookedTickets bookTickets = new BookedTickets(0, randomNo, userModel, busModel, busModel.getDeparture(),
@@ -88,7 +83,7 @@ public class ConfirmBookingController extends HttpServlet {
 		else {
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Insufficient Balance please recharge your wallet');");
-			out.println("location='UpdateWallet.jsp';");
+			out.println("location='updateWallet.jsp';");
 			out.println("</script>");
 
 		}

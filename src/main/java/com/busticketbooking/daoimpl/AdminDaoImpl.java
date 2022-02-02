@@ -18,22 +18,25 @@ public class AdminDaoImpl implements AdminDAO {
 	public Admin adminLogin(String contact)  {
 		
 		String loginadmin="select admin_password,admin_email from admin_details where admin_email=?";
-		Connection con;
+		Connection con = null;
+		PreparedStatement pstatement=null;
+		ResultSet rs=null;
 		Admin adminmodule=null;
 		try {
 			con = ConnectionUtill.connectdb();
-			PreparedStatement pstatement=con.prepareStatement(loginadmin);
+			pstatement=con.prepareStatement(loginadmin);
 			pstatement.setString(1, contact);
-			ResultSet rs=pstatement.executeQuery();
+			rs=pstatement.executeQuery();
 			
 			rs.next() ;
-				adminmodule=new Admin(rs.getString(1),rs.getString(2));
+				adminmodule=new Admin(rs.getString("admin_password"),rs.getString("admin_email"));
 			
 			
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			ConnectionUtill.closeStatement(pstatement,con, rs);
 		}
 		return adminmodule;
 	}

@@ -142,10 +142,9 @@ element.style {
            <c:choose>
            		<c:when test="${totalSeat!=0 }">
            		<button id="btn" name="btn" type="submit">BookTicket</button></c:when>
-           		<c:otherwise>
-           		${busDao.updateBusStatus("unavailable", CurrentBusObject.getBusId()) }
-           		<p id="seatsunavailable">Seats are Unavailable</p>
-           		</c:otherwise>
+           		<c:when test="${totalSeat==0 }">
+           		 ${busDao.updateBusStatus("unavailable", CurrentBusObject.getBusId()) } 
+           		<p id="seatsunavailable">Seats are Unavailable</p></c:when>
            </c:choose>
          </form>  
     </div>
