@@ -104,7 +104,7 @@
      <c:set var="date" scope="session" value="${Date}"></c:set>
      <c:set var="UserSession" scope="session" value="${userModel}"></c:set>
     
-    <form action="SeatBooking">
+    <form action="SeatBooking" method="post">
         <div>
             <fieldset id="fieldsettable">
                 <legend>Available Buses</legend>

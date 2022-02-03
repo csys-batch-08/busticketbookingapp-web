@@ -17,7 +17,7 @@ import com.busticketbooking.model.Bus;
 public class SeatBookingController extends HttpServlet {
 
 	@Override
-	public void service(HttpServletRequest req,HttpServletResponse res) {
+	public void doPost(HttpServletRequest req,HttpServletResponse res) {
 		
 		HttpSession session=req.getSession();
 		BusDaoImpl busDao=new BusDaoImpl();

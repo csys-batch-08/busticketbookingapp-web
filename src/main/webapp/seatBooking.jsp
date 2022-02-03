@@ -97,7 +97,7 @@ element.style {
         <legend>Booking Form</legend>
         
         <div id="bookingdiv">
-         <form  action="confirmBooking" >
+         <form  action="confirmBooking"  >
         <table id="seatbookingtable">
        
             <tr>
@@ -139,13 +139,13 @@ element.style {
                       
                  <jsp:useBean id="busDao" class="com.busticketbooking.daoimpl.BusDaoImpl"/>
                       
-           <c:choose>
-           		<c:when test="${totalSeat!=0 }">
-           		<button id="btn" name="btn" type="submit">BookTicket</button></c:when>
-           		<c:when test="${totalSeat==0 }">
-           		 ${busDao.updateBusStatus("unavailable", CurrentBusObject.getBusId()) } 
-           		<p id="seatsunavailable">Seats are Unavailable</p></c:when>
-           </c:choose>
+           		<c:if test="${CurrentBusObject.getTotalseat()>0 }">
+           		<button id="btn" name="btn" type="submit">BookTicket</button></c:if>
+           		
+           	<c:if test="${CurrentBusObject.getTotalseat()==0 and  }">
+           		 ${busDao.updateBusStatus("unavailable", CurrentBusObject.getBusId()) }
+           		<p id="seatsunavailable">Seats are Unavailable</p></c:if>
+           
          </form>  
     </div>
     

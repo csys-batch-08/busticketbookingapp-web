@@ -40,6 +40,7 @@ public class UpdateOperatorController extends HttpServlet {
 	
 		if(updateOperatorFlag) {
 				
+			res.sendRedirect(operatorEmail);
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Successfully Updated');");
 			out.println("location='OperatorList';");
