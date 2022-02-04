@@ -46,7 +46,7 @@
         <table>
             <tr>
                 <th><label for="busCategory">Bus Category</label></th>
-                <th><input name="busCategory" type="text" id="busCategory" pattern="[A-Za-z]{3,}" title="please enter correct bus category" placeholder="Enter the category"  autofocus  required ></th>
+                <th><input name="busCategory" type="text" id="busCategory" pattern="[A-Za-z ]{3,}" title="please enter correct bus category" placeholder="Enter the category"  autofocus  required ></th>
             </tr>
             <tr>
                 <th><label for="fromCity">From City</label></th>

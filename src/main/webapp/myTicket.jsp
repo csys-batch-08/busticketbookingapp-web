@@ -4,6 +4,11 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<script
+src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet'
+href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
 <link rel="stylesheet" href="css/NavigationUser.css">
 <title>Invoice</title>
     <style>
@@ -37,8 +42,8 @@
     		background: linear-gradient(45deg, #0aacf9, #1197e566);
     		border-radius: 10px;
     		border: none;
-    		margin-top: 160px;
-    		margin-left: 430px;
+    		margin-top: 105px;   
+    		margin-left: 390px;
     		box-shadow: 0px 0px 5px 0px #161313;
         }
         
@@ -73,11 +78,49 @@
             font-size: 23px; 
             color: rgb(95, 95, 224);
         }
+        .fire{
+        	
+        	
+        }
+        
     </style>
 </head>
 <body>
+
+	<c:set var="cancelMessage" scope="session" value="${WrongNumber }"></c:set>
     
-    <c:set var="cancelMessage" scope="session" value="${WrongNumber }"></c:set>
+    <c:if test="${cancelMessage!=null}">
+	<script>
+
+	/* Swal.fire({
+ 		icon: 'failure',
+ 		title: '${cancelMessage}',
+ 		showConfirmButton: false,
+ 		timer: 1500}) */
+ 		
+ 		var toastMixin = Swal.mixin({
+ 	   		toast: true,
+ 	   		icon: 'failure',
+ 	   		title: 'General Title',
+ 	   		animation: false,
+ 	   		position: 'center',
+ 	   		showConfirmButton: false,
+ 	   		timer: 3000,
+ 	   		timerProgressBar: true,
+ 	   		didOpen: (toast) => {
+ 	     	toast.addEventListener('mouseenter', Swal.stopTimer)
+ 	     	toast.addEventListener('mouseleave', Swal.resumeTimer)
+ 	   		}
+ 	 		});
+ 	   		deleted();
+ 			function deleted(){
+ 				toastMixin.fire({
+ 	        	animation: true,
+ 	        	title: '${cancelMessage}'
+ 	        	});
+ 	         }
+     </script>
+	</c:if>
     
     <div id="nav">
             <ul>
@@ -116,10 +159,13 @@
             </tr>
         </table>
         
-        <c:if test="${cancelMessage!=null }">
+        <%-- <c:if test="${cancelMessage!=null }">
+        <script type="text/javascript">
+        	alert("cancelMessage");
+        </script>
     	<p id="msgtag"><c:out value="${cancelMessage }"></c:out></p>
         </c:if>
-        <c:remove var="cancelMessage" scope="session"/>
+        <c:remove var="cancelMessage" scope="session"/> --%>
         
         <button id="searchbutton" type="submit" >Submit</button>
 		</form>

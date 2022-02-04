@@ -143,7 +143,7 @@ src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
                     
                     <c:if test="${operator.getOperatorStatus().equals('active') }">
                     <td><button id="editbutton" onclick="editOperator(${operator.getOperatorId()})">Edit</button> / <button id="deletebutton" onclick="deleteOperator(${operator.getOperatorId()})" >Delete</button></td>
-                    </c:if>
+                    </c:if>	
                     
            			<c:if test="${operator.getOperatorStatus().equals('inactive') }">
            			<td></td>

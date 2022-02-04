@@ -6,33 +6,57 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+
+<script
+src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet'
+href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
+<link rel="stylesheet" type="text/css"
+href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<script
+src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript"
+src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
 <title>Booking History</title>
 <link rel="stylesheet" href="css/NavigationUser.css">
 <style>
+
+	.title-heading{
+		margin-top:100px;
+		text-align:center;
+   		font-variant: all-petite-caps;
+	}
        #nav{
        position:fixed;
+       z-index:1;
        }
-            #operatorlistdiv table tr th,td {
-                padding: 25px;
-                text-align: center;
-                border: 1px solid black;
-                border-collapse: collapse;
-             }
-            #operatorlistfieldset{
-                margin-top: 110px;
-                margin-left: 100px;
-                width: 1000px;
-                
-            }
+            
             #operatorlistdiv{
-                padding: 40px;
-                margin-left: 20px;
-                margin-top: 10px;
+                padding: 15px;
+    			margin-left: 5px;
             }
-            #operatorlistfieldset legend{
-                font-size: 30px;
-                text-align: center;
-            }
+            
+            thead, th {
+	border: 1px solid;
+	border-collapse: collapse;
+	 background: #0aacf9;
+	font-size: 18px;
+	color: aliceblue;
+	text-align: center;
+}
+
+tbody, td {
+	border: 1px solid;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+td:hover {
+	background: #e7e7e7;
+}
+            
     </style>
 </head>
 <body>
@@ -64,25 +88,33 @@
                 </ul>
         </div>
 
-        <fieldset id="operatorlistfieldset">
-            <legend>Booking-History</legend>
+        
+            <h1 class="title-heading">Booking History</h1>
         <div id="operatorlistdiv">
          
-            <table>
+           <table id="table_id">
+            <thead>
                 <tr>
+                	<th>S.No</th>
                     <th>Ticket No</th>
-                    <th>Booking_Date</th>
+                    <th>Booking Date</th>
                     <th>Bus Type</th>
-                    <th>Departure_Date</th>
-                    <th>Arrival_Date</th>
+                    <th>Departure Date</th>
+                    <th>Arrival Date</th>
                     <th>Seat Count</th>
                     <th>Total Price</th>
                     <th>Booking Status</th>
                 </tr>
-               <c:forEach items="${BookingList}" var="bookticket">
-				<tr>
+                </thead>
+                <tbody>
+               <c:forEach begin="0" items="${BookingList}" var="bookticket" varStatus="loop">
+                <tr>
+                	<td>${loop.count }</td>
                     <td>${bookticket.getTicketNo() }</td>
-                    <td>${bookticket.getBookingDate() }</td>
+                    
+                    <fmt:parseDate value="${bookticket.getBookingDate() }"
+							pattern="yyyy-MM-dd" var="bookingDate" type="both" />
+                    <td><fmt:formatDate pattern="dd-MM-yyyy" value="${bookingDate}" /></td>
                     <td>${bookticket.getBusModel().getBusCategory() }</td>
                     
                     <fmt:parseDate value="${bookticket.getBusModel().getDeparture()}"
@@ -98,9 +130,15 @@
                     <td>${bookticket.getBookingStatus() }</td>
                 </tr>
                 </c:forEach>
+                </tbody>
             </table>
             
       </div>
-    </fieldset>
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+		$('#table_id').DataTable();
+		});
+    </script>
 </body>
 </html>

@@ -140,7 +140,7 @@
         </div>
 <script type="text/javascript">
 function check() {
-	var result = confirm("if you want to cancel 15% cancelation charge will be detected on your total price");
+	var result = confirm("Do you want to cancel this ticket?");
 
 	if (result == false) {
 		event.preventDefault();

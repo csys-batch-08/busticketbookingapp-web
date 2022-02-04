@@ -113,11 +113,15 @@
             	
                 <div id="forcontent">
                       <ul id="forcontentinlist">
-                        <li><h4>${fromLocation}</h4></li>
+                      <c:set var = "from" value = "${fn:toUpperCase(fromLocation )}" />
+                        <li><h4>${from}</h4></li>
                         <li><p>to</p></li>
-                        <li><h4>${toLocation}</h4></li>
+                        <c:set var = "to" value = "${fn:toUpperCase(toLocation )}" />
+                        <li><h4>${to}</h4></li>
                         <li><p>Journey Date :</p></li>
-                        <li><h4>${date}</h4></li>
+                        <fmt:parseDate value="${date}"
+							pattern="yyyy-mm-dd" var="dateDeparture" type="both" />
+                        <li><h4><fmt:formatDate pattern="dd-mm-yyyy" value="${dateDeparture}" /></h4></li>
                     </ul>
                 </div>
                 <div id="outerlinetable">

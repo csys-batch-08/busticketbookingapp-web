@@ -116,12 +116,16 @@
                 <tr>
                     <td><label for="bookingdate">Booking Date</label></td>
                     <td>:</td>
-                    <td><h4>${booktickets.getBookingDate() }</h4></td>
+                    <fmt:parseDate value="${booktickets.getBookingDate()  }"
+							pattern="yyyy-MM-dd" var="bookingDate" type="both" />
+                    <td><h4><fmt:formatDate pattern="dd-MM-yyyy" value="${bookingDate}" /></h4></td>
                 </tr>
                 <tr>
                     <td><label for="dateofjourney">Date of Journey</label></td>
                     <td>:</td>
-                    <td><h4>${booktickets.getDepartureDate().toLocalDate() }</h4></td>
+                    <fmt:parseDate value="${booktickets.getDepartureDate().toLocalDate() }"
+							pattern="yyyy-MM-dd" var="departureDate" type="both" />
+                    <td><h4><fmt:formatDate pattern="dd-MM-yyyy" value="${departureDate}" /></h4></td>
                 </tr>
                 <tr>
                     <td><label for="startpoint">Service Start Point</label></td>
@@ -149,7 +153,9 @@
                 <tr>
                     <td><label for="arrivaldate">Arrival Date</label></td>
                     <td>:</td>
-                    <td><h4>${booktickets.getBusModel().getArrival().toLocalDate() }</h4></td>
+                    <fmt:parseDate value="${booktickets.getBusModel().getArrival().toLocalDate()}"
+							pattern="yyyy-MM-dd" var="arrivalDate" type="both" />
+                    <td><h4><fmt:formatDate pattern="dd-MM-yyyy" value="${arrivalDate}" /></h4></td>
                 </tr>
                 <tr>
                     <td><label for="endpoint">Service End Point</label></td>
@@ -193,7 +199,8 @@
                     <td><label for="gender">Gender</label></td>
                 </tr>
                 <tr>
-                    <td><h4>${booktickets.getUserModel().getUserName() }</h4></td>
+                <c:set var = "empName" value = "${fn:toUpperCase(booktickets.getUserModel().getUserName() )}" />
+                    <td><h4>${empName}</h4></td>
                     <td><h4>${userage }</h4></td>
                     <td><h4>${booktickets.getUserModel().getUserContact() }</h4></td>
                     <td><h4>${booktickets.getUserModel().getUserGender() }</h4></td>

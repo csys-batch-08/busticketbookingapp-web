@@ -32,7 +32,7 @@
 		<c:if test="${currentUserModel!=null }">
     <div id="nav">
             <ul>
-                <li><h3 id="buslogo">BusHub</h3></li>
+                <li><h3 id="buslogo"><label>BusHub</label></h3></li>
                 <li><a href="SearchBus">Bus_Tickets</a></li>
                 <li><a href="aboutUs.jsp">About_us</a></li>
                   <li><div class="dropdown">
@@ -61,7 +61,7 @@
         <c:if test="${currentUserModel==null }">
            <div id="nav">
         <ul>
-            <li><span id="buslogo">BusHub</span></li>
+            <li><span id="buslogo"><label>BusHub</label></span></li>
             <li><a href="index.jsp">Bus_Tickets</a></li>
             <li><a href="aboutUs.jsp">About_us</a></li>
             
