@@ -115,7 +115,7 @@
         <table id="ticketnotable" aria-describedby="cancelbus">
         	<thead>
             <tr>
-                <th>TICKET NO :</th>
+                <th><label for="ticketNumber">TICKET NO :</label></th>
                 <th><input id="tickettext" name="tickettext" type="text" placeholder="Enter the ticket number" pattern="[A-Za-z0-9]{7}" title="please enter 7 digit ticket number" autofocus autocomplete="off" required></th>
             </tr>
             </thead>
