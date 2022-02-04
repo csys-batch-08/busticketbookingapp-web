@@ -31,7 +31,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			pstatement.setInt(4, OperatorModel.getOperatorAge());
 			
 			result = pstatement.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -60,7 +60,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			result=pstatement.executeUpdate();
 			pstatement.executeUpdate("commit");
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -88,7 +88,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			result=pstatement.executeUpdate();
 			pstatement.executeQuery(commitQuery);
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -115,7 +115,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 				operatorList.add(operator);
 			}
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con,rs);
@@ -142,7 +142,7 @@ public class OperatorDaoImpl implements OperatorDAO{
 			 if (rs.next()) {
 				 operatormodel=new Operator(rs.getInt("operator_id"),rs.getString("operator_name"),rs.getString("operator_email"),rs.getLong("operator_contact"),rs.getInt("operator_age"),rs.getString("operator_status"));
 				}
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con,rs);

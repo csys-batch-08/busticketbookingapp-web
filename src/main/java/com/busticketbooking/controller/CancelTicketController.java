@@ -100,7 +100,6 @@ public class CancelTicketController extends HttpServlet {
 									
 									out.println("<script type=\"text/javascript\">");
 									out.println("alert('Ticket cancelled successfully');");
-									out.println("alert('Your (85%)refund amount will be credit with your wallet with in 7 working days ');");
 									out.println("location='cancelTicket.jsp';");
 									out.println("</script>");
 									

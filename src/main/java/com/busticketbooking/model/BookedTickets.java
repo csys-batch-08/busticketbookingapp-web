@@ -1,12 +1,13 @@
 package com.busticketbooking.model;
 
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class BookedTickets {
+public class BookedTickets implements Serializable{
 
 	private int bookingId;
 	private String ticketNo;
@@ -162,7 +163,7 @@ public class BookedTickets {
 				&& Objects.equals(bookingStatus, other.bookingStatus) && Objects.equals(busModel, other.busModel)
 				&& Objects.equals(departureDate, other.departureDate)
 				&& Objects.equals(paymentStatus, other.paymentStatus) && ticketCount == other.ticketCount
-				&& Objects.equals(ticketNo, other.ticketNo) && totalPrice == other.totalPrice
+				&& Objects.equals(ticketNo, other.ticketNo)
 				&& Objects.equals(userModel, other.userModel);
 	}
 

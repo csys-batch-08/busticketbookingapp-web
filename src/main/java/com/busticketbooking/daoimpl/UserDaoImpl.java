@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDAO {
 			userModel = new User(rs.getInt("User_id"), rs.getString("User_name"), rs.getDate("User_dob").toLocalDate(), rs.getString("User_email"), rs.getLong("User_contact"),
 					rs.getString("User_gender"), rs.getString("User_password"), rs.getDouble("User_wallet"));
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDAO {
 			} else {
 				checkUserFlag = false;
 			}
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -86,7 +86,7 @@ public class UserDaoImpl implements UserDAO {
 			pstatement.setString(6, userModel.getUserPassword());
 
 			result	= pstatement.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}  finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -113,7 +113,7 @@ public class UserDaoImpl implements UserDAO {
 			
 			result=pstatement.executeUpdate();
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -144,7 +144,7 @@ public class UserDaoImpl implements UserDAO {
 				userList.add(userModel);
 			}
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -173,7 +173,7 @@ public class UserDaoImpl implements UserDAO {
 						rs.getLong("user_contact"), rs.getString("user_gender"), rs.getString("user_password"), rs.getDouble("user_wallet"));
 			}
 		
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -195,7 +195,7 @@ public class UserDaoImpl implements UserDAO {
 			pstatement.setDouble(1, updatedWallet);
 			pstatement.setLong(2, userContact);
 			result = pstatement.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -205,9 +205,9 @@ public class UserDaoImpl implements UserDAO {
 	}
 
 	
-	public int findUserAge(LocalDate DOB) {
+	public int findUserAge(LocalDate dateOfBirth) {
 		
-	      Period period = Period.between(DOB, LocalDate.now());
+	      Period period = Period.between(dateOfBirth, LocalDate.now());
 	      
 	      return period.getYears();
 	}

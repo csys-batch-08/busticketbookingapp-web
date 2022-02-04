@@ -38,7 +38,7 @@ public class SeatDetailsDaoImpl {
 		
 			result=pstatement.executeUpdate();
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.getMessage();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -92,12 +92,11 @@ public class SeatDetailsDaoImpl {
 			
 			resultFlag=false;
 		}
-//		return false;
-	} catch (ClassNotFoundException | SQLException e) {
+	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
-		ConnectionUtill.closeStatement(pstatement, con, rs);
-		ConnectionUtill.closeStatement(pstatement1, con);
+		ConnectionUtill.closeStatement(pstatement1, con, rs);
+		ConnectionUtill.closeStatement(pstatement, con);
 	}
 	return resultFlag;
 	}
@@ -115,7 +114,7 @@ public class SeatDetailsDaoImpl {
 			
 			pstatement.setString(1, ticketNo);
 			result=pstatement.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -148,7 +147,7 @@ public class SeatDetailsDaoImpl {
 				}
 				
 				return seatDetailsList;
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -174,7 +173,7 @@ public class SeatDetailsDaoImpl {
 					seatList.add(rs.getString(1));
 				}
 				return seatList;
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -203,7 +202,7 @@ public class SeatDetailsDaoImpl {
 					seatDetailsList.add(seatDetails);
 				}
 				return seatDetailsList;
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				ConnectionUtill.closeStatement(pstatement, con, rs);

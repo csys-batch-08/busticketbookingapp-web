@@ -1,8 +1,9 @@
 package com.busticketbooking.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class SeatDetails {
+public class SeatDetails implements Serializable{
 
 	private BookedTickets bookedTickets;
 	private int seatNo;

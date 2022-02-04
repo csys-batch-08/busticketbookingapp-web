@@ -1,6 +1,7 @@
 package com.busticketbooking.model;
 
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-public class Bus {
+public class Bus implements Serializable {
 
 	private int busId;
 	private int busNo;

@@ -1,8 +1,9 @@
 package com.busticketbooking.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Operator {
+public class Operator implements Serializable{
 
 	private int operatorId;
 	private String operatorName;

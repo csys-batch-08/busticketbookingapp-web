@@ -9,10 +9,15 @@ import java.sql.Statement;
 
 public class ConnectionUtill {
 
-     public static Connection connectdb() throws ClassNotFoundException, SQLException {
-	      Class.forName("oracle.jdbc.driver.OracleDriver");
-	      Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","oracle");
-	
+     public static Connection connectdb(){
+    	 Connection con = null;
+	      try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","oracle");
+		} 
+	      catch (ClassNotFoundException | SQLException e) {
+			e.getMessage();
+		} 
 	      return con;
 	
 }

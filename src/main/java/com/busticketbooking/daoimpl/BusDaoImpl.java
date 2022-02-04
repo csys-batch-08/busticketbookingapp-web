@@ -44,7 +44,7 @@ public class BusDaoImpl implements BusDAO {
 			
 			result = pstatement.executeUpdate();
 
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -65,7 +65,7 @@ public class BusDaoImpl implements BusDAO {
 			pstatement.setInt(1, busId);
 			result = pstatement.executeUpdate();
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}  finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -99,7 +99,7 @@ public class BusDaoImpl implements BusDAO {
 			result=pstatement.executeUpdate();
 			
 			}
-    	    catch (ClassNotFoundException | SQLException e) {
+    	    catch (SQLException e) {
     	    	e.printStackTrace();
     		} finally {
     			ConnectionUtill.closeStatement(pstatement, con);
@@ -124,7 +124,7 @@ public class BusDaoImpl implements BusDAO {
 		result=pstatement.executeUpdate();
 		
 		}
-	    catch (ClassNotFoundException | SQLException e) {
+	    catch (SQLException e) {
 	    	e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -155,7 +155,7 @@ public class BusDaoImpl implements BusDAO {
 				busList.add(busModel);
 			}
 
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -172,7 +172,7 @@ public class BusDaoImpl implements BusDAO {
 		public List<Bus> searchhBus(LocalDate givenDepartureDate,String fromLocation,String toLocation) 
 		 {
 				String findBus="select bus_id,bus_no,operator_id,bus_category,from_city,to_city,departure,arrival,seater_fare,"
-						+ "total_seat,seat_status from bus_details where to_char(departure,'dd-mm-yyyy')=? and from_city=? and to_city=?";
+						+ "total_seat,seat_status from bus_details where to_char(departure,'dd-mm-yyyy')=? and from_city=? and to_city=? order by departure";
 				Connection con=null;
 				PreparedStatement pstatement=null;
 				Bus busModel;
@@ -190,7 +190,7 @@ public class BusDaoImpl implements BusDAO {
 						busModel=new Bus(rs.getInt("bus_id"),rs.getInt("bus_no"),rs.getInt("operator_id"),rs.getString("bus_category"),rs.getString("from_city"),rs.getString("to_city"),rs.getTimestamp("departure").toLocalDateTime(),rs.getTimestamp("arrival").toLocalDateTime(),rs.getInt("seater_fare"),rs.getInt("total_seat"),rs.getString("seat_status"));
 						busFilterList.add(busModel);
 					}
-				} catch (ClassNotFoundException | SQLException e) {
+				} catch (SQLException e) {
 					e.printStackTrace();
 				} finally {
 					ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -216,7 +216,7 @@ public class BusDaoImpl implements BusDAO {
 				result=pstatement.executeUpdate();
 				
 				}
-	    	    catch (ClassNotFoundException  | SQLException e) {
+	    	    catch (SQLException e) {
 	    	    	e.printStackTrace();
 	    		}  finally {
 	    			ConnectionUtill.closeStatement(pstatement, con);
@@ -240,7 +240,7 @@ public class BusDaoImpl implements BusDAO {
 				con.close();
 				pstatement.close();
 				}
-	    	    catch (ClassNotFoundException | SQLException e) {
+	    	    catch (SQLException e) {
 	    	    	e.printStackTrace();
 	    		}  finally {
 	    			ConnectionUtill.closeStatement(pstatement, con);
@@ -268,7 +268,7 @@ public class BusDaoImpl implements BusDAO {
 				 }
 				con.close();
 				pstatement.close();
-			} catch (ClassNotFoundException | SQLException e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -292,7 +292,7 @@ public class BusDaoImpl implements BusDAO {
 					}
 					con.close();
 					pstatement.close();
-				} catch (ClassNotFoundException | SQLException e) {
+				} catch (SQLException e) {
 					e.printStackTrace();
 				} finally {
 					ConnectionUtill.closeStatement(pstatement, con, rs);

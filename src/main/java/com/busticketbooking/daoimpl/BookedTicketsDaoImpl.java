@@ -54,7 +54,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 			result=pstatement.executeUpdate();
 			result=pstatement1.executeUpdate();
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.getMessage();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -81,7 +81,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 				bookingId=rs.getInt(1);
 			}
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.getMessage();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -109,14 +109,14 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 			rs=pstatement.executeQuery();
 			
 			while(rs.next()) {
-				userModel1=userDao.getUserDetailsById(rs.getInt("user_id"));
-				busModel=busDao.findBusDetailsUsingID(rs.getInt("bus_id"));
-				BookedTickets bookedTicketsModel=new BookedTickets(rs.getInt("booking_id"),rs.getString("ticket_no"),userModel1,busModel,rs.getDate("booking_date").toLocalDate(),rs.getTimestamp("departure_date").toLocalDateTime(),rs.getInt("ticket_count"),rs.getDouble("total_price"),rs.getString("booking_status"),rs.getString("payment_status"));
+				userModel1=userDao.getUserDetailsById(rs.getInt("user_Id"));
+				busModel=busDao.findBusDetailsUsingID(rs.getInt("bus_Id"));
+				BookedTickets bookedTicketsModel=new BookedTickets(rs.getInt("booking_Id"),rs.getString("ticket_No"),userModel1,busModel,rs.getDate("booking_Date").toLocalDate(),rs.getTimestamp("departure_Date").toLocalDateTime(),rs.getInt("ticket_Count"),rs.getDouble("total_Price"),rs.getString("booking_Status"),rs.getString("payment_Status"));
 				bookingList.add(bookedTicketsModel);
 				
 			}	
 				
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -145,13 +145,13 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 			
 			while(rs.next()) {				
 				
-				userModel=userDao.getUserDetailsById(rs.getInt("user_id"));
-				busModel=busDao.findBusDetailsUsingID(rs.getInt("bus_id"));
-				bookedTicketsModel=new BookedTickets(rs.getInt("booking_id"),rs.getString("ticket_no"),userModel,busModel,rs.getDate("booking_date").toLocalDate(),rs.getTimestamp("departure_date").toLocalDateTime(),rs.getInt("ticket_count"),rs.getDouble("total_price"),rs.getString("booking_status"),rs.getString("payment_status"));
+				userModel=userDao.getUserDetailsById(rs.getInt("user_ID"));
+				busModel=busDao.findBusDetailsUsingID(rs.getInt("bus_ID"));
+				bookedTicketsModel=new BookedTickets(rs.getInt("booking_ID"),rs.getString("ticket_NO"),userModel,busModel,rs.getDate("Booking_Date").toLocalDate(),rs.getTimestamp("Departure_Date").toLocalDateTime(),rs.getInt("Ticket_Count"),rs.getDouble("Total_Price"),rs.getString("Booking_Status"),rs.getString("Payment_Status"));
 				bookTickets.add(bookedTicketsModel);
 			}	
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -177,7 +177,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 			pstatement.setString(3, ticketNo);
 			result=pstatement.executeUpdate();
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.getMessage();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con);
@@ -211,7 +211,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 				bookingListAdmin.add(bookedTicketsModel);
 			
 			}	
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -243,7 +243,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 				bookedTicketsModel=new BookedTickets(rs.getInt("booking_id"),rs.getString("ticket_no"),userModel,busModel,rs.getDate("booking_date").toLocalDate(),rs.getTimestamp("departure_date").toLocalDateTime(),rs.getInt("ticket_count"),rs.getDouble("total_price"),rs.getString("booking_status"),rs.getString("payment_status"));
 			}	
 			return bookedTicketsModel;
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);
@@ -270,7 +270,7 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 				resultFlag=true;
 			}
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtill.closeStatement(pstatement, con, rs);

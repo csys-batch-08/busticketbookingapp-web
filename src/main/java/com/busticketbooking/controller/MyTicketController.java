@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,9 +71,12 @@ public class MyTicketController extends HttpServlet {
 		}
 		}
 		catch(WrongTicketNumber | IOException t) {
-			session.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
-			try {
-				res.sendRedirect("myTicket.jsp");
+			req.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
+			RequestDispatcher reqDispatcher=req.getRequestDispatcher("myTicket.jsp");
+    		try {
+				reqDispatcher.forward(req, res);
+			} catch (ServletException e) {
+				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

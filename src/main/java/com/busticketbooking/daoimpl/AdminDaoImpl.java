@@ -32,7 +32,7 @@ public class AdminDaoImpl implements AdminDAO {
 				adminmodule=new Admin(rs.getString("admin_password"),rs.getString("admin_email"));
 			
 			
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 		finally {

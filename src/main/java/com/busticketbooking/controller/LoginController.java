@@ -87,9 +87,7 @@ public class LoginController extends HttpServlet {
 					if (userModel.getUserPassword().equals(password)) {
 						try {
 							
-							session.setAttribute("userModel", userModel);
-//						    session.setAttribute("userHome", "loginSession");
-							
+							session.setAttribute("userModel", userModel);							
 							res.sendRedirect("SearchBus");
 						} catch (IOException e) {
 							e.printStackTrace();
