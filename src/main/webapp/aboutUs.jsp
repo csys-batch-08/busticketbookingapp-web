@@ -107,12 +107,12 @@
 <br><br>
     <h3>Online Bus booking services by BusHub</h3><br>
     <p>BusHub is a one-stop destination for online booking bus. Bus booking can be done from anywhere and BusHub ensures that your bus journey is a smooth one.</p><br>
-    <p><b>E-Tickets:</b> BusHub provides e-tickets to passengers. When you make an online booking, an e-ticket is generated which is sent to your registered email ID and phone number. All you have to do is show that e-ticket in order to 
+    <p><strong>E-Tickets:</strong> BusHub provides e-tickets to passengers. When you make an online booking, an e-ticket is generated which is sent to your registered email ID and phone number. All you have to do is show that e-ticket in order to 
         board your bus. Although, to have a stress-free journey, it is always advisable to carry the print of your e-tickets.</p>
 <br>
-<p><b>Refunds:</b> If you book bus online on BusHub and for some reason, either you have to cancel your trip or the bus trip was cancelled by the bus provider, then the refund process is initiated. Though, please note that if you are cancelling your trip at the last moment, then you will not be eligible for a refund.</p>
+<p><strong>Refunds:</strong> If you book bus online on BusHub and for some reason, either you have to cancel your trip or the bus trip was cancelled by the bus provider, then the refund process is initiated. Though, please note that if you are cancelling your trip at the last moment, then you will not be eligible for a refund.</p>
 <br>
-<p><b>Cancel Booked Tickets:</b> Steps to cancel your booked ticket are easy to follow. All you have to do is to go to the cancel tab on BusHub's home page and put in the necessary details such as your booking ID and ticket number. After selecting the ticket, simply click on the cancel button.</p>
+<p><strong>Cancel Booked Tickets:</strong> Steps to cancel your booked ticket are easy to follow. All you have to do is to go to the cancel tab on BusHub's home page and put in the necessary details such as your booking ID and ticket number. After selecting the ticket, simply click on the cancel button.</p>
 <br><br>
 
 <h3>Book at cheapest online fares</h3><br>
@@ -141,13 +141,13 @@
 <p>It is really easy to book bus tickets on the BusHub portal, all thanks to their easy-to-use user interface. It is quite easy to find all the services on one click on the official website and mobile app of BusHub. 
     There are some simple steps that you have to follow for making your bus booking:</p>
 <br>
-<p><b>Step 1:</b> Visit the mobile app or BusHub website and go to the bus section in order to make your bus booking.</p>
+<p><strong>Step 1:</strong> Visit the mobile app or BusHub website and go to the bus section in order to make your bus booking.</p>
 <br>
-<p><b>Step 2:</b> Fill in important details such as your city of origin, your destination and set the journey date of your preference.</p>
+<p><strong>Step 2:</strong> Fill in important details such as your city of origin, your destination and set the journey date of your preference.</p>
 <br>
-<p><b>Step 3:</b> After bus selection, it's time to select a seat of your choice.</p>
+<p><strong>Step 3:</strong> After bus selection, it's time to select a seat of your choice.</p>
 <br>
-<p><b>Step 4:</b> After the confirmation of details, it's time to pay the final amount and get your e-ticket. </p>
+<p><strong>Step 4:</strong> After the confirmation of details, it's time to pay the final amount and get your e-ticket. </p>
 <br>
 <p>Considering the number of bus operators listed on BusHub, you can get the services from anywhere in India. Whether you wish to travel to popular cities such as Delhi, Mumbai, Chennai and Kolkata or explore the offbeat locations of the country such as Spiti, Puducherry, Chamba and Itanagar, you can board a bus and reach your
      destination. In fact, the bus service offered on BusHub is among the cheapest ways of travelling across India.</p>
