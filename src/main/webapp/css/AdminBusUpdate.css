@@ -1,0 +1,94 @@
+#bustitle {
+	padding: 0px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#headeraddbus {
+	padding: 0px;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	text-align: center;
+}
+
+#headeraddbus, #addbus {
+	margin: 0px auto;
+}
+
+#headeraddbus2 {
+	padding: 0px;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	text-align: center;
+}
+
+#headeraddbus2, #addbus2 {
+	margin: 0px auto;
+}
+
+#addbus {
+	position: absolute;
+	padding: 15px;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	border: none;
+	margin: 10px auto;
+	margin-left: 70px;
+	margin-top: 130px;
+}
+
+#addbus2 {
+	position: absolute;
+	padding: 15px;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	border: none;
+	margin: 10px auto;
+	margin-left: 750px;
+	margin-top: 235px;
+}
+
+#addbus table tr th, td {
+	padding: 7px 0px;
+	margin: 14px auto;
+}
+
+#addbus2 table tr th, td {
+	padding: 7px 0px;
+	margin: 14px auto;
+}
+
+#addbus label {
+	display: inline-block;
+	padding: 0px 7px;
+}
+
+#addbus table, #addbus2 table {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#seatStatus {
+	height: 13px;
+}
+
+#btn button {
+	height: 35px;
+	width: 100px;
+	outline: none;
+	border: none;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	background: none;
+	margin: 0px 20px;
+}
+
+#btn {
+	text-align: center
+}
+
+#btnsubmit:hover {
+	background-color: #008000c9;
+	color: white;
+}
+
+#btnreset:hover {
+	background-color: red;
+	color: white;
+}

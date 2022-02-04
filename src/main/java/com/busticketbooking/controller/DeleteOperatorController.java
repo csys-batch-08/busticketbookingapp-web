@@ -2,7 +2,9 @@ package com.busticketbooking.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,10 +32,19 @@ public class DeleteOperatorController extends HttpServlet{
 		
 		if(deleteOperatorFlag) {
 			
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Successfully deleted');");
-			out.println("location='OperatorList';");
-			out.println("</script>");
+			
+    		try {
+    			List<Operator> operatorList=operatorDao.viewOperator();
+    			req.setAttribute("OperatorListAdmin", operatorList);
+        		RequestDispatcher reqDispatcher=req.getRequestDispatcher("operatorList.jsp?deleteOperator=deleted");
+				reqDispatcher.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			} 
+//			out.println("<script type=\"text/javascript\">");
+//			out.println("alert('Successfully deleted');");
+//			out.println("location='OperatorList';");
+//			out.println("</script>");
 		}
 	}
 }

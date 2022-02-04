@@ -3,7 +3,9 @@ package com.busticketbooking.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,10 +44,18 @@ public class UpdateBusAndOperatorController extends HttpServlet {
 				
 				if(busUpdateFlag) {
 					
-					out.println("<script type=\"text/javascript\">");
-					out.println("alert('Successfully Updated');");
-					out.println("location='BusList';");
-					out.println("</script>");
+					try {
+						List<Bus> busList=busDao.viewAllBus();
+						req.setAttribute("BusListAdmin", busList);
+						RequestDispatcher rd = req.getRequestDispatcher("busList.jsp?updateBus=updated");
+							rd.forward(req, res);
+						} catch (ServletException | IOException e) {
+							e.printStackTrace();
+						} 
+//					out.println("<script type=\"text/javascript\">");
+//					out.println("alert('Successfully Updated');");
+//					out.println("location='BusList';");
+//					out.println("</script>");
 
 				}
 			}

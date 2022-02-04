@@ -2,7 +2,9 @@ package com.busticketbooking.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,12 +41,20 @@ public class UpdateOperatorController extends HttpServlet {
 		boolean updateOperatorFlag=operatorDao.updateOperator(operatorModel);
 	
 		if(updateOperatorFlag) {
-				
-			res.sendRedirect(operatorEmail);
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Successfully Updated');");
-			out.println("location='OperatorList';");
-			out.println("</script>");
+			
+			List<Operator> operatorList=operatorDao.viewOperator();
+			req.setAttribute("OperatorListAdmin", operatorList);
+			try {
+			RequestDispatcher rd = req.getRequestDispatcher("operatorList.jsp?updateOperator=updated");
+				rd.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			} 
+//			res.sendRedirect(operatorEmail);
+//			out.println("<script type=\"text/javascript\">");
+//			out.println("alert('Successfully Updated');");
+//			out.println("location='OperatorList';");
+//			out.println("</script>");
 				
 		}	
 		

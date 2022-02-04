@@ -44,10 +44,12 @@ public class AddBusController extends HttpServlet {
 				
 		if(busInsertFlag) {
 
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Successfully Added');");
-			out.println("location='addBus.jsp';");
-			out.println("</script>");
+			res.sendRedirect("addBus.jsp?infomsg=successfully added");
+			
+//			out.println("<script type=\"text/javascript\">");
+//			out.println("alert('Successfully Added');");
+//			out.println("location='addBus.jsp';");
+//			out.println("</script>");
 		}
 	}
 }

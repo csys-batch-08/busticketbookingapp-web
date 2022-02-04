@@ -1,0 +1,58 @@
+#headeraddoperator {
+	padding: 0px;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	text-align: center;
+}
+
+#headeraddoperator, #addOperator {
+	margin: 0px auto;
+}
+
+#operatortitle {
+	padding: 0px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#addOperator {
+	position: absolute;
+	padding: 17px;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	border: none;
+	margin: 140px 450px auto;
+}
+
+#addOperator label {
+	display: inline-block;
+	padding: 0px 7px;
+}
+
+#addOperator table, tr, th {
+	padding: 7px 0px;
+	margin: 14px auto;
+}
+
+#btn button {
+	height: 35px;
+	width: 100px;
+	outline: none;
+	border: none;
+	box-shadow: 0px 0px 10px 0px #c7c7c7;
+	background: none;
+	margin: 0px 20px;
+}
+
+#btn {
+	text-align: center
+}
+
+#btnsubmit:hover {
+	background-color: #008000c9;
+	color: white;
+}
+
+#btnreset:hover {
+	background-color: red;
+	color: white;
+}

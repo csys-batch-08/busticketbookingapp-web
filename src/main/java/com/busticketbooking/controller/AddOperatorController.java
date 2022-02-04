@@ -37,10 +37,12 @@ public class AddOperatorController extends HttpServlet {
 		boolean operatorInsertFlag=operatorDao.insertOperator(operatorModel);
 		if(operatorInsertFlag) {
 			
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Successfully Added');");
-			out.println("location='addOperator.jsp';");
-			out.println("</script>");
+			res.sendRedirect("addOperator.jsp?infomsg=successfully added");
+			
+//			out.println("<script type=\"text/javascript\">");
+//			out.println("alert('Successfully Added');");
+//			out.println("location='addOperator.jsp';");
+//			out.println("</script>");
 
 		}
 	}
