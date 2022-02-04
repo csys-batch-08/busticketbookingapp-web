@@ -6,13 +6,12 @@ public class Admin {
 
 	private int adminId;
 	private String adminName;
-	private long admincontact;
+	private long adminContact;
 	private String adminPassword;
 	private String adminEmail;
 	
 	public Admin() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Admin(String adminPassword, String adminEmail) {
@@ -30,8 +29,8 @@ public class Admin {
 		return adminName;
 	}
 
-	public long getAdmincontact() {
-		return admincontact;
+	public long getAdminContact() {
+		return adminContact;
 	}
 
 	public String getAdminPassword() {
@@ -50,8 +49,8 @@ public class Admin {
 		this.adminName = adminName;
 	}
 
-	public void setAdmincontact(long admincontact) {
-		this.admincontact = admincontact;
+	public void setadminContact(long adminContact) {
+		this.adminContact = adminContact;
 	}
 
 	public void setAdminPassword(String adminPassword) {
@@ -64,13 +63,13 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return "Admin [adminId=" + adminId + ", adminName=" + adminName + ", admincontact=" + admincontact
+		return "Admin [adminId=" + adminId + ", adminName=" + adminName + ", adminContact=" + adminContact
 				+ ", adminPassword=" + adminPassword + ", adminEmail=" + adminEmail + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(adminEmail, adminId, adminName, adminPassword, admincontact);
+		return Objects.hash(adminEmail, adminId, adminName, adminPassword, adminContact);
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class Admin {
 		Admin other = (Admin) obj;
 		return Objects.equals(adminEmail, other.adminEmail) && adminId == other.adminId
 				&& Objects.equals(adminName, other.adminName) && Objects.equals(adminPassword, other.adminPassword)
-				&& admincontact == other.admincontact;
+				&& adminContact == other.adminContact;
 	}
 
 	

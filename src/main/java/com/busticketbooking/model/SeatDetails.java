@@ -10,7 +10,6 @@ public class SeatDetails {
 	
 	public SeatDetails() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public SeatDetails(BookedTickets bookedTickets, int seatNo, String status) {

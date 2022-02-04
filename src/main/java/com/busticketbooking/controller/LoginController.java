@@ -34,15 +34,12 @@ public class LoginController extends HttpServlet {
 
 		// Admin Login
 		if (loginId.endsWith("admin@gmail.com")) {
-//			boolean adminCheckFlag;
-//			adminCheckFlag = adminDao.checkadmin(loginId);
 			adminModel = adminDao.adminLogin(loginId);
 			try {
 				if (adminModel!=null) {
 					if (adminModel.getAdminPassword().equals(password)) {
 						try {
 							res.sendRedirect("adminHome.jsp");
-//							session.setAttribute("AdminHome", "HomeSession");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}

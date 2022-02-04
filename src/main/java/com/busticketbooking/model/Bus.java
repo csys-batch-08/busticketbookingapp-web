@@ -19,7 +19,7 @@ public class Bus {
 	private LocalDateTime departure;
 	private LocalDateTime arrival;
 	private int seaterFare;
-	private int totalseat;
+	private int totalSeat;
 	private String seatStatus;
 
 	
@@ -35,7 +35,7 @@ public class Bus {
 		this.departure = departure;
 		this.arrival = arrival;
 		this.seaterFare = seaterFare;
-		this.totalseat = totalseat;
+		this.totalSeat = totalseat;
 		this.seatStatus = seatStatus;
 	}
 
@@ -50,7 +50,7 @@ public class Bus {
 		this.departure = departure;
 		this.arrival = arrival;
 		this.seaterFare = seaterFare;
-		this.totalseat = totalseat;
+		this.totalSeat = totalseat;
 		this.seatStatus = seatStatus;
 	}
 	
@@ -99,7 +99,7 @@ public class Bus {
 	}
 
 	public int getTotalseat() {
-		return totalseat;
+		return totalSeat;
 	}
 
 	public String getSeatStatus() {
@@ -143,7 +143,7 @@ public class Bus {
 	}
 
 	public void setTotalseat(int totalseat) {
-		this.totalseat = totalseat;
+		this.totalSeat = totalseat;
 	}
 
 	public void setSeatStatus(String seatStatus) {
@@ -154,14 +154,14 @@ public class Bus {
 	public String toString() {
 		return "Bus [busId=" + busId + ", busNo=" + busNo + ", operatorId=" + operatorId + ", busCategory="
 				+ busCategory + ", fromCity=" + fromCity + ", toCity=" + toCity + ", departure=" + departure
-				+ ", arrival=" + arrival + ", seaterFare=" + seaterFare + ", totalseat=" + totalseat + ", seatStatus="
+				+ ", arrival=" + arrival + ", seaterFare=" + seaterFare + ", totalseat=" + totalSeat + ", seatStatus="
 				+ seatStatus + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(arrival, busCategory, busId, busNo, departure, fromCity, operatorId, seatStatus, seaterFare,
-				toCity, totalseat);
+				toCity, totalSeat);
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class Bus {
 				&& busId == other.busId && busNo == other.busNo && Objects.equals(departure, other.departure)
 				&& Objects.equals(fromCity, other.fromCity) && operatorId == other.operatorId
 				&& Objects.equals(seatStatus, other.seatStatus) && seaterFare == other.seaterFare
-				&& Objects.equals(toCity, other.toCity) && totalseat == other.totalseat;
+				&& Objects.equals(toCity, other.toCity) && totalSeat == other.totalSeat;
 	}
 
 	

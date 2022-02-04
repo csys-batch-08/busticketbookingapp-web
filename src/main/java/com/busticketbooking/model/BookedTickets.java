@@ -23,7 +23,6 @@ public class BookedTickets {
 
 	public BookedTickets() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public BookedTickets(int bookingId,String ticketNo, User userModel, Bus busModel, LocalDate bookingDate,

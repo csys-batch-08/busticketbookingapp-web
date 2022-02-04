@@ -13,7 +13,6 @@ public class Operator {
 	
 	public Operator() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	
