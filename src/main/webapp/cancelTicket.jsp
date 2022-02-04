@@ -113,12 +113,12 @@
 	<div id="cancelticketdiv">
         <form action="cancelticketservlet">
         <table id="ticketnotable" aria-describedby="cancelbus">
-        
+        	<thead>
             <tr>
-                <td>TICKET NO :</td>
-                <td><input id="tickettext" name="tickettext" type="text" placeholder="Enter the ticket number" pattern="[A-Za-z0-9]{7}" title="please enter 7 digit ticket number" autofocus autocomplete="off" required></td>
+                <th>TICKET NO :</th>
+                <th><input id="tickettext" name="tickettext" type="text" placeholder="Enter the ticket number" pattern="[A-Za-z0-9]{7}" title="please enter 7 digit ticket number" autofocus autocomplete="off" required></th>
             </tr>
-            
+            </thead>
         </table>
         <label for="deductedmessage" id="deductedmessage">If you want to cancel your ticket(15% amount will be deducted)</label>
        	
