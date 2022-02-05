@@ -22,13 +22,6 @@
             font-size: xx-large;
             text-align: center;
         }
-        #seatsunavailable{
-        	padding: 15px;
-			margin-left: 230px;
-    		font-size: 25px;
-        	color: red;
-        	font-variant: all-petite-caps;
-        }
         #seatbookingtable tr td{
             padding: 15px;
         }
@@ -137,15 +130,9 @@ element.style {
               </select>
            </div> 
                       
-                 <%-- <jsp:useBean id="busDao" class="com.busticketbooking.daoimpl.BusDaoImpl"/> --%>
-                      
            		<c:if test="${CurrentBusObject.getTotalseat()>0 }">
            		<button id="btn" name="btn" type="submit">BookTicket</button></c:if>
            		
-           	<c:if test="${CurrentBusObject.getTotalseat()==0 }">
-           		 <%-- ${busDao.updateBusStatus("unavailable", CurrentBusObject.getBusId()) } --%>
-           		<p id="seatsunavailable">Seats are Unavailable</p></c:if>
-           
          </form>  
     </div>
     

@@ -6,6 +6,10 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<script
+src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet'
+href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <title>Bus Hub</title>
 <style>
         *{
@@ -98,6 +102,24 @@
     </head>
     <body>
     
+     <c:if test="${param.seatstatus!=null}">
+	<script type="text/javascript"> 
+	 Swal.fire({
+		title: "Oops!",
+		text: "Seats are unavailable",
+	    position: "center",
+	    /* background: "linear-gradient(red, brown)", 
+	    color: "white",*/
+	    allowOutsideClick: false,
+	    allowEscapeKey: false,
+	    allowEnterKey: false,
+	    showConfirmButton: false,
+	    showCancelButton: false,
+	    timer: 3000
+	  });
+	</script>
+	</c:if>
+	
      <c:set var="busList" scope="session" value="${BusList}"></c:set>
      <c:set var="fromLocation" scope="session" value="${FromLocation}"></c:set>
      <c:set var="toLocation" scope="session" value="${ToLocation}"></c:set>

@@ -22,6 +22,7 @@ public class FilterBusController extends HttpServlet {
 	@Override
 	public void service(HttpServletRequest req,HttpServletResponse res) {
 		
+		HttpSession session = req.getSession();
 		BusDaoImpl busDao=new BusDaoImpl();
 		
 		String fromLocation=req.getParameter("fromlocation");
@@ -31,10 +32,10 @@ public class FilterBusController extends HttpServlet {
 	    List<Bus> busFilterList=busDao.searchhBus(date, fromLocation, toLocation);
 	    if(busFilterList!=null) {
 	    	try {
-	    		req.setAttribute("BusList", busFilterList);
-	    		req.setAttribute("FromLocation", fromLocation);
-	    		req.setAttribute("ToLocation", toLocation);
-	    		req.setAttribute("Date", date);
+	    		session.setAttribute("BusList", busFilterList);
+	    		session.setAttribute("FromLocation", fromLocation);
+	    		session.setAttribute("ToLocation", toLocation);
+	    		session.setAttribute("Date", date);
 	    		RequestDispatcher reqDispatcher=req.getRequestDispatcher("filterBus.jsp");
 	    		reqDispatcher.forward(req, res);
 			} catch (IOException | ServletException e) {

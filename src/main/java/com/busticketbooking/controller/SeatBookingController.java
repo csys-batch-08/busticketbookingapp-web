@@ -27,15 +27,28 @@ public class SeatBookingController extends HttpServlet {
 	       
 	       Bus busModel=busDao.findBusDetailsUsingID(busId);
 	       
+	       
 	       if(busModel!=null) {
-		    		try {
+	    	   if(busModel.getTotalseat()==0) {
+	    		   busDao.updateBusStatus("unavailable", busId);
+	    		   try {
+//		    			session.setAttribute("CurrentBusObject", busModel);
+			    		RequestDispatcher reqDispatcher=req.getRequestDispatcher("filterBus.jsp?seatstatus=unavailable");
+						reqDispatcher.forward(req, res);
+					} catch (ServletException | IOException e) {
+						e.printStackTrace();
+					}
+	    	   }
+	    	   else {
+	    		   busDao.updateBusStatus("available", busId);
+	    		   try {
 		    			session.setAttribute("CurrentBusObject", busModel);
 			    		RequestDispatcher reqDispatcher=req.getRequestDispatcher("seatBooking.jsp");
 						reqDispatcher.forward(req, res);
 					} catch (ServletException | IOException e) {
 						e.printStackTrace();
 					}
-			
+	    	   }
 	       }
 	}
 }

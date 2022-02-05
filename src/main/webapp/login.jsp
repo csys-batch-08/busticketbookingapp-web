@@ -103,11 +103,12 @@
 
         <table id="tablee">
             <tr>
-                <th><img src="Assets/LoginPngUserName.png" id="loginuserpng"></th>
+            
+                <th><img src="Assets/LoginPngUserName.png" id="loginuserpng" alt=""></th>
                 <th><input name="name" type="text" placeholder="Login Id" autofocus autocomplete="off" required><br><br></th>
             </tr>
             <tr>
-                <th><img src="Assets/password2.png"></th>
+                <th><img src="Assets/password2.png" alt=""></th>
                 <th><input name="password" type="password" placeholder="Password" autocomplete="off" required><br><br></th>
             </tr>
             

@@ -60,11 +60,11 @@ href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'
             </tr>
             <tr>
                 <th><label for="operatorContact">Operator Contact</label></th>
-                <th><input name="operatorContact" type="text" id="operatorContact" pattern="[6-9][0-9]{9}" title="Must contain 10 numbers only" autocomplete="off" required></th>
+                <th><input name="operatorContact" type="number" id="operatorContact" pattern="[6-9][0-9]{9}" title="Must contain 10 numbers only" autocomplete="off" required></th>
             </tr>
             <tr>
                 <th><label for="operatorAge">Operator Age</label></th>
-                <th><input name="operatorAge" type="text" id="operatorAge" pattern="[0-9]{2}" title="please enter correct age" required></th>
+                <th><input name="operatorAge" type="number" id="operatorAge" pattern="[0-9]{2}" title="please enter correct age" required></th>
             </tr>
             
            

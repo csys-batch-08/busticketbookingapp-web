@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -121,26 +123,35 @@ public class CancelTicketController extends HttpServlet {
 				throw new WrongTicketNumber();
 			}
 		} catch (WrongTicketNumber t) {
-			session.setAttribute("WrongNumber", t.getWrongNumber());
+			
 			try {
-				res.sendRedirect("cancelTicket.jsp");
-			} catch (IOException e) {
+				req.setAttribute("WrongNumber", t.getWrongNumber());
+    			RequestDispatcher reqDispatcher=req.getRequestDispatcher("cancelTicket.jsp");
+				reqDispatcher.forward(req, res);
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			}
+			} 
+			
 		} catch (TicketAlreadyCancel t1) {
-			session.setAttribute("AlreadyCancel", t1.getAlreadyCancelMessage());
+			
 			try {
-				res.sendRedirect("cancelTicket.jsp");
-			} catch (IOException e) {
+				req.setAttribute("AlreadyCancel", t1.getAlreadyCancelMessage());
+    			RequestDispatcher reqDispatcher=req.getRequestDispatcher("cancelTicket.jsp");
+				reqDispatcher.forward(req, res);
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			}
+			} 
+			
 		} catch (BusDepartureDateEnded b) {
-			session.setAttribute("DateEnded", b.getDepartureMessage());
+			
 			try {
-				res.sendRedirect("cancelTicket.jsp");
-			} catch (IOException e) {
+				req.setAttribute("DateEnded", b.getDepartureMessage());
+    			RequestDispatcher reqDispatcher=req.getRequestDispatcher("cancelTicket.jsp");
+				reqDispatcher.forward(req, res);
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			}
+			} 
+			
 		}
 	}
 }

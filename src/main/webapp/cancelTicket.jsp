@@ -4,6 +4,10 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<script
+src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet'
+href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <title>Cancel Ticket</title>
 <link rel="stylesheet" href="css/NavigationUser.css">
 <style>
@@ -24,16 +28,17 @@
        	#ticketnotable{
             padding: 35px;
             padding-top:0px;
-            margin-left: 65px;
+            margin-left: 55px;
     		color: white;
     		font-size: 20px;
         }
         #deductedmessage{
             position: absolute;
             color: red;
-            font-size: 17px;
-            margin-left: 22px;
+            font-size: 20px;
+            margin-left: -18px;
     		margin-top: -27px;
+    		/* font-variant: all-petite-caps; */
         }
          #cancelticketdiv{
         	width: 600px;
@@ -42,8 +47,8 @@
     		background: linear-gradient(45deg, #0aacf9, #1197e566);
     		border-radius: 10px;
     		border: none;
-    		margin-top: 160px;
-    		margin-left: 430px;
+    		margin-top: 75px;
+    		margin-left: 385px;
     		box-shadow: 0px 0px 5px 0px #161313;
         }
         #submitbutton {
@@ -60,14 +65,14 @@
     		box-shadow: 0px 0px 5px 0px black;
     		position: absolute;
 		}
-		#msgtag{
+		/* #msgtag{
         	margin-left: 105px;
     		margin-top: 25px;
     		color: red;
    			position: absolute;
    			font-size: 25px;
    			font-variant: all-petite-caps;
-        }
+        } */
         #buslogo{
             font-style: italic;
             font-family: cursive;
@@ -81,6 +86,93 @@
     <c:set var="wrongnumbermessage" scope="session" value="${WrongNumber}"></c:set>
      <c:set var="alreadycancelmessage" scope="session" value="${AlreadyCancel}"></c:set>
      <c:set var="dateendedmessage" scope="session" value="${DateEnded}"></c:set>
+         
+    <c:if test="${wrongnumbermessage!=null}">
+	<script>
+
+	/* Swal.fire({
+ 		icon: 'failure',
+ 		title: '${wrongnumbermessage}',
+ 		showConfirmButton: false,
+ 		timer: 1500}) */
+ 		
+ 		var toastMixin = Swal.mixin({
+ 	   		toast: true,
+ 	   		icon: 'failure',
+ 	   		title: 'General Title',
+ 	   		animation: false,
+ 	   		position: 'center',
+ 	   		showConfirmButton: false,
+ 	   		timer: 3000,
+ 	   		timerProgressBar: true,
+ 	   		didOpen: (toast) => {
+ 	     	toast.addEventListener('mouseenter', Swal.stopTimer)
+ 	     	toast.addEventListener('mouseleave', Swal.resumeTimer)
+ 	   		}
+ 	 		});
+ 	   		deleted();
+ 			function deleted(){
+ 				toastMixin.fire({
+ 	        	animation: true,
+ 	        	title: '${wrongnumbermessage}'
+ 	        	});
+ 	         }
+     </script>
+	</c:if>
+	
+	<c:if test="${alreadycancelmessage!=null}">
+	<script>
+
+ 		var toastMixin = Swal.mixin({
+ 	   		toast: true,
+ 	   		icon: 'failure',
+ 	   		title: 'General Title',
+ 	   		animation: false,
+ 	   		position: 'center',
+ 	   		showConfirmButton: false,
+ 	   		timer: 3000,
+ 	   		timerProgressBar: true,
+ 	   		didOpen: (toast) => {
+ 	     	toast.addEventListener('mouseenter', Swal.stopTimer)
+ 	     	toast.addEventListener('mouseleave', Swal.resumeTimer)
+ 	   		}
+ 	 		});
+ 	   		deleted();
+ 			function deleted(){
+ 				toastMixin.fire({
+ 	        	animation: true,
+ 	        	title: '${alreadycancelmessage}'
+ 	        	});
+ 	         }
+     </script>
+	</c:if>
+	
+	<c:if test="${dateendedmessage!=null}">
+	<script>
+
+ 		var toastMixin = Swal.mixin({
+ 	   		toast: true,
+ 	   		icon: 'failure',
+ 	   		title: 'General Title',
+ 	   		animation: false,
+ 	   		position: 'center',
+ 	   		showConfirmButton: false,
+ 	   		timer: 3000,
+ 	   		timerProgressBar: true,
+ 	   		didOpen: (toast) => {
+ 	     	toast.addEventListener('mouseenter', Swal.stopTimer)
+ 	     	toast.addEventListener('mouseleave', Swal.resumeTimer)
+ 	   		}
+ 	 		});
+ 	   		deleted();
+ 			function deleted(){
+ 				toastMixin.fire({
+ 	        	animation: true,
+ 	        	title: '${dateendedmessage}'
+ 	        	});
+ 	         }
+     </script>
+	</c:if>
     
    <div id="nav">
             <ul>
@@ -122,10 +214,10 @@
         </table>
         <label for="deductedmessage" id="deductedmessage">If you want to cancel your ticket(15% amount will be deducted)</label>
        	
-    <c:if test="${wrongnumbermessage!=null}">
+    <%-- <c:if test="${wrongnumbermessage!=null}">
     	<p id="msgtag">${wrongnumbermessage }</p>
     </c:if> 
-    <%-- <%}session.removeAttribute("WrongNumber");%> --%>
+    <%}session.removeAttribute("WrongNumber");%> 
     
     <c:if test="${alreadycancelmessage!=null}">
     	<p id="msgtag">${alreadycancelmessage  }</p>
@@ -133,7 +225,7 @@
     
     <c:if test="${dateendedmessage!=null}">
     	<p id="msgtag">${dateendedmessage }</p>
-    </c:if>
+    </c:if> --%>
     
         <button onclick="check()" id="submitbutton" type="submit" >Submit</button>
         </form>

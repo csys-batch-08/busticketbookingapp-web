@@ -71,15 +71,14 @@ public class MyTicketController extends HttpServlet {
 		}
 		}
 		catch(WrongTicketNumber | IOException t) {
-			req.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
-			RequestDispatcher reqDispatcher=req.getRequestDispatcher("myTicket.jsp");
+			
     		try {
+    			req.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
+    			RequestDispatcher reqDispatcher=req.getRequestDispatcher("myTicket.jsp");
 				reqDispatcher.forward(req, res);
-			} catch (ServletException e) {
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			} 
 		}
 		
 	}
