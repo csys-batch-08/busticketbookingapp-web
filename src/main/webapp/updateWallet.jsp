@@ -38,18 +38,18 @@
 		<div id="updatewalletdiv">
 			<table>
 				<tr>
-					<td>Login Id</td>
-					<td>:</td>
-					<td>${usermodel.getUserContact() }</td>
+					<th>Login Id</th>
+					<th>:</th>
+					<th>${usermodel.getUserContact() }</th>
 				</tr>
 				<tr>
-					<td>Available Balance</td>
-					<td>:</td>
-					<td>${usermodel.getUserWallet() }</td>
+					<th>Available Balance</th>
+					<th>:</th>
+					<th>${usermodel.getUserWallet() }</th>
 				</tr>
 			</table>
 			<div id="amountdiv">
-				<label for="enteramount">Enter the amount</label> <input
+				<label for="amounttext">Enter the amount</label> <input
 					id="amounttext" name="amountentered" type="number"
 					placeholder="To be added to your wallet" autocomplete="off"
 					min="100" autofocus required>

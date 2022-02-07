@@ -13,15 +13,15 @@
 			<h2 class="pngtitle">LogIn</h2>
 			<table id="tablee">
 				<tr>
-					<th><img src="Assets/LoginPngUserName.png" id="loginuserpng"
-						alt=""></th>
-					<th><input name="name" type="text" placeholder="Login Id"
+					<th><label for="name"><img src="Assets/LoginPngUserName.png" id="loginuserpng"
+						alt=""></label></th>
+					<th><input id="name" name="name" type="text" placeholder="Login Id"
 						autofocus autocomplete="off" required><br>
 					<br></th>
 				</tr>
 				<tr>
-					<th><img src="Assets/password2.png" alt=""></th>
-					<th><input name="password" type="password"
+					<th><label for="password"><img src="Assets/password2.png" alt=""></label></th>
+					<th><input id="password" name="password" type="password"
 						placeholder="Password" autocomplete="off" required><br>
 					<br></th>
 				</tr>

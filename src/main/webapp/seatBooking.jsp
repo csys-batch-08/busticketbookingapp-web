@@ -14,35 +14,35 @@
          <form  action="confirmBooking" method="post" >
         <table id="seatbookingtable">
             <tr>
-                <td><label for="pickuppoint">Pickup Point : <input type="text" id="pickuppoint" value="${CurrentBusObject.getFromCity()}"></label></td>
-                <td><label for="pickuptime">Pickup Time  : <input type="text" id="pickuptime" value="${CurrentBusObject.getDeparture().toLocalTime()}"></label></td>
+                <th><label for="pickuppoint">Pickup Point : <input type="text" id="pickuppoint" value="${CurrentBusObject.getFromCity()}"></label></th>
+                <th><label for="pickuptime">Pickup Time  : <input type="text" id="pickuptime" value="${CurrentBusObject.getDeparture().toLocalTime()}"></label></th>
             </tr>
             <tr>
-                <td><label for="dropoffpoint">DropOff Point  : <input id="dropoffpoint" type="text" value="${CurrentBusObject.getToCity()}"></label></td>
-                <td><label for="dropofftime">DropOff Time  : <input id="dropofftime" type="text" value="${CurrentBusObject.getArrival().toLocalTime()}"></label></td>
+                <th><label for="dropoffpoint">DropOff Point  : <input id="dropoffpoint" type="text" value="${CurrentBusObject.getToCity()}"></label></th>
+                <th><label for="dropofftime">DropOff Time  : <input id="dropofftime" type="text" value="${CurrentBusObject.getArrival().toLocalTime()}"></label></th>
             </tr>
         </table>
         <table id="seatinfotable">
             <tr>
-                <td> <label for="buscategory">Bus Category :  <input id="buscategory" type="text" value="${CurrentBusObject.getBusCategory() }" ></label></td>
+                <th> <label for="buscategory">Bus Category :  <input id="buscategory" type="text" value="${CurrentBusObject.getBusCategory() }" ></label></th>
                 
             </tr>
             <tr>
-                <td><label for="availableseat">Available Seat : <input id="availableseat" type="text" value="${CurrentBusObject.getTotalseat()}"readonly ></label></td>
+                <th><label for="availableseat">Available Seat : <input id="availableseat" type="text" value="${CurrentBusObject.getTotalseat()}"readonly ></label></th>
             </tr>
             <tr>
-                <td><label for="noofselectedseat">No OF Seats Selected :  <input id="noofseatsselected" name="noofseats" type="text" readonly ></label></td>
+                <th><label for="noofselectedseat">No OF Seats Selected :  <input id="noofseatsselected" name="noofseats" type="text" readonly ></label></th>
             </tr>
             <tr>
-                <td><label for="totalfair">Total Fair : <input id="totalFair" name="totalFair" type="text" readonly ></label></td>
+                <th><label for="totalfair">Total Fair : <input id="totalFair" name="totalFair" type="text" readonly ></label></th>
             </tr>
             <tr>
-                <td><input id="randomnumber" name="randomnumber" type="text" style="visibility: hidden;" ></td>
+                <th><label for="randomnumber"><input id="randomnumber" name="randomnumber" type="text" style="visibility: hidden;" ></label></th>
             </tr>
          </table>
 
         <div id="seatcountdiv">
-            <label for="seatercount">Select Seater Count</label>
+            <label for="seatcount">Select Seater Count</label>
             <select name="seatcount" id="seatcount" >
             <c:forEach begin="1" end="${CurrentBusObject.getTotalseat() }" var="count">
                 <option  value="${count }">${count }</option>

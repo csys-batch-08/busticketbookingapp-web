@@ -93,7 +93,8 @@ public class BookedTicketsDaoImpl implements BookedTicketsDAO {
 	
 	//to show all booking for particular user
 	public List<BookedTickets> getBookingDetailsForCurrentUser(User userModel) {
-		String query="select booking_id,ticket_no,user_id,bus_id,booking_date,departure_date,ticket_count,total_price,booking_status,payment_status from booked_tickets where user_id=? order by departure_date desc";
+		String query="select booking_id,ticket_no,user_id,bus_id,booking_date,departure_date,ticket_count,total_price,"
+				+ "booking_status,payment_status from booked_tickets where user_id=? order by departure_date desc";
 		
 		Connection con = null;
 		PreparedStatement pstatement = null;

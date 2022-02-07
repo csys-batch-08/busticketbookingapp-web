@@ -53,20 +53,20 @@
 				</tr>
 				<tr>
 					<th><label for="gender">Gender</label></th>
-					<th id="male"><input type="radio" name="gender" value="Male"
-						required required><label for="Male"> Male</label> <input
+					<th id="male"><input id="gender" type="radio" name="gender" value="Male"
+						required required><label for="gender"> Male</label> <input id="gender"
 						type="radio" value="Female" name="gender" required required><label
-						for="Female">Female</label></th>
+						for="gender">Female</label></th>
 				</tr>
 			</table>
 			<br>
 			<table id="buttontable">
 				<tr>
-					<td><button type="submit">Register</button></td>
-					<td><button type="reset">Reset</button></td>
-					<td><button type="submit">
+					<th><button type="submit">Register</button></th>
+					<th><button type="reset">Reset</button></th>
+					<th><button type="submit">
 							<a href="index.jsp"> Home</a>
-						</button></td>
+						</button></th>
 				</tr>
 			</table>
 		</form>

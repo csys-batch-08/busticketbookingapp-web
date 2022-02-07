@@ -40,7 +40,7 @@
 			<div id="searchlocation">
 				<table>
 					<tr>
-						<td><div class="fromto">
+						<th><div class="fromto">
 								<span>FROM</span><br> <input class="inputtype" name="fromlocation"
 									id="fromlocation" pattern="[a-zA-Z]{2,}"
 									title="please enter correct city" autocomplete="off"
@@ -50,8 +50,8 @@
 										<option value="${location }">${location }</option>
 									</c:forEach>
 								</datalist>
-							</div></td>
-						<td><div class="fromto">
+							</div></th>
+						<th><div class="fromto">
 								<span>TO</span><br> <input class="inputtype" name="tolocation"
 									id="tolocation" pattern="[a-zA-Z]{2,}"
 									title="please enter correct city" autocomplete="off"
@@ -61,11 +61,11 @@
 										<option value="${location }">${location }</option>
 									</c:forEach>
 								</datalist>
-							</div></td>
-						<td><div class="fromto">
-								<span>DATE</span><br> <input class="inputtype" name="date" id="date"
+							</div></th>
+						<th><div class="fromto">
+								<label for="date">DATE</label><br> <input class="inputtype" name="date" id="date"
 									type="date" required>
-							</div></td>
+							</div></th>
 					</tr>
 				</table>
 				<button type="submit" id="searchbutton" onclick="return validate()">
