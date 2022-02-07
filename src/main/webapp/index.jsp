@@ -49,7 +49,7 @@
 									</datalist>
 								</div></th>
 							<th><div class="fromto">
-									<span>DATE</span><br> <input class="inputtype" name="date"
+									<label for="date">DATE</label><br> <input class="inputtype" name="date"
 										id="date" type="date" required>
 								</div></th>
 						</tr>

@@ -7,7 +7,6 @@ fieldset {
 #bookingdiv {
 	border: 1px solid black;
 	border-radius: 30px;
-	padding-left: 100px;
 	padding: 20px;
 	width: 696px;
 }
@@ -57,7 +56,6 @@ input {
 #bookingdiv {
 	border: 1px solid #237c85;
 	border-radius: 30px;
-	padding-left: 100px;
 	padding: 20px;
 	width: 696px;
 	background: linear-gradient(45deg, #7dd0f7, #1197e566);

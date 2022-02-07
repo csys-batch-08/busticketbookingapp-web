@@ -41,7 +41,7 @@
 				<table>
 					<tr>
 						<td><div class="fromto">
-								<span>FROM</span><br> <input name="fromlocation"
+								<span>FROM</span><br> <input class="inputtype" name="fromlocation"
 									id="fromlocation" pattern="[a-zA-Z]{2,}"
 									title="please enter correct city" autocomplete="off"
 									placeholder="Search Locations" list="from" required>
@@ -52,7 +52,7 @@
 								</datalist>
 							</div></td>
 						<td><div class="fromto">
-								<span>TO</span><br> <input name="tolocation"
+								<span>TO</span><br> <input class="inputtype" name="tolocation"
 									id="tolocation" pattern="[a-zA-Z]{2,}"
 									title="please enter correct city" autocomplete="off"
 									placeholder="Search Locations" list="to" required>
@@ -63,7 +63,7 @@
 								</datalist>
 							</div></td>
 						<td><div class="fromto">
-								<span>DATE</span><br> <input name="date" id="date"
+								<span>DATE</span><br> <input class="inputtype" name="date" id="date"
 									type="date" required>
 							</div></td>
 					</tr>

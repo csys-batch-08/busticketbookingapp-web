@@ -7,9 +7,8 @@
 	outline: none;
 }
 
-#searchlocation input, type {
+.inputtype {
 	font-size: 20px;
-	padding-top: 5px;
 	background-color: white;
 	padding: 15px 20px;
 	border-radius: 5px;
@@ -25,14 +24,13 @@
 
 #searchlocation {
 	padding: 40px;
-	border: 1px solid black;
 	border-radius: 15px;
 	height: 247px;
 	width: 1030px;
 	margin-left: 150px;
 	margin-top: 100px;
 	background: linear-gradient(45deg, #0aacf9, #1197e566);
-	border: none;
+	Border: none;
 }
 
 .fromto {
@@ -47,7 +45,7 @@
 	margin-bottom: -16px;
 	display: block;
 	font-size: 25px;
-	font-family: auto;
+	font-family: inherit;
 }
 
 #searchbutton {
