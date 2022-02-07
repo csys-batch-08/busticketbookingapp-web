@@ -17,46 +17,33 @@ import com.busticketbooking.model.Operator;
 
 @WebServlet("/UpdateOperatorjsp")
 public class UpdateOperatorController extends HttpServlet {
-	
-	OperatorDaoImpl operatorDao=new OperatorDaoImpl();
-	
-	public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
-		
-		HttpSession session=req.getSession();
-		 PrintWriter out=res.getWriter();
-		 
-		Operator operatorModel=(Operator) session.getAttribute("OperatorObject");	
-		int operatorId=operatorModel.getOperatorId();
-		
-		String operatorName=req.getParameter("operatorName").toLowerCase();
-		String operatorEmail=req.getParameter("operatorEmail").toLowerCase();
-		long operatorContact=Long.parseLong(req.getParameter("operatorContact"));
-		int operatorAge=Integer.parseInt(req.getParameter("operatorAge"));
-		
+	OperatorDaoImpl operatorDao = new OperatorDaoImpl();
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+		HttpSession session = req.getSession();
+		Operator operatorModel = (Operator) session.getAttribute("OperatorObject");
+		String operatorName = req.getParameter("operatorName").toLowerCase();
+		String operatorEmail = req.getParameter("operatorEmail").toLowerCase();
+		long operatorContact = Long.parseLong(req.getParameter("operatorContact"));
+		int operatorAge = Integer.parseInt(req.getParameter("operatorAge"));
+
 		operatorModel.setOperatorName(operatorName);
 		operatorModel.setOperatorEmail(operatorEmail);
 		operatorModel.setOperatorContact(operatorContact);
 		operatorModel.setOperatorAge(operatorAge);
-		
-		boolean updateOperatorFlag=operatorDao.updateOperator(operatorModel);
-	
-		if(updateOperatorFlag) {
-			
-			List<Operator> operatorList=operatorDao.viewOperator();
+
+		boolean updateOperatorFlag = operatorDao.updateOperator(operatorModel);
+		if (updateOperatorFlag) {
+			List<Operator> operatorList = operatorDao.viewOperator();
 			req.setAttribute("OperatorListAdmin", operatorList);
 			try {
-			RequestDispatcher rd = req.getRequestDispatcher("operatorList.jsp?updateOperator=updated");
+				RequestDispatcher rd = req.getRequestDispatcher("operatorList.jsp?updateOperator=updated");
 				rd.forward(req, res);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			} 
-//			res.sendRedirect(operatorEmail);
-//			out.println("<script type=\"text/javascript\">");
-//			out.println("alert('Successfully Updated');");
-//			out.println("location='OperatorList';");
-//			out.println("</script>");
-				
-		}	
-		
+			}
+		}
+
 	}
 }

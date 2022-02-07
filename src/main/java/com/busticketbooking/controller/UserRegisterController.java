@@ -1,7 +1,6 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 
 import javax.servlet.annotation.WebServlet;
@@ -16,18 +15,16 @@ import com.busticketbooking.model.User;
 
 @WebServlet("/registerpage")
 public class UserRegisterController extends HttpServlet {
-
 	UserDaoImpl userDao = new UserDaoImpl();
 
 	@Override
-	public void service(HttpServletRequest req, HttpServletResponse res) {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
+		
 		HttpSession session = req.getSession();
-
+		UserDaoImpl userDao = new UserDaoImpl();
 		String name = req.getParameter("name").toLowerCase();
 		String email = req.getParameter("emailId").toLowerCase();
-
 		long mobile = Long.parseLong(req.getParameter("mobile"));
-
 		boolean checkMobile = userDao.checkUser(mobile);
 		try {
 			if (!(checkMobile)) {
@@ -35,23 +32,15 @@ public class UserRegisterController extends HttpServlet {
 				LocalDate dob = LocalDate.parse(req.getParameter("dob"));
 				String gender = req.getParameter("gender").toLowerCase();
 				User userModel = new User(0, name, dob, email, mobile, gender, password, 0);
-				UserDaoImpl userDao = new UserDaoImpl();
-
 				boolean registerFlag = userDao.registrationUser(userModel);
-
 				if (registerFlag) {
-					PrintWriter out;
+					
 					try {
-						out = res.getWriter();
-						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Registered successfully');");
-						out.println("location='userRegister.jsp';");
-						out.println("</script>");
+						res.sendRedirect("userRegister.jsp?register=success");
 					} catch (IOException e) {
 						e.printStackTrace();
-					} 
-				} 
-				else {
+					}
+				} else {
 					throw new UserRegister();
 				}
 			} else {

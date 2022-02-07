@@ -40,7 +40,8 @@ td:hover {
 }
 
 #editbutton {
-	padding: 4px;
+	padding: 7px;
+	cursor: pointer;
 	border: none;
 	background: #5959e5e0;
 	color: white;
@@ -48,7 +49,7 @@ td:hover {
 }
 
 #deletebutton {
-	padding: 4px;
+	padding: 7px;
 	border: none;
 	background: #e55973e0;
 	color: white;

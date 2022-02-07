@@ -6,18 +6,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @WebServlet("/logout")
-public class LogOutController extends HttpServlet{
+public class LogOutController extends HttpServlet {
 
-	public void service(HttpServletRequest req,HttpServletResponse res) {
-		
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+
 		req.getSession().invalidate();
-	    try {
+		try {
 			res.sendRedirect("index.jsp");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

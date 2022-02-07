@@ -1,0 +1,60 @@
+#balancediv {
+	width: 600px;
+	height: 205px;
+	padding: 63px;
+	background: linear-gradient(45deg, #0aacf9, #1197e566);
+	border-radius: 10px;
+	border: none;
+	margin-top: 160px;
+	margin-left: 430px;
+	box-shadow: 0px 0px 5px 0px #161313;
+}
+
+#btn a {
+	text-decoration: none;
+	font-size: large;
+}
+
+#btn {
+	height: 50px;
+	width: 200px;
+	margin-top: 13px;
+	margin-left: 152px;
+	font-size: 18px;
+	color: black;
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0px 0px 5px 0px black;
+	position: absolute;
+}
+
+.clickmsg {
+	margin-left: 108px;
+	margin-top: 24px;
+	color: white;
+}
+
+#availableamount {
+	font-size: 32px;
+	font-style: oblique;
+	border-radius: 11px;
+	border: 1px solid rgb(238, 225, 225);
+	padding: 10px;
+	margin-left: 10px;
+	color: #fff4f4;
+}
+
+.currentbalance {
+	margin-left: 74px;
+	font-size: 31px;
+	color: white;
+}
+
+#buslogo {
+	font-style: italic;
+	font-family: cursive;
+	font-size: 23px;
+	color: rgb(95, 95, 224);
+}

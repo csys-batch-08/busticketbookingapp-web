@@ -1,7 +1,6 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+a<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +8,11 @@
 <link href="css/bootstrap.css" rel="stylesheet" >
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" ></script>
 <title>Add Bus</title>
-<link rel="stylesheet" href="css/NavigationAdmin.css">
-<link rel="stylesheet" href="css/AdminBusUpdate.css">
-
-<style>
-    
-     </style>
+<link rel="stylesheet" href="Assets/css/NavigationAdmin.css">
+<link rel="stylesheet" href="Assets/css/busUpdate.css">
  </head>
- <body>
  
+ <body>
      <div id="homeadmin">
        <ul>
             <li><a href="adminHome.jsp">Home</a></li>
@@ -30,45 +25,43 @@
             <li><a href="SeatList">Seat list</a></li>
         </ul>
     </div>
- 
         <div id="addbus" class="col-sm-4">
              <div id="headeraddbus"> <label id="bustitle" for="bus">Bus</label> </div>
         
             <form action="updateBusPage">
                 <table>
                     <tr>
-                  <!--  pattern="[A-Za-z][ ]"  -->
                         <th><label for="busCategory">Bus Category</label></th>
-                        <th><input name="busCategory" type="text" id="busCategory" title="please enter correct bus category" placeholder="Enter the category"  autofocus autocomplete="off" required ></th>
+                        <th><input class="input" name="busCategory" type="text" id="busCategory" pattern="[A-Za-z ]{3,}"  title="please enter correct bus category" placeholder="Enter the category"  autofocus autocomplete="off" required ></th>
                     </tr>
                     <tr>
                 <th><label for="fromCity">From City</label></th>
-                <th><input name="fromCity" type="text" id="fromCity" pattern="[A-Za-z]{3,}" title="please enter correct bus category" placeholder="Enter from city" autocomplete="off" required ></th>
+                <th><input class="input" name="fromCity" type="text" id="fromCity" pattern="[A-Za-z]{3,}" title="please enter correct bus category" placeholder="Enter from city" autocomplete="off" required ></th>
             </tr>
             <tr>
                 <th><label for="toCity">To City</label></th>
-                <th><input name="toCity" type="text" id="toCity" pattern="[A-Za-z]{3,}" title="please enter correct bus category" placeholder="Enter to city" autocomplete="off" required ></th>
+                <th><input class="input" name="toCity" type="text" id="toCity" pattern="[A-Za-z]{3,}" title="please enter correct bus category" placeholder="Enter to city" autocomplete="off" required ></th>
             </tr>
             <tr>
                 <th><label for="departure">Departure</label></th>
-                <th><input name="departure" type="datetime-local" id="departure" required></th>
+                <th><input class="input" name="departure" type="datetime-local" id="departure" required></th>
             </tr>
             <tr>
                 <th><label for="arrival">Arrival</label></th>
-                <th><input name="arrival" type="datetime-local" id="arrival" required></th>
+                <th><input class="input" name="arrival" type="datetime-local" id="arrival" required></th>
             </tr>
             <tr>
                 <th><label for="seaterFare">Seater Fare</label></th>
-                <th><input name="seaterFare" type="number" id="seaterFare" placeholder="Enter seater fare" required></th>
+                <th><input class="input" name="seaterFare" type="number" id="seaterFare" placeholder="Enter seater fare" required></th>
             </tr>
             <tr>
                 <th><label for="totalSeat">Total Seat</label></th>
-                <th><input name="totalSeat" type="number" id="totalSeat" placeholder="Enter total seat" required></th>
+                <th><input class="input" name="totalSeat" type="number" id="totalSeat" placeholder="Enter total seat" required></th>
             </tr>
 			<tr>
                  <th><label for="seatStatus">Status</label></th>
                  <th><input type="radio" id="seatStatus" name="seatStatus" value="available" required ><label for="available"> Available</label> 
-                    <input type="radio" id="seatStatus" value="unavailable" name="seatStatus" required ><label for="unavailable">UnAvailable</label></th>
+                    <input class="input" type="radio" id="seatStatus" value="unavailable" name="seatStatus" required ><label for="unavailable">UnAvailable</label></th>
              </tr>
         </table>
 
@@ -78,19 +71,17 @@
         </div>
                 </form>
                 </div>
-
      <div id="addbus2" class="col-sm-4">
           <div id="headeraddbus2"> <label id="bustitle" for="bus">Bus</label> </div>
-     
         <form action="busAndOperatorPage">
             <table>
                 <tr>
                     <th><label for="busno">Bus No</label></th>
-                    <th><input name="busNo" type="text" id="busno" pattern="[0-9]{4}" title="only numbers are allowed with 4 digit " placeholder="Enter Bus No"   ></th>
+                    <th><input class="input" name="busNo" type="text" id="busno" pattern="[0-9]{4}" title="only numbers are allowed with 4 digit " placeholder="Enter Bus No"   ></th>
                 </tr>
                 <tr>
                     <th><label for="operatorId">Operator ID</label></th>
-                    <th><input name="operatorId" type="text" id="operatorId" pattern="[0-9]" title="only numbers are allowed"  placeholder="Enter operator Id" ></th>
+                    <th><input class="input" name="operatorId" type="text" id="operatorId" pattern="[0-9]" title="only numbers are allowed"  placeholder="Enter operator Id" ></th>
                 </tr>
             </table>
             <div id="btn"><br>
@@ -101,9 +92,7 @@
             </div>
 
      <script type="text/javascript">
-     
      	<c:set var="busModel" scope="session" value="${BusObject}"></c:set>
-     	
      	document.getElementById("busno").value=`${busModel.getBusNo()}`;
      	document.getElementById("operatorId").value=`${busModel.getOperatorId()}`;
      	document.getElementById("busCategory").value=`${busModel.getBusCategory()}`;

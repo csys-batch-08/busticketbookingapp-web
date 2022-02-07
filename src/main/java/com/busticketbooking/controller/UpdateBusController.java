@@ -16,55 +16,42 @@ import javax.servlet.http.HttpSession;
 import com.busticketbooking.daoimpl.BusDaoImpl;
 import com.busticketbooking.model.Bus;
 
-
 @WebServlet("/updateBusPage")
-public class UpdateBusController extends HttpServlet  {
-		
-		BusDaoImpl busDao=new BusDaoImpl();
-		
-		public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
-			
-			HttpSession session=req.getSession();
-			 PrintWriter out=res.getWriter();
-			 
-			Bus busModel=(Bus) session.getAttribute("BusObject");
-			
-			int busId=busModel.getBusId();
-			
-			String busCategory=req.getParameter("busCategory").toLowerCase();
-			String fromCity=req.getParameter("fromCity").toLowerCase();
-			String toCity=req.getParameter("toCity").toLowerCase();
-			LocalDateTime departure=LocalDateTime.parse(req.getParameter("departure"));
-			LocalDateTime arrival=LocalDateTime.parse(req.getParameter("arrival"));
-			int seaterFare=Integer.parseInt(req.getParameter("seaterFare"));
-			int totalSeat=Integer.parseInt(req.getParameter("totalSeat"));
-			String status=req.getParameter("seatStatus");	
-			
-			busModel.setBusCategory(busCategory);
-			busModel.setFromCity(fromCity);
-			busModel.setToCity(toCity);
-			busModel.setDeparture(departure);
-			busModel.setArrival(arrival);
-			busModel.setSeaterFare(seaterFare);
-			busModel.setTotalseat(totalSeat);
-			busModel.setSeatStatus(status);
-			
-			boolean busUpdateFlag=busDao.updateBus(busModel);
-			
-			if(busUpdateFlag) {
-				
-				try {
-					List<Bus> busList=busDao.viewAllBus();
-					req.setAttribute("BusListAdmin", busList);
-					RequestDispatcher rd = req.getRequestDispatcher("busList.jsp?updateBus=updated");
-						rd.forward(req, res);
-					} catch (ServletException | IOException e) {
-						e.printStackTrace();
-					} 
-//				out.println("<script type=\"text/javascript\">");
-//				out.println("alert('Successfully Updated');");
-//				out.println("location='BusList';");
-//				out.println("</script>");
+public class UpdateBusController extends HttpServlet {
+
+	BusDaoImpl busDao = new BusDaoImpl();
+
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+		HttpSession session = req.getSession();
+		Bus busModel = (Bus) session.getAttribute("BusObject");
+		String busCategory = req.getParameter("busCategory").toLowerCase();
+		String fromCity = req.getParameter("fromCity").toLowerCase();
+		String toCity = req.getParameter("toCity").toLowerCase();
+		LocalDateTime departure = LocalDateTime.parse(req.getParameter("departure"));
+		LocalDateTime arrival = LocalDateTime.parse(req.getParameter("arrival"));
+		int seaterFare = Integer.parseInt(req.getParameter("seaterFare"));
+		int totalSeat = Integer.parseInt(req.getParameter("totalSeat"));
+		String status = req.getParameter("seatStatus");
+
+		busModel.setBusCategory(busCategory);
+		busModel.setFromCity(fromCity);
+		busModel.setToCity(toCity);
+		busModel.setDeparture(departure);
+		busModel.setArrival(arrival);
+		busModel.setSeaterFare(seaterFare);
+		busModel.setTotalseat(totalSeat);
+		busModel.setSeatStatus(status);
+		boolean busUpdateFlag = busDao.updateBus(busModel);
+		if (busUpdateFlag) {
+			try {
+				List<Bus> busList = busDao.viewAllBus();
+				req.setAttribute("BusListAdmin", busList);
+				RequestDispatcher rd = req.getRequestDispatcher("busList.jsp?infomsg=Updated");
+				rd.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
 			}
 		}
+	}
 }

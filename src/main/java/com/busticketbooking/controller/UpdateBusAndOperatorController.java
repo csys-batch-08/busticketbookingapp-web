@@ -18,45 +18,28 @@ import com.busticketbooking.model.Bus;
 
 @WebServlet("/busAndOperatorPage")
 public class UpdateBusAndOperatorController extends HttpServlet {
-			
-			BusDaoImpl busDao=new BusDaoImpl();
-			
-			@Override
-			public void service(HttpServletRequest req,HttpServletResponse res) throws IOException {
-				
-				HttpSession session=req.getSession();
-				 PrintWriter out=res.getWriter();
-				 
-				Bus busModel=(Bus) session.getAttribute("BusObject");
-				
-				int busId=busModel.getBusId();
-				Bus bus=busDao.findBusDetailsUsingID(busId);
-				
-				int busNo=Integer.parseInt(req.getParameter("busNo"));
-				int operatorId=Integer.parseInt(req.getParameter("operatorId"));
-				
-				busModel.setBusNo(busNo);
-				busModel.setOperatorId(operatorId);
-				
-//				Bus bus1=new Bus(busId,busNo,operatorId,bus.getBusCategory(),bus.getFromCity(),bus.getToCity(),bus.getDeparture(),
-//						bus.getArrival(),bus.getSeaterFare(),bus.getTotalseat(),bus.getSeatStatus());
-				boolean busUpdateFlag=busDao.updateBusNoAndOperator(busModel);
-				
-				if(busUpdateFlag) {
-					
-					try {
-						List<Bus> busList=busDao.viewAllBus();
-						req.setAttribute("BusListAdmin", busList);
-						RequestDispatcher rd = req.getRequestDispatcher("busList.jsp?updateBus=updated");
-							rd.forward(req, res);
-						} catch (ServletException | IOException e) {
-							e.printStackTrace();
-						} 
-//					out.println("<script type=\"text/javascript\">");
-//					out.println("alert('Successfully Updated');");
-//					out.println("location='BusList';");
-//					out.println("</script>");
+	BusDaoImpl busDao = new BusDaoImpl();
 
-				}
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+		HttpSession session = req.getSession();
+		Bus busModel = (Bus) session.getAttribute("BusObject");
+		int busNo = Integer.parseInt(req.getParameter("busNo"));
+		int operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		busModel.setBusNo(busNo);
+		busModel.setOperatorId(operatorId);
+		boolean busUpdateFlag = busDao.updateBusNoAndOperator(busModel);
+
+		if (busUpdateFlag) {
+			try {
+				List<Bus> busList = busDao.viewAllBus();
+				req.setAttribute("BusListAdmin", busList);
+				RequestDispatcher rd = req.getRequestDispatcher("busList.jsp?updateBus=updated");
+				rd.forward(req, res);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
 			}
+		}
+	}
 }

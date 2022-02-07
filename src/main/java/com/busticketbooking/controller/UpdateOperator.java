@@ -17,23 +17,21 @@ import com.busticketbooking.model.Operator;
 public class UpdateOperator extends HttpServlet {
 
 	@Override
-	public void service(HttpServletRequest req,HttpServletResponse res) {
-				
+	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+
 		HttpSession session = req.getSession();
-		
-		int operatorId=Integer.parseInt(req.getParameter("operatorId")); 
-     	OperatorDaoImpl operatorDao=new OperatorDaoImpl();
-         Operator operatorModel=operatorDao.getOperatorById(operatorId);
-         
-         if(operatorModel!=null) {
-        	 try {
-        		 session.setAttribute("OperatorObject", operatorModel);
-        		 RequestDispatcher reqDispatcher=req.getRequestDispatcher("updateOperator.jsp");
-  	    		reqDispatcher.forward(req, res);
+		int operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		OperatorDaoImpl operatorDao = new OperatorDaoImpl();
+		Operator operatorModel = operatorDao.getOperatorById(operatorId);
+		if (operatorModel != null) {
+			try {
+				session.setAttribute("OperatorObject", operatorModel);
+				RequestDispatcher reqDispatcher = req.getRequestDispatcher("updateOperator.jsp");
+				reqDispatcher.forward(req, res);
 			} catch (IOException | ServletException e) {
 				e.printStackTrace();
 			}
-         }
-		
+		}
+
 	}
 }

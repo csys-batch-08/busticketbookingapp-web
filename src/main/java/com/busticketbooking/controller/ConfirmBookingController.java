@@ -2,9 +2,6 @@ package com.busticketbooking.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,7 +30,7 @@ public class ConfirmBookingController extends HttpServlet {
 	SeatDetails seatDetails=new SeatDetails();
 
 	@Override
-	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
 
 		HttpSession session = req.getSession();
 		PrintWriter out=res.getWriter();
@@ -57,23 +54,19 @@ public class ConfirmBookingController extends HttpServlet {
 			
 			int updateBusSeat = busModel.getTotalseat() - ticketCount;
 			busModel.setTotalseat(updateBusSeat);
-			boolean updateSeatFlag = busDao.updateSeatCount(busModel);
-
-			
+			busDao.updateSeatCount(busModel);
 			seatDetailsDao.ticketexist(ticketCount, randomNo, busModel, userModel);
 			
 			//inserting all getting values in booked tickets DAO
 			BookedTickets bookTickets = new BookedTickets(0, randomNo, userModel, busModel, busModel.getDeparture(),
 					ticketCount, totalPrice, "success");
 			boolean ticketInsertFlag = bookTicketsDao.insertBookedTickets(bookTickets);
-
+			
 			//creating final session by using all
 			req.setAttribute("FinalBookTicketsModel", bookTickets);
-
-			
 			if (ticketInsertFlag) {
 				try {
-					RequestDispatcher reqDispatcher=req.getRequestDispatcher("bookSuccess.jsp");
+					RequestDispatcher reqDispatcher=req.getRequestDispatcher("bookSuccess.jsp?infomsg=Booked");					
 	 	    		reqDispatcher.forward(req, res);
 				} catch (IOException | ServletException e) {
 					e.printStackTrace();
@@ -85,7 +78,6 @@ public class ConfirmBookingController extends HttpServlet {
 			out.println("alert('Insufficient Balance please recharge your wallet');");
 			out.println("location='updateWallet.jsp';");
 			out.println("</script>");
-
 		}
 
 	}

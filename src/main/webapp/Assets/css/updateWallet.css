@@ -1,0 +1,60 @@
+body {
+	color: white;
+}
+
+#updatewalletdiv {
+	width: 600px;
+	height: 333px;
+	padding: 45px;
+	background: linear-gradient(45deg, #0aacf9, #1197e566);
+	border-radius: 10px;
+	border: none;
+	margin-top: 111px;
+	margin-left: 430px;
+	box-shadow: 0px 0px 5px 0px #161313;
+}
+
+#updatewalletdiv table tr td {
+	padding: 8px;
+	font-size: x-large;
+}
+
+#updatewalletdiv table {
+	margin-left: 50px;
+	color: white;
+}
+
+#amounttext {
+	height: 40px;
+	width: 200px;
+	font-size: 15px;
+	text-align: center;
+}
+
+#amountdiv {
+	margin-top: 35px;
+	margin-left: 138px;
+	font-size: 26px;
+}
+
+#btn {
+	height: 50px;
+	width: 200px;
+	margin-top: 62px;
+	margin-left: 145px;
+	font-size: 18px;
+	color: black;
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0px 0px 5px 0px black;
+	position: absolute;
+}
+
+#buslogo {
+	font-style: italic;
+	font-family: cursive;
+	font-size: 23px;
+	color: rgb(95, 95, 224);
+}

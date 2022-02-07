@@ -1,0 +1,34 @@
+.title-heading {
+	margin-top: 100px;
+	text-align: center;
+	font-variant: all-petite-caps;
+}
+
+#nav {
+	position: fixed;
+	z-index: 1;
+}
+
+#operatorlistdiv {
+	padding: 15px;
+	margin-left: 5px;
+}
+
+thead, th {
+	border: 1px solid;
+	border-collapse: collapse;
+	background: #0aacf9;
+	font-size: 18px;
+	color: aliceblue;
+	text-align: center;
+}
+
+tbody, td {
+	border: 1px solid;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+td:hover {
+	background: #e7e7e7;
+}

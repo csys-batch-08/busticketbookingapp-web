@@ -1,0 +1,68 @@
+#btnticket {
+	height: 45px;
+	width: 120px;
+	background-color: rgb(129, 168, 252);
+	outline: none;
+	border: none;
+	color: blanchedalmond;
+	text-decoration: none;
+	font-size: large;
+}
+
+#btnticket:hover {
+	background-color: rgb(247, 112, 112);
+}
+
+#buslogo {
+	font-style: italic;
+	font-family: cursive;
+	font-size: 23px;
+	color: rgb(95, 95, 224);
+}
+
+#buslogohead {
+	font-style: italic;
+	font-family: cursive;
+	font-size: 40px;
+	color: rgb(95, 95, 224);
+}
+
+#ticketdiv {
+	border: 1px solid black;
+	padding: 30px;
+	width: 788px;
+	margin-left: 300px;
+	height: 530px;
+	margin-top: 10px;
+}
+
+#heading {
+	text-align: center;
+}
+
+#endtable tr td, #starttable tr td, #seattable tr td {
+	padding: 10px;
+}
+
+#endtable {
+	position: relative;
+	margin-left: 410px;
+	margin-top: -200px;
+}
+
+#usertable tr td {
+	padding: 0 45px;
+}
+
+#usertable {
+	position: absolute;
+	margin-left: -30px;
+}
+
+#passengerdetails {
+	text-align: center;
+}
+
+#seattable {
+	margin-top: -40px;
+}

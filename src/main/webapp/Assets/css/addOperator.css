@@ -23,6 +23,11 @@
 	margin: 140px 450px auto;
 }
 
+.input {
+	height: 25px;
+	font-size: 15px;
+}
+
 #addOperator label {
 	display: inline-block;
 	padding: 0px 7px;

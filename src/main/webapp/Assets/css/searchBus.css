@@ -1,0 +1,69 @@
+#searchlocation input {
+	height: 30px;
+	width: 220px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+}
+
+#searchlocation input, type {
+	font-size: 20px;
+	padding-top: 5px;
+	background-color: white;
+	padding: 15px 20px;
+	border-radius: 5px;
+	margin-top: 10px;
+}
+
+#searchlocation table tr td {
+	box-shadow: -8px 4px 20px 0px #4283af52;
+	padding: 0px;
+	border-spacing: 0px;
+	margin: auto;
+}
+
+#searchlocation {
+	padding: 40px;
+	border: 1px solid black;
+	border-radius: 15px;
+	height: 247px;
+	width: 1030px;
+	margin-left: 150px;
+	margin-top: 100px;
+	background: linear-gradient(45deg, #0aacf9, #1197e566);
+	border: none;
+}
+
+.fromto {
+	width: 300px;
+	font-size: 20px;
+	padding: 20px;
+	margin-top: 0px;
+	text-align: center;
+}
+
+.fromto span {
+	margin-bottom: -16px;
+	display: block;
+	font-size: 25px;
+	font-family: auto;
+}
+
+#searchbutton {
+	height: 50px;
+	width: 200px;
+	margin-top: 70px;
+	margin-left: 360px;
+	color: black;
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0px 0px 5px 0px black;
+}
+
+#usernameshow {
+	font-size: larger;
+	margin-left: 1100px;
+}

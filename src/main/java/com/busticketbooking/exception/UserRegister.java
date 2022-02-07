@@ -4,12 +4,12 @@ public class UserRegister extends Exception{
 
 
 	public String getEmailRegisterMessage() {
-		return "this account already register";
+		return "This account already register";
 	}
 	
 
 	public String getPhoneRegisterMessage() {
-		return "this account already register";
+		return "This account already register";
 	}
 	
 }

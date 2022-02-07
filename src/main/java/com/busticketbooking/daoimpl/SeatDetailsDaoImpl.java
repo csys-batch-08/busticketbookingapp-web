@@ -47,7 +47,6 @@ public class SeatDetailsDaoImpl {
 	}
 	
 	public boolean ticketexist(int ticketCountEntered,String ticketRandomNumber,Bus bus,User user)  {
-		
 	Connection con = null;
 	PreparedStatement pstatement=null;
 	PreparedStatement pstatement1=null;
@@ -73,7 +72,6 @@ public class SeatDetailsDaoImpl {
 			else {
 				
 				pstatement1=con.prepareStatement(query1);
-				
 				pstatement1.setString(1, ticketRandomNumber);
 				pstatement1.setInt(2, user.getUserId());
 				pstatement1.setInt(3, bus.getBusId());
@@ -82,7 +80,6 @@ public class SeatDetailsDaoImpl {
 				pstatement1.executeUpdate("commit");
 				seatcount++;
 			}
-			
 			seatno++;
 		}
 		
@@ -95,8 +92,8 @@ public class SeatDetailsDaoImpl {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
-		ConnectionUtill.closeStatement(pstatement1, con, rs);
-		ConnectionUtill.closeStatement(pstatement, con);
+		ConnectionUtill.closeStatement(pstatement, con, rs);
+		ConnectionUtill.closeStatement(pstatement1, con);
 	}
 	return resultFlag;
 	}

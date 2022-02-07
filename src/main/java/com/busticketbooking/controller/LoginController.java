@@ -20,23 +20,21 @@ import com.busticketbooking.model.User;
 public class LoginController extends HttpServlet {
 
 	@Override
-	public void service(HttpServletRequest req, HttpServletResponse res) {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 
 		HttpSession session = req.getSession();
-
 		String loginId = req.getParameter("name");
 		String password = req.getParameter("password");
-
 		AdminDaoImpl adminDao = new AdminDaoImpl();
 		UserDaoImpl userDao = new UserDaoImpl();
 		Admin adminModel;
-		User userModel = new User();
+		User userModel = null;
 
 		// Admin Login
 		if (loginId.endsWith("admin@gmail.com")) {
 			adminModel = adminDao.adminLogin(loginId);
 			try {
-				if (adminModel!=null) {
+				if (adminModel != null) {
 					if (adminModel.getAdminPassword().equals(password)) {
 						try {
 							res.sendRedirect("adminHome.jsp");
@@ -54,7 +52,7 @@ public class LoginController extends HttpServlet {
 				try {
 					res.sendRedirect("login.jsp");
 				} catch (IOException e1) {
-					System.out.println(e.getMessage());
+					e1.printStackTrace();
 				}
 			} catch (LoginPasswordException e) {
 				session.setAttribute("erroruserid", e.getPasswordLoginMessage());
@@ -82,12 +80,12 @@ public class LoginController extends HttpServlet {
 			long userId = Long.parseLong(loginId);
 			userModel = userDao.loginUser(userId);
 			try {
-				if (userModel!=null) {
-					
+				if (userModel != null) {
+
 					if (userModel.getUserPassword().equals(password)) {
 						try {
-							
-							session.setAttribute("userModel", userModel);							
+
+							session.setAttribute("userModel", userModel);
 							res.sendRedirect("SearchBus");
 						} catch (IOException e) {
 							e.printStackTrace();

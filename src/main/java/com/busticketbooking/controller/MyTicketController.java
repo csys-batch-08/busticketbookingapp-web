@@ -29,57 +29,47 @@ public class MyTicketController extends HttpServlet {
 	BookedTicketsDaoImpl bookTicketsDao = new BookedTicketsDaoImpl();
 	SeatDetailsDaoImpl seatDetailsDao = new SeatDetailsDaoImpl();
 	BookedTickets bookedTicketsModel = new BookedTickets();
-	UserDaoImpl dao=new UserDaoImpl();
-	List<SeatDetails> seatNoList=new ArrayList<SeatDetails>();
+	UserDaoImpl dao = new UserDaoImpl();
+	List<SeatDetails> seatNoList = new ArrayList<>();
 
 	@Override
-	public void service(HttpServletRequest req, HttpServletResponse res) {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
-
-		String ticketNo=req.getParameter("tickettext");
+		String ticketNo = req.getParameter("tickettext");
 		bookTickets = bookTicketsDao.findBookedTicketsObjectDetails(ticketNo);
-		
-		//to take seat no from seat table and store it in string to show 
-		seatNoList=seatDetailsDao.getSeatDetailsUsingTicketNo(ticketNo);
+		// to take seat no from seat table and store it in string to show
+		seatNoList = seatDetailsDao.getSeatDetailsUsingTicketNo(ticketNo);
 		String bookSeatNum = "";
 		for (int i = 0; i < seatNoList.size(); i++) {
-			
-			SeatDetails agis= seatNoList.get(i); 
-			bookSeatNum += agis.getSeatNo() + "  ";	
+			SeatDetails agis = seatNoList.get(i);
+			bookSeatNum += agis.getSeatNo() + "  ";
 		}
 		try {
-		if (bookTickets != null) {
-
-			LocalDate date = bookTickets.getDepartureDate().toLocalDate();
-			boolean resultCheck=bookTicketsDao.dateChecking(ticketNo, date);
-			
-			//to check whether departure date is finished or not
-			if (resultCheck) { 
-				session.setAttribute("ticketdetailsresult", bookTickets);
-				session.setAttribute("seatnumberdetailsresult", bookSeatNum);
-				
+			if (bookTickets != null) {
+				LocalDate date = bookTickets.getDepartureDate().toLocalDate();
+				boolean resultCheck = bookTicketsDao.dateChecking(ticketNo, date);
+				// to check whether departure date is finished or not
+				if (resultCheck) {
+					session.setAttribute("ticketdetailsresult", bookTickets);
+					session.setAttribute("seatnumberdetailsresult", bookSeatNum);
 					res.sendRedirect("ticketInvoice.jsp");
-				
-			} else {
+				} else {
+					throw new WrongTicketNumber();
+				}
+			}
+			// if ticketNumber entered by user is wrong
+			else {
 				throw new WrongTicketNumber();
 			}
-		}
-		
-		// if ticketNumber entered by user is wrong
-		else {
-			throw new WrongTicketNumber();
-		}
-		}
-		catch(WrongTicketNumber | IOException t) {
-			
-    		try {
-    			req.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
-    			RequestDispatcher reqDispatcher=req.getRequestDispatcher("myTicket.jsp");
+		} catch (WrongTicketNumber | IOException t) {
+			try {
+				req.setAttribute("WrongNumber", ((WrongTicketNumber) t).getWrongNumber());
+				RequestDispatcher reqDispatcher = req.getRequestDispatcher("myTicket.jsp");
 				reqDispatcher.forward(req, res);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			} 
+			}
 		}
-		
+
 	}
 }

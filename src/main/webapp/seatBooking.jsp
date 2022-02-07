@@ -1,98 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Booking</title>
-<style>
-        fieldset{
-            padding: 47px;
-    		width: 500px;
-    		margin-left:300px;
-        }
-        #bookingdiv{
-            border: 1px solid black;
-    		border-radius: 30px;
-    		padding-left: 100px;
-    		padding: 20px;
-    		width: 696px;
-        }
-        legend{
-            font-size: xx-large;
-            text-align: center;
-        }
-        #seatbookingtable tr td{
-            padding: 15px;
-        }
-        #seatcountdiv {
-   		margin-left: 245px; 
-       position: absolute;
-    	margin-top: -68px;
-    	text-align: center;
-    	margin-bottom: 14px;
-}
-        #seatinfotable tr td{
-            padding: 15px;
-            padding-left: 20px;
-        }
-        #seatcount{
-            width: 70px;
-            height: 35px;
-            text-align: center;
-        }
-        label{
-            font-size: 17px;
-        }
-input {
-    border: none;
-    outline: none;
-    font-size: 22px;
-    text-align: center;
-    width: 100%;
-    margin-top: 14px;
-    padding: 5px;
-}
-      #bookingdiv {
-    border: 1px solid #237c85;
-    border-radius: 30px;
-    padding-left: 100px;
-    padding: 20px;
-    width: 696px;
-    background: linear-gradient(45deg,#7dd0f7, #1197e566);
-}
-   
-element.style {
-}
-#btn {
-    		height: 50px;
-    		width: 200px;
-    		margin-left: 240px;
-    		font-size: 18px;
-    		color: black;
-    		background-color: rgb(255 255 255);
-    		border: none;
-    		border-radius: 10px;
-    		cursor: pointer;
-    		box-shadow: 0px 0px 5px 0px black;
-}
-#btn:hover {
-        background-color: green;
-    color: white;
-}
-    </style>
+<link rel="stylesheet" href="Assets/css/seatBooking.css">
     
 </head>
-<body onmouseover="check()">
-  
-    					
+<body onmouseover="check()"> 					
     <fieldset>
-        <legend>Booking Form</legend>
-        
+        <legend>Booking Form</legend>    
         <div id="bookingdiv">
-         <form  action="confirmBooking"  >
+         <form  action="confirmBooking" method="post" >
         <table id="seatbookingtable">
-       
             <tr>
                 <td><label for="pickuppoint">Pickup Point : <input type="text" id="pickuppoint" value="${CurrentBusObject.getFromCity()}"></label></td>
                 <td><label for="pickuptime">Pickup Time  : <input type="text" id="pickuptime" value="${CurrentBusObject.getDeparture().toLocalTime()}"></label></td>
@@ -128,17 +48,12 @@ element.style {
                 <option  value="${count }">${count }</option>
               </c:forEach>
               </select>
-           </div> 
-                      
+           </div>            
            		<c:if test="${CurrentBusObject.getTotalseat()>0 }">
-           		<button id="btn" name="btn" type="submit">BookTicket</button></c:if>
-           		
+           		<button id="btn" name="btn" type="submit">BookTicket</button></c:if>   		
          </form>  
-    </div>
-    
-        </fieldset>
-     
-
+    </div>  
+        </fieldset>   
 </body>
 
  <script type="text/javascript">
@@ -151,13 +66,11 @@ var count=seatcount.options[seatcount.selectedIndex].value;
 
 numberSeats.value=count;
 price.value=`${CurrentBusObject.getSeaterFare()}`*count;
-
 var text = "";
 var random = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 for (var i = 0; i < 7; i++)
   text += random.charAt(Math.floor(Math.random() * random.length));
 randomNo.value=text;
-
 }
 </script>
 </html>

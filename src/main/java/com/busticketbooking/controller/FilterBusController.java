@@ -2,7 +2,6 @@ package com.busticketbooking.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -20,15 +19,13 @@ import com.busticketbooking.model.Bus;
 public class FilterBusController extends HttpServlet {
 
 	@Override
-	public void service(HttpServletRequest req,HttpServletResponse res) {
+	public void doPost(HttpServletRequest req,HttpServletResponse res) {
 		
 		HttpSession session = req.getSession();
 		BusDaoImpl busDao=new BusDaoImpl();
-		
 		String fromLocation=req.getParameter("fromlocation");
 	    String toLocation=req.getParameter("tolocation");
 	    LocalDate date=LocalDate.parse(req.getParameter("date"));
-	    
 	    List<Bus> busFilterList=busDao.searchhBus(date, fromLocation, toLocation);
 	    if(busFilterList!=null) {
 	    	try {

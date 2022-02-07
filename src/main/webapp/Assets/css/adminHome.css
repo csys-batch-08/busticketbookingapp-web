@@ -1,0 +1,14 @@
+#logout {
+	height: 50px;
+	width: 200px;
+	margin-top: 150px;
+	margin-left: 600px;
+	padding: 8px;
+	color: black;
+	background-color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0px 0px 5px 0px black;
+	text-allign: center;
+}
