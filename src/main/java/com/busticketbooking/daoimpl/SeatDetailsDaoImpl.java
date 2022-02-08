@@ -71,14 +71,21 @@ public class SeatDetailsDaoImpl {
 			}
 			else {
 				
-				pstatement1=con.prepareStatement(query1);
-				pstatement1.setString(1, ticketRandomNumber);
-				pstatement1.setInt(2, user.getUserId());
-				pstatement1.setInt(3, bus.getBusId());
-				pstatement1.setInt(4, seatno);
-				pstatement1.executeUpdate();
-				pstatement1.executeUpdate("commit");
-				seatcount++;
+				try {
+					pstatement1=con.prepareStatement(query1);
+					pstatement1.setString(1, ticketRandomNumber);
+					pstatement1.setInt(2, user.getUserId());
+					pstatement1.setInt(3, bus.getBusId());
+					pstatement1.setInt(4, seatno);
+					pstatement1.executeUpdate();
+					pstatement1.executeUpdate("commit");
+					seatcount++;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					ConnectionUtill.closeStatement(pstatement1,null);
+				}
+				
 			}
 			seatno++;
 		}
@@ -92,8 +99,7 @@ public class SeatDetailsDaoImpl {
 	} catch (SQLException e) {
 		e.printStackTrace();
 	} finally {
-		ConnectionUtill.closeStatement(pstatement, con, rs);
-		ConnectionUtill.closeStatement(pstatement1, con);
+		ConnectionUtill.closeStatement(pstatement,pstatement1, con, rs);
 	}
 	return resultFlag;
 	}

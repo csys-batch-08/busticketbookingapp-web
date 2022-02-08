@@ -34,6 +34,8 @@ public class ConnectionUtill {
  			e.printStackTrace();
  		}
  	}
+     
+     
  	
  	public static void closeStatement(Statement stmt, Connection con) {
  		try {
@@ -52,6 +54,25 @@ public class ConnectionUtill {
  		try {
  			if (pstmt != null) {
  				pstmt.close();
+ 			}
+ 			if (con != null) {
+ 				con.close();
+ 			}
+ 			if(rs!=null){
+ 				rs.close();
+ 			}
+ 		} catch (SQLException e) {
+ 			e.printStackTrace();
+ 		}
+ 	}
+ 	
+ 	public static void closeStatement(PreparedStatement pstmt,PreparedStatement pstmt2, Connection con, ResultSet rs) {
+ 		try {
+ 			if (pstmt != null) {
+ 				pstmt.close();
+ 			}
+ 			if (pstmt2 != null) {
+ 				pstmt2.close();
  			}
  			if (con != null) {
  				con.close();

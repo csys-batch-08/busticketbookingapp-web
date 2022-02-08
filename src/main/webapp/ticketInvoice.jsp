@@ -49,6 +49,9 @@
 		</div>
 		<br>
 		<table id="starttable">
+		<tr>
+			<th></th>
+			</tr>
 			<tr>
 				<td><label for="bookingdate">Booking Date</label></td>
 				<td>:</td>
