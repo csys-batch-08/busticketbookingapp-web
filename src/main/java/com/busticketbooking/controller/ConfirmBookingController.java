@@ -36,7 +36,7 @@ public class ConfirmBookingController extends HttpServlet {
 		PrintWriter out = null;
 		try {
 			out = res.getWriter();
-		} catch (IOException e1) {
+		} catch (IOException |NullPointerException e1) {
 			e1.printStackTrace();
 		}
 		

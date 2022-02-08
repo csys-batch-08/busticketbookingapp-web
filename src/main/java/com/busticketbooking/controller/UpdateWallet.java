@@ -34,7 +34,7 @@ public class UpdateWallet extends HttpServlet {
 		PrintWriter out = null;
 		try {
 			out = res.getWriter();
-		} catch (IOException e) {
+		} catch (IOException |NullPointerException e) {
 			e.printStackTrace();
 		}
 		if (walletUpdateFlag) {
