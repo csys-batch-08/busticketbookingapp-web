@@ -49,15 +49,19 @@ public class UpdateUserProfileController extends HttpServlet {
 		PrintWriter out = null;
 		try {
 			out = res.getWriter();
-		} catch (IOException |NullPointerException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (userUpdateFlag) {
 			session.setAttribute("UserAge", userAge);
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Profile Updated Successfully');");
-			out.println("location='userProfile.jsp';");
-			out.println("</script>");
+			try {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Profile Updated Successfully');");
+				out.println("location='userProfile.jsp';");
+				out.println("</script>");
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
