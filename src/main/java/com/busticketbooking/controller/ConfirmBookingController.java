@@ -30,10 +30,15 @@ public class ConfirmBookingController extends HttpServlet {
 	SeatDetails seatDetails=new SeatDetails();
 
 	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 
 		HttpSession session = req.getSession();
-		PrintWriter out=res.getWriter();
+		PrintWriter out = null;
+		try {
+			out = res.getWriter();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 		//getting userDetails from session from loginController
 		User userModel = (User) session.getAttribute("userModel");
@@ -43,8 +48,14 @@ public class ConfirmBookingController extends HttpServlet {
 		
 		//getting details from seatBooking jsp page input entered by user
 		String randomNo = req.getParameter("randomnumber");
-		int ticketCount = Integer.parseInt(req.getParameter("noofseats"));
-		int totalPrice = Integer.parseInt(req.getParameter("totalFair"));
+		int ticketCount = 0;
+		int totalPrice = 0;
+		try {
+			ticketCount = Integer.parseInt(req.getParameter("noofseats"));
+			totalPrice = Integer.parseInt(req.getParameter("totalFair"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 
 		//checking balance from user to book ticket
 		if (userModel.getUserWallet() >= totalPrice) {

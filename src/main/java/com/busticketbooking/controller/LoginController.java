@@ -33,33 +33,35 @@ public class LoginController extends HttpServlet {
 		// Admin Login
 		if (loginId.endsWith("admin@gmail.com")) {
 			adminModel = adminDao.adminLogin(loginId);
-			try {
-				if (adminModel != null) {
-					if (adminModel.getAdminPassword().equals(password)) {
-						try {
-							res.sendRedirect("adminHome.jsp");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					} else {
-						throw new LoginPasswordException();
+			if (adminModel != null) {
+				if (adminModel.getAdminPassword().equals(password)) {
+					try {
+						res.sendRedirect("adminHome.jsp");
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
 				} else {
+					try {
+						throw new LoginPasswordException();
+					} catch (LoginPasswordException e) {
+						session.setAttribute("erroruserid", e.getPasswordLoginMessage());
+						try {
+							res.sendRedirect("login.jsp");
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+			} else {
+				try {
 					throw new LoginUserNameException();
-				}
-			} catch (LoginUserNameException e) {
-				session.setAttribute("erroruserid", e.getUserNameLoginMessage());
-				try {
-					res.sendRedirect("login.jsp");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			} catch (LoginPasswordException e) {
-				session.setAttribute("erroruserid", e.getPasswordLoginMessage());
-				try {
-					res.sendRedirect("login.jsp");
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				} catch (LoginUserNameException e) {
+					session.setAttribute("erroruserid", e.getUserNameLoginMessage());
+					try {
+						res.sendRedirect("login.jsp");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		} else if (loginId.contains("admin@gmail.com") == false && loginId.matches("[0-9]+") == false) {
@@ -77,42 +79,50 @@ public class LoginController extends HttpServlet {
 
 		// userLogin
 		else {
-			long userId = Long.parseLong(loginId);
-			userModel = userDao.loginUser(userId);
+			long userId = 0;
 			try {
-				if (userModel != null) {
+				userId = Long.parseLong(loginId);
+			} catch (NumberFormatException e2) {
+				e2.printStackTrace();
+			}
+			userModel = userDao.loginUser(userId);
+			if (userModel != null) {
 
-					if (userModel.getUserPassword().equals(password)) {
-						try {
+				if (userModel.getUserPassword().equals(password)) {
+					try {
 
-							session.setAttribute("userModel", userModel);
-							res.sendRedirect("SearchBus");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					} else {
+						session.setAttribute("userModel", userModel);
+						res.sendRedirect("SearchBus");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
 						throw new LoginPasswordException();
+					} catch (LoginPasswordException e) {
+						session.setAttribute("erroruserid", e.getPasswordLoginMessage());
+						try {
+							res.sendRedirect("login.jsp");
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+
+			} else {
+				try {
+					throw new LoginUserNameException();
+				} catch (LoginUserNameException e) {
+					session.setAttribute("erroruserid", e.getUserNameLoginMessage());
+					try {
+						res.sendRedirect("login.jsp");
+					} catch (IOException e1) {
+						e1.printStackTrace();
 					}
 
-				} else {
-					throw new LoginUserNameException();
-				}
-			} catch (LoginUserNameException e) {
-				session.setAttribute("erroruserid", e.getUserNameLoginMessage());
-				try {
-					res.sendRedirect("login.jsp");
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-
-			} catch (LoginPasswordException e) {
-				session.setAttribute("erroruserid", e.getPasswordLoginMessage());
-				try {
-					res.sendRedirect("login.jsp");
-				} catch (IOException e1) {
-					e1.printStackTrace();
 				}
 			}
+
 		}
 	}
 }

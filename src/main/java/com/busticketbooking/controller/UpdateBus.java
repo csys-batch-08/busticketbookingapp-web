@@ -20,7 +20,12 @@ public class UpdateBus extends HttpServlet {
 	public void doGet(HttpServletRequest req,HttpServletResponse res)  {
 				
 		HttpSession session = req.getSession();
-		int busId=Integer.parseInt(req.getParameter("busId")); 
+		int busId = 0;
+		try {
+			busId = Integer.parseInt(req.getParameter("busId"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		} 
 		BusDaoImpl busDao=new BusDaoImpl();
         Bus busModel=busDao.findBusDetailsUsingID(busId);
          if(busModel!=null) {

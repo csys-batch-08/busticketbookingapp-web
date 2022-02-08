@@ -29,15 +29,23 @@ public class AddBusController extends HttpServlet {
 		String toCity = req.getParameter("toCity").toLowerCase();
 		LocalDateTime departure = LocalDateTime.parse(req.getParameter("departure"));
 		LocalDateTime arrival = LocalDateTime.parse(req.getParameter("arrival"));
-		int seaterFare = Integer.parseInt(req.getParameter("seaterFare"));
-		int totalSeat = Integer.parseInt(req.getParameter("totalSeat"));
+		int seaterFare = 0;
+		int totalSeat = 0;
+		try {
+			seaterFare = Integer.parseInt(req.getParameter("seaterFare"));
+			totalSeat = Integer.parseInt(req.getParameter("totalSeat"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		String status = req.getParameter("seatStatus").toLowerCase();
-
 		Bus busmodel = new Bus(0, 0, 0, busCategory, fromCity, toCity, departure, arrival, seaterFare, totalSeat, status);
 		boolean busInsertFlag = busDao.insertBus(busmodel);
-
 		if (busInsertFlag) {
-			res.sendRedirect("addBus.jsp?infomsg=successfully added");
+			try {
+				res.sendRedirect("addBus.jsp?infomsg=successfully added");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

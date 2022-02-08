@@ -19,40 +19,56 @@ public class UserRegisterController extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
-		
+
 		HttpSession session = req.getSession();
 		UserDaoImpl userDao = new UserDaoImpl();
 		String name = req.getParameter("name").toLowerCase();
 		String email = req.getParameter("emailId").toLowerCase();
-		long mobile = Long.parseLong(req.getParameter("mobile"));
-		boolean checkMobile = userDao.checkUser(mobile);
+		long mobile = 0;
 		try {
-			if (!(checkMobile)) {
-				String password = req.getParameter("password");
-				LocalDate dob = LocalDate.parse(req.getParameter("dob"));
-				String gender = req.getParameter("gender").toLowerCase();
-				User userModel = new User(0, name, dob, email, mobile, gender, password, 0);
-				boolean registerFlag = userDao.registrationUser(userModel);
-				if (registerFlag) {
-					
-					try {
-						res.sendRedirect("userRegister.jsp?register=success");
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else {
-					throw new UserRegister();
+			mobile = Long.parseLong(req.getParameter("mobile"));
+		} catch (NumberFormatException e2) {
+			e2.printStackTrace();
+		}
+		boolean checkMobile = userDao.checkUser(mobile);
+
+		if (!(checkMobile)) {
+			String password = req.getParameter("password");
+			LocalDate dob = LocalDate.parse(req.getParameter("dob"));
+			String gender = req.getParameter("gender").toLowerCase();
+			User userModel = new User(0, name, dob, email, mobile, gender, password, 0);
+			boolean registerFlag = userDao.registrationUser(userModel);
+			if (registerFlag) {
+
+				try {
+					res.sendRedirect("userRegister.jsp?register=success");
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			} else {
-				throw new UserRegister();
+				try {
+					throw new UserRegister();
+				} catch (UserRegister e) {
+					session.setAttribute("registerMessage", e.getPhoneRegisterMessage());
+					try {
+						res.sendRedirect("userRegister.jsp");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
 			}
-		} catch (UserRegister e) {
-			session.setAttribute("registerMessage", e.getPhoneRegisterMessage());
+		} else {
 			try {
-				res.sendRedirect("userRegister.jsp");
-			} catch (IOException e1) {
-				System.out.println(e.getMessage());
+				throw new UserRegister();
+			} catch (UserRegister e) {
+				session.setAttribute("registerMessage", e.getPhoneRegisterMessage());
+				try {
+					res.sendRedirect("userRegister.jsp");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
+
 	}
 }

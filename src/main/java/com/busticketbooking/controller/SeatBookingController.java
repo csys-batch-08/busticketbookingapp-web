@@ -22,7 +22,12 @@ public class SeatBookingController extends HttpServlet {
 		HttpSession session = req.getSession();
 		BusDaoImpl busDao = new BusDaoImpl();
 		// busId coming from filterJsp class
-		int busId = Integer.parseInt(req.getParameter("busIdValue"));
+		int busId = 0;
+		try {
+			busId = Integer.parseInt(req.getParameter("busIdValue"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 		Bus busModel = busDao.findBusDetailsUsingID(busId);
 		if (busModel != null) {
 			if (busModel.getTotalseat() == 0) {

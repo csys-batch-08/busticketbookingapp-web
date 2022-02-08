@@ -88,6 +88,9 @@
 			</tr>
 		</table>
 		<table id="endtable">
+		<tr>
+			<th></th>
+			</tr>
 			<tr>
 				<td><label for="pnrnumber">PNR Number</label></td>
 				<td>:</td>
@@ -125,6 +128,9 @@
 			</tr>
 		</table>
 		<table id="seattable">
+		<tr>
+			<th></th>
+			</tr>
 			<tr>
 				<td><label for="noofseats">No Of Seats</label></td>
 				<td>:</td>
@@ -140,6 +146,9 @@
 		<h4 id="passengerdetails">Passenger Details</h4>
 		<br>
 		<table id="usertable">
+		<tr>
+			<th></th>
+			</tr>
 			<tr>
 				<td><label for="username">UserName</label></td>
 				<td><label for="age">Age</label></td>

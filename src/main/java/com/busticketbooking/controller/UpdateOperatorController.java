@@ -25,8 +25,14 @@ public class UpdateOperatorController extends HttpServlet {
 		Operator operatorModel = (Operator) session.getAttribute("OperatorObject");
 		String operatorName = req.getParameter("operatorName").toLowerCase();
 		String operatorEmail = req.getParameter("operatorEmail").toLowerCase();
-		long operatorContact = Long.parseLong(req.getParameter("operatorContact"));
-		int operatorAge = Integer.parseInt(req.getParameter("operatorAge"));
+		long operatorContact = 0;
+		int operatorAge = 0;
+		try {
+			operatorContact = Long.parseLong(req.getParameter("operatorContact"));
+			operatorAge = Integer.parseInt(req.getParameter("operatorAge"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 
 		operatorModel.setOperatorName(operatorName);
 		operatorModel.setOperatorEmail(operatorEmail);

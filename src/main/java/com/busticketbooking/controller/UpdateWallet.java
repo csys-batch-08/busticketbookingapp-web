@@ -19,14 +19,24 @@ public class UpdateWallet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		
+
 		HttpSession session = req.getSession();
 		User userModel = (User) session.getAttribute("userModel");
-		int amountEntered = Integer.parseInt(req.getParameter("amountentered"));
+		int amountEntered = 0;
+		try {
+			amountEntered = Integer.parseInt(req.getParameter("amountentered"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		double totalAmount = amountEntered + userModel.getUserWallet();
 		userModel.setUserWallet(totalAmount);
 		boolean walletUpdateFlag = userDao.updateWallet(totalAmount, userModel.getUserContact());
-		PrintWriter out = res.getWriter();
+		PrintWriter out = null;
+		try {
+			out = res.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (walletUpdateFlag) {
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Successfully Updated');");

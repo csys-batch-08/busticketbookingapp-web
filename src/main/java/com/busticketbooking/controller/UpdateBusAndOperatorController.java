@@ -25,8 +25,14 @@ public class UpdateBusAndOperatorController extends HttpServlet {
 
 		HttpSession session = req.getSession();
 		Bus busModel = (Bus) session.getAttribute("BusObject");
-		int busNo = Integer.parseInt(req.getParameter("busNo"));
-		int operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		int busNo = 0;
+		int operatorId = 0;
+		try {
+			busNo = Integer.parseInt(req.getParameter("busNo"));
+			operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 		busModel.setBusNo(busNo);
 		busModel.setOperatorId(operatorId);
 		boolean busUpdateFlag = busDao.updateBusNoAndOperator(busModel);

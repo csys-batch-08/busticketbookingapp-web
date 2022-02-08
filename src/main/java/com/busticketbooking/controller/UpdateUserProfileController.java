@@ -26,7 +26,12 @@ public class UpdateUserProfileController extends HttpServlet {
 		int userId = user.getUserId();
 		String userName = req.getParameter("userName").toLowerCase();
 		String userEmail = req.getParameter("emailId").toLowerCase();
-		long userContact = Long.parseLong(req.getParameter("mobile"));
+		long userContact = 0;
+		try {
+			userContact = Long.parseLong(req.getParameter("mobile"));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		String userPassword = req.getParameter("password");
 		LocalDate userDOB = LocalDate.parse(req.getParameter("dob"));
 		String userGender = req.getParameter("gender").toLowerCase();
@@ -41,7 +46,12 @@ public class UpdateUserProfileController extends HttpServlet {
 
 		User userModel = new User(userId, userName, userDOB, userEmail, userContact, userGender, userPassword, 0);
 		boolean userUpdateFlag = userDao.updateUser(userModel);
-		PrintWriter out = res.getWriter();
+		PrintWriter out = null;
+		try {
+			out = res.getWriter();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (userUpdateFlag) {
 			session.setAttribute("UserAge", userAge);
 			out.println("<script type=\"text/javascript\">");

@@ -34,7 +34,7 @@ public class CancelTicketController extends HttpServlet {
 	SeatDetailsDaoImpl seatDetails = new SeatDetailsDaoImpl();
 	BookedTickets bookedTicketsModel = new BookedTickets();
 
-	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 		HttpSession session = req.getSession();
 		User userModel = (User) session.getAttribute("userModel");
 
@@ -83,12 +83,21 @@ public class CancelTicketController extends HttpServlet {
 								boolean ticketCancelFlag = bookTicketsDao.cancelTicket(ticketNo);
 								seatDetails.cancelSeatDetails(ticketNo);
 
-								PrintWriter out = res.getWriter();
+								PrintWriter out = null;
+								try {
+									out = res.getWriter();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
 								if (ticketCancelFlag) {
-									out.println("<script type=\"text/javascript\">");
-									out.println("alert('Ticket cancelled successfully');");
-									out.println("location='cancelTicket.jsp';");
-									out.println("</script>");
+									try {
+										out.println("<script type=\"text/javascript\">");
+										out.println("alert('Ticket cancelled successfully');");
+										out.println("location='cancelTicket.jsp';");
+										out.println("</script>");
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
 								}
 							}
 						}

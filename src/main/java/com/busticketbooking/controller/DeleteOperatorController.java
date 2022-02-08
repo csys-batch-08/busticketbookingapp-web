@@ -18,7 +18,12 @@ public class DeleteOperatorController extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 
-		int operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		int operatorId = 0;
+		try {
+			operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 		boolean deleteOperatorFlag = operatorDao.deleteOperator(operatorId);
 		if (deleteOperatorFlag) {
 			try {

@@ -20,7 +20,12 @@ public class UpdateOperator extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) {
 
 		HttpSession session = req.getSession();
-		int operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		int operatorId = 0;
+		try {
+			operatorId = Integer.parseInt(req.getParameter("operatorId"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 		OperatorDaoImpl operatorDao = new OperatorDaoImpl();
 		Operator operatorModel = operatorDao.getOperatorById(operatorId);
 		if (operatorModel != null) {

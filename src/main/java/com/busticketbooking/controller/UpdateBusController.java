@@ -30,8 +30,14 @@ public class UpdateBusController extends HttpServlet {
 		String toCity = req.getParameter("toCity").toLowerCase();
 		LocalDateTime departure = LocalDateTime.parse(req.getParameter("departure"));
 		LocalDateTime arrival = LocalDateTime.parse(req.getParameter("arrival"));
-		int seaterFare = Integer.parseInt(req.getParameter("seaterFare"));
-		int totalSeat = Integer.parseInt(req.getParameter("totalSeat"));
+		int seaterFare = 0;
+		int totalSeat = 0;
+		try {
+			seaterFare = Integer.parseInt(req.getParameter("seaterFare"));
+			totalSeat = Integer.parseInt(req.getParameter("totalSeat"));
+		} catch (NumberFormatException e1) {
+			e1.printStackTrace();
+		}
 		String status = req.getParameter("seatStatus");
 
 		busModel.setBusCategory(busCategory);
