@@ -1,8 +1,6 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,17 +29,12 @@ public class UpdateWallet extends HttpServlet {
 		double totalAmount = amountEntered + userModel.getUserWallet();
 		userModel.setUserWallet(totalAmount);
 		boolean walletUpdateFlag = userDao.updateWallet(totalAmount, userModel.getUserContact());
-		PrintWriter out = null;
-		try {
-			out = res.getWriter();
-		} catch (IOException |NullPointerException e) {
-			e.printStackTrace();
-		}
 		if (walletUpdateFlag) {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Successfully Updated');");
-			out.println("location='updateWallet.jsp';");
-			out.println("</script>");
+			try {
+				res.sendRedirect("updateWallet.jsp?recharged=success");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

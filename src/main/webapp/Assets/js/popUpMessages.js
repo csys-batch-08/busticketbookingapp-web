@@ -58,6 +58,24 @@ function popupMessages(infoMessage) {
 			})
 			break;
 			
+			case "Recharged successfully":
+			Swal.fire({
+				icon: 'success',
+				title: message,
+				showConfirmButton: false,
+				timer: 3000
+			})
+			break;
+			
+			case "Cancelled successfully":
+			Swal.fire({
+				icon: 'success',
+				title: message,
+				showConfirmButton: false,
+				timer: 1500
+			})
+			break;
+			
 			case "Registered successfully":
 			Swal.fire({
 				icon: 'success',
@@ -176,6 +194,22 @@ var toastMixin = Swal.mixin({
 	Swal.fire({
 		title: "Oops!",
 		text: "Seats are unavailable",
+	    position: "center",
+	    /* background: "linear-gradient(red, brown)", 
+	    color: "white",*/
+	    allowOutsideClick: false,
+	    allowEscapeKey: false,
+	    allowEnterKey: false,
+	    showConfirmButton: false,
+	    showCancelButton: false,
+	    timer: 3000
+	  });
+break;
+
+	case "Insufficient balance":
+	Swal.fire({
+		title: message,
+		text: "Please recharge to book a ticket",
 	    position: "center",
 	    /* background: "linear-gradient(red, brown)", 
 	    color: "white",*/

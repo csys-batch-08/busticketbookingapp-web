@@ -1,8 +1,6 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,13 +31,6 @@ public class ConfirmBookingController extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) {
 
 		HttpSession session = req.getSession();
-		PrintWriter out = null;
-		try {
-			out = res.getWriter();
-		} catch (IOException |NullPointerException e1) {
-			e1.printStackTrace();
-		}
-		
 		//getting userDetails from session from loginController
 		User userModel = (User) session.getAttribute("userModel");
 
@@ -85,10 +76,11 @@ public class ConfirmBookingController extends HttpServlet {
 			}	
 		}
 		else {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Insufficient Balance please recharge your wallet');");
-			out.println("location='updateWallet.jsp';");
-			out.println("</script>");
+			try {
+				res.sendRedirect("updateWallet.jsp?insufficient=recharge");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

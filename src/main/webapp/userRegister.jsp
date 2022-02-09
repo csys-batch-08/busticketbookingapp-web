@@ -62,9 +62,9 @@
 			<br>
 			<table id="buttontable">
 				<tr>
-					<th><button type="submit">Register</button></th>
-					<th><button type="reset">Reset</button></th>
-					<th><button type="submit">
+					<th><button type="submit" class="submit">Register</button></th>
+					<th><button type="reset" class="reset">Reset</button></th>
+					<th><button type="submit" class="submit">
 							<a href="index.jsp"> Home</a>
 						</button></th>
 				</tr>

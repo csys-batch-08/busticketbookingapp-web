@@ -1,8 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet'
+	href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <title>Profile</title>
 <link rel="stylesheet" href="Assets/css/NavigationUser.css">
 <link rel="stylesheet" href="Assets/css/userProfile.css">
@@ -45,9 +50,11 @@
 				<th>${usermodel.getUserContact() }</th>
 			</tr>
 			<tr>
+				<c:set var="userName"
+					value="${fn:toUpperCase(usermodel.getUserName())}" />
 				<th><label for="name">UserName</label></th>
 				<th>:</th>
-				<th>${usermodel.getUserName()}</th>
+				<th>${userName}</th>
 			</tr>
 			<tr>
 				<th><label for="emailId">EmailId</label></th>
@@ -114,6 +121,12 @@
 		</form>
 	</fieldset>
 	<script src="Assets/js/popUpMessages.js"></script>
+	<c:if test="${param.updated!=null}">
+		<script>
+			popupMessages('Updated successfully')
+		</script>
+	</c:if>
+
 	<script>
 		today();
 	</script>

@@ -1,7 +1,6 @@
 package com.busticketbooking.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -83,19 +82,9 @@ public class CancelTicketController extends HttpServlet {
 							// cancelTicketdao
 							boolean ticketCancelFlag = bookTicketsDao.cancelTicket(ticketNo);
 							seatDetails.cancelSeatDetails(ticketNo);
-
-							PrintWriter out = null;
-							try {
-								out = res.getWriter();
-							} catch (IOException | NullPointerException e) {
-								e.printStackTrace();
-							}
 							if (ticketCancelFlag) {
 								try {
-									out.println("<script type=\"text/javascript\">");
-									out.println("alert('Ticket cancelled successfully');");
-									out.println("location='cancelTicket.jsp';");
-									out.println("</script>");
+									res.sendRedirect("cancelTicket.jsp?cancel=success");
 								} catch (Exception e) {
 									e.printStackTrace();
 								}

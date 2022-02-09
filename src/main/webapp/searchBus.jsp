@@ -41,10 +41,11 @@
 				<table>
 					<tr>
 						<th><div class="fromto">
-								<span>FROM</span><br> <input class="inputtype" name="fromlocation"
-									id="fromlocation" pattern="[a-zA-Z]{2,}"
-									title="please enter correct city" autocomplete="off"
-									placeholder="Search Locations" list="from" required>
+								<label for="fromlocation">FROM</label><br> <input
+									class="inputtype" name="fromlocation" id="fromlocation"
+									pattern="[a-zA-Z]{2,}" title="please enter correct city"
+									autocomplete="off" placeholder="Search Locations" list="from"
+									required>
 								<datalist id="from">
 									<c:forEach items="${locationList }" var="location">
 										<option value="${location }">${location }</option>
@@ -52,10 +53,11 @@
 								</datalist>
 							</div></th>
 						<th><div class="fromto">
-								<span>TO</span><br> <input class="inputtype" name="tolocation"
-									id="tolocation" pattern="[a-zA-Z]{2,}"
-									title="please enter correct city" autocomplete="off"
-									placeholder="Search Locations" list="to" required>
+								<label for="tolocation">TO</label><br> <input
+									class="inputtype" name="tolocation" id="tolocation"
+									pattern="[a-zA-Z]{2,}" title="please enter correct city"
+									autocomplete="off" placeholder="Search Locations" list="to"
+									required>
 								<datalist id="to">
 									<c:forEach items="${locationList }" var="location">
 										<option value="${location }">${location }</option>
@@ -63,8 +65,8 @@
 								</datalist>
 							</div></th>
 						<th><div class="fromto">
-								<label for="date">DATE</label><br> <input class="inputtype" name="date" id="date"
-									type="date" required>
+								<label for="date">DATE</label><br> <input class="inputtype"
+									name="date" id="date" type="date" required>
 							</div></th>
 					</tr>
 				</table>

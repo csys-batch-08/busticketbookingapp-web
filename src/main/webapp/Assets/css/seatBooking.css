@@ -16,7 +16,7 @@ legend {
 	text-align: center;
 }
 
-#seatbookingtable tr td {
+#seatbookingtable tr th {
 	padding: 15px;
 }
 
@@ -28,7 +28,7 @@ legend {
 	margin-bottom: 14px;
 }
 
-#seatinfotable tr td {
+#seatinfotable tr th {
 	padding: 15px;
 	padding-left: 20px;
 }

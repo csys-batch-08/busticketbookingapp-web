@@ -20,15 +20,25 @@ body{
         }
         a{
         	text-decoration: none;
+        	color:black;
         }
-        button{
+        a:hover{
+        	color:white;
+        }
+        .submit,.reset{
             height: 35px;
             width: 100px;
             border: none;
             outline: none;
+            cursor:pointer;
         }
-        button:hover{
+        .reset:hover{
             background-color: tomato;
+            color:white;
+        }
+        .submit:hover{
+            background-color:#14b314eb;
+            color:white;
         }
         label,h2{
             color: white;

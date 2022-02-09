@@ -14,9 +14,15 @@
 
 <body>
 	<c:set var="wrongnumbermessage" scope="session" value="${WrongNumber}"></c:set>
-	<c:set var="alreadycancelmessage" scope="session" value="${AlreadyCancel}"></c:set>
+	<c:set var="alreadycancelmessage" scope="session"
+		value="${AlreadyCancel}"></c:set>
 	<c:set var="dateendedmessage" scope="session" value="${DateEnded}"></c:set>
 	<script src="Assets/js/popUpMessages.js"></script>
+	<c:if test="${param.cancel!=null}">
+		<script>
+			popupMessages('Cancelled successfully')
+		</script>
+	</c:if>
 	<c:if test="${wrongnumbermessage!=null}">
 		<script>
 			popupMessages('${wrongnumbermessage}')

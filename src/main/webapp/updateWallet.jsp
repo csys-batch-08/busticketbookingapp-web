@@ -3,6 +3,10 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@11.3.10/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet'
+	href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 <title>Wallet</title>
 <link rel="stylesheet" href="Assets/css/NavigationUser.css">
 <link rel="stylesheet" href="Assets/css/updateWallet.css">
@@ -58,4 +62,18 @@
 		</div>
 	</form>
 </body>
+
+<script src="Assets/js/popUpMessages.js"></script>
+<c:if test="${param.insufficient!=null}">
+	<script>
+		popupMessages('Insufficient balance')
+	</script>
+</c:if>
+
+<c:if test="${param.recharged!=null}">
+	<script>
+		popupMessages('Recharged successfully')
+	</script>
+</c:if>
+
 </html>

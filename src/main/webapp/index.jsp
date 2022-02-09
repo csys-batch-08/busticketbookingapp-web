@@ -9,7 +9,8 @@
 <body>
 	<jsp:useBean id="busDao"
 		class="com.busticketbooking.daoimpl.BusDaoImpl" />
-	<c:set var="locationList" scope="session" value="${busDao.getLocations()}"></c:set>
+	<c:set var="locationList" scope="session"
+		value="${busDao.getLocations()}"></c:set>
 	<div id="nav">
 		<ul>
 			<li><span id="buslogo">BusHub</span></li>
@@ -27,10 +28,11 @@
 					<thead>
 						<tr>
 							<th><div class="fromto">
-									<span>FROM</span><br> <input class="inputtype"
-										name="fromlocation" id="fromlocation" pattern="[aA-zZ]{2,}"
-										title="please enter correct city" autocomplete="off"
-										placeholder="Search Locations" list="from" required>
+									<label for="fromlocation">FROM</label><br> <input
+										class="inputtype" name="fromlocation" id="fromlocation"
+										pattern="[aA-zZ]{2,}" title="please enter correct city"
+										autocomplete="off" placeholder="Search Locations" list="from"
+										required>
 									<datalist id="from">
 										<c:forEach items="${locationList }" var="location">
 											<option value="${location }">${location }</option>
@@ -38,10 +40,11 @@
 									</datalist>
 								</div></th>
 							<th><div class="fromto">
-									<span>TO</span><br> <input class="inputtype"
-										name="tolocation" id="tolocation" pattern="[aA-zZ]{2,}"
-										title="please enter correct city" autocomplete="off"
-										placeholder="Search Locations" list="to" required>
+									<label for="tolocation">TO</label><br> <input
+										class="inputtype" name="tolocation" id="tolocation"
+										pattern="[aA-zZ]{2,}" title="please enter correct city"
+										autocomplete="off" placeholder="Search Locations" list="to"
+										required>
 									<datalist id="to">
 										<c:forEach items="${locationList }" var="location">
 											<option value="${location }">${location }</option>
@@ -49,8 +52,8 @@
 									</datalist>
 								</div></th>
 							<th><div class="fromto">
-									<label for="date">DATE</label><br> <input class="inputtype" name="date"
-										id="date" type="date" required>
+									<label for="date">DATE</label><br> <input
+										class="inputtype" name="date" id="date" type="date" required>
 								</div></th>
 						</tr>
 					</thead>
@@ -61,7 +64,7 @@
 			</div>
 		</form>
 	</div>
-	
+
 	<script src="Assets/js/popUpMessages.js"></script>
 	<script>
 		dayBefore();

@@ -122,7 +122,7 @@
 				<td><h4>${booktickets.getBookingStatus() }</h4></td>
 			</tr>
 			<tr>
-				<td><label for="totalfair">Total Fair</label></td>
+				<td><label for="totalfair">Total Fair</label></td>	
 				<td>:</td>
 				<td><h4>${booktickets.getTotalPrice() }</h4></td>
 			</tr>
@@ -156,9 +156,9 @@
 				<td><label for="gender">Gender</label></td>
 			</tr>
 			<tr>
-				<c:set var="empName"
+				<c:set var="userName"
 					value="${fn:toUpperCase(booktickets.getUserModel().getUserName() )}" />
-				<td><h4>${empName}</h4></td>
+				<td><h4>${userName}</h4></td>
 				<td><h4>${userage }</h4></td>
 				<td><h4>${booktickets.getUserModel().getUserContact() }</h4></td>
 				<td><h4>${booktickets.getUserModel().getUserGender() }</h4></td>
