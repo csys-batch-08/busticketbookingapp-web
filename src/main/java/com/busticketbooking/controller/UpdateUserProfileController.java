@@ -46,21 +46,11 @@ public class UpdateUserProfileController extends HttpServlet {
 
 		User userModel = new User(userId, userName, userDOB, userEmail, userContact, userGender, userPassword, 0);
 		boolean userUpdateFlag = userDao.updateUser(userModel);
-		PrintWriter out = null;
-		try {
-			out = res.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		if (userUpdateFlag) {
 			session.setAttribute("UserAge", userAge);
 			try {
 				res.sendRedirect("userProfile.jsp?updated=success");
-//				out.println("<script type=\"text/javascript\">");
-//				out.println("alert('Profile Updated Successfully');");
-//				out.println("location='userProfile.jsp';");
-//				out.println("</script>");
-			} catch (NullPointerException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
